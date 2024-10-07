@@ -14,11 +14,14 @@ from frappe import _
 class Participant(Document):
 	# @frappe.whitelist(allow_guest=True)
 	def after_insert(self):
+		
+		participant_id=frappe.get_doc("Participant", filters={})
+
 		if not self.full_name:
 			self.full_name = f"{self.first_name} {self.last_name}"
 			self.save(ignore_permissions=True)
 		if not self.e_mail:
-			frappe.throw("Email is required to create a new User.")
+			frappe.throw("Please Enter your Email")
 		if not frappe.db.exists('User',self.e_mail):
 			
 			doc=frappe.new_doc('User')
