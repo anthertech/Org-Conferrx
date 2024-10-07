@@ -1,0 +1,125 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:hotel",
+ "creation": "2023-09-13 15:20:39.791186",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "hotel",
+  "address",
+  "section_break_zq4vh",
+  "location_url",
+  "hotel_details",
+  "get_directions",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "address",
+   "fieldtype": "Link",
+   "label": "Address",
+   "options": "Address",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hotel",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Hotel Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "section_break_zq4vh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "get_directions",
+   "fieldtype": "Button",
+   "label": "<p class=\"fa fa-hand-o-right\" style=\"background-color: #4169E1; color: #fff; padding: 10px; font-size: 16px;\">Get Direct</p>"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Hotel",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "location_url",
+   "fieldtype": "Small Text",
+   "label": "Location URL"
+  },
+  {
+   "fieldname": "hotel_details",
+   "fieldtype": "Small Text",
+   "label": "Hotel Details"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-27 00:13:57.469809",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "Hotel",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Participant",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "E-Desk Admin",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

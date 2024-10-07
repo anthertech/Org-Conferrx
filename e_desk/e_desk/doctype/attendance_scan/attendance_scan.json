@@ -1,0 +1,77 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-09-16 12:27:09.540868",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "scan_qr",
+  "submit",
+  "section_break_leywe",
+  "attendance_scanned_list",
+  "confer"
+ ],
+ "fields": [
+  {
+   "fieldname": "scan_qr",
+   "fieldtype": "Data",
+   "label": "Scan QR",
+   "options": "Barcode"
+  },
+  {
+   "fieldname": "submit",
+   "fieldtype": "Button",
+   "label": "Submit"
+  },
+  {
+   "fieldname": "section_break_leywe",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "attendance_scanned_list",
+   "fieldtype": "Table",
+   "label": "Attendance Scanned List",
+   "options": "Attendance Scanned List"
+  },
+  {
+   "fieldname": "confer",
+   "fieldtype": "Link",
+   "label": "Confer",
+   "options": "Confer"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-08-07 15:11:31.949551",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "Attendance Scan",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "Volunteer",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

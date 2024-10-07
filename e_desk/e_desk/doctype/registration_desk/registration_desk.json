@@ -1,0 +1,192 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2023-07-06 18:16:32.837258",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "registration_process_section",
+  "naming_series",
+  "confer",
+  "abr",
+  "participant",
+  "kit_provided_",
+  "section_break_sec1",
+  "part_profile",
+  "profile_preview",
+  "column_break_j8oqr",
+  "qr_profile",
+  "qr_preview",
+  "registration_fee_collected_section",
+  "mode_of_payment",
+  "qr",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "participant",
+   "fieldtype": "Table",
+   "label": "Participant ",
+   "options": "Participant Table",
+   "reqd": 1
+  },
+  {
+   "fieldname": "kit_provided_",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Kit provided ?",
+   "options": "\nYES\nNO",
+   "reqd": 1
+  },
+  {
+   "fieldname": "registration_fee_collected_section",
+   "fieldtype": "Section Break",
+   "label": "Registration Fee Collected?"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Registration Desk",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "profile_preview",
+   "fieldtype": "HTML",
+   "label": "Preview"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Registration Series",
+   "options": ".{abr}.-.YY.-.####",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "participant.profile_photo",
+   "fieldname": "part_profile",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "Profile",
+   "options": "Participant"
+  },
+  {
+   "fieldname": "mode_of_payment",
+   "fieldtype": "Table",
+   "label": "Mode of payment",
+   "options": "Mode of payment",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_sec1",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "qr_profile",
+   "fieldtype": "Attach Image",
+   "hidden": 1,
+   "label": "QR Profile",
+   "options": "Participant Table"
+  },
+  {
+   "fieldname": "qr_preview",
+   "fieldtype": "HTML",
+   "label": "QR Preview"
+  },
+  {
+   "fieldname": "column_break_j8oqr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "registration_process_section",
+   "fieldtype": "Section Break",
+   "label": "Registration Process "
+  },
+  {
+   "fieldname": "qr",
+   "fieldtype": "Data",
+   "label": "qr"
+  },
+  {
+   "fieldname": "confer",
+   "fieldtype": "Link",
+   "label": "Confer",
+   "options": "Confer",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "confer.abr",
+   "fieldname": "abr",
+   "fieldtype": "Data",
+   "label": "Abr",
+   "read_only": 1,
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_submittable": 1,
+ "links": [],
+ "modified": "2024-10-06 20:19:39.553792",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "Registration Desk",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "E-Desk Admin",
+   "select": 1,
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -1,0 +1,149 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:title",
+ "creation": "2024-08-07 15:01:26.839526",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "abr",
+  "venuelocation",
+  "theme",
+  "start_date",
+  "end_date",
+  "agenda",
+  "is_private",
+  "attach_files"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Start date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "End date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "agenda",
+   "fieldtype": "Table",
+   "label": "Agenda",
+   "options": "Confer Agenda"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_private",
+   "fieldtype": "Check",
+   "hidden": 1,
+   "label": "Is private"
+  },
+  {
+   "fieldname": "attach_files",
+   "fieldtype": "Table",
+   "label": "Attachments",
+   "options": "Category Table"
+  },
+  {
+   "fieldname": "abr",
+   "fieldtype": "Data",
+   "label": "Abr",
+   "reqd": 1
+  },
+  {
+   "fieldname": "venuelocation",
+   "fieldtype": "Data",
+   "label": "Venue/Location"
+  },
+  {
+   "fieldname": "theme",
+   "fieldtype": "Data",
+   "label": "Theme"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "is_calendar_and_gantt": 1,
+ "links": [],
+ "modified": "2024-10-07 10:33:04.959485",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "Confer",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Guest",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Participant",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer",
+   "select": 1,
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "E-Desk Admin",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

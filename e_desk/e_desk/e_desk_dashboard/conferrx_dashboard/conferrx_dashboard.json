@@ -1,0 +1,31 @@
+{
+ "cards": [
+  {
+   "card": "Event Participant Open"
+  },
+  {
+   "card": "Event Participant Registered"
+  },
+  {
+   "card": "Event Volunteer Count"
+  }
+ ],
+ "charts": [
+  {
+   "chart": "Event Participant Count",
+   "width": "Half"
+  }
+ ],
+ "creation": "2023-09-25 16:39:11.895306",
+ "dashboard_name": "Conferrx Dashboard",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 1,
+ "is_standard": 1,
+ "modified": "2024-09-26 11:51:01.305970",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "Conferrx Dashboard",
+ "owner": "Administrator"
+}

@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include e_desk *.css
+recursive-include e_desk *.csv
+recursive-include e_desk *.html
+recursive-include e_desk *.ico
+recursive-include e_desk *.js
+recursive-include e_desk *.json
+recursive-include e_desk *.md
+recursive-include e_desk *.png
+recursive-include e_desk *.py
+recursive-include e_desk *.svg
+recursive-include e_desk *.txt
+recursive-exclude e_desk *.pyc

@@ -1,0 +1,67 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-09-12 18:27:32.987884",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "food_scan_hours",
+  "attendance_scan_hours",
+  "category_image_table",
+  "event"
+ ],
+ "fields": [
+  {
+   "fieldname": "category_image_table",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Category Image Table",
+   "options": "Category Table"
+  },
+  {
+   "fieldname": "food_scan_hours",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Food Scan Hours",
+   "reqd": 1
+  },
+  {
+   "fieldname": "attendance_scan_hours",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Attendance Scan Hours",
+   "reqd": 1
+  },
+  {
+   "fieldname": "event",
+   "fieldtype": "Link",
+   "label": "Event",
+   "options": "Confer"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-09-03 21:47:30.044890",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "CCA Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

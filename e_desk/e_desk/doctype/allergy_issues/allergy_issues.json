@@ -1,0 +1,40 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2023-08-12 12:27:00.000803",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "allergies",
+  "dietary_specifications"
+ ],
+ "fields": [
+  {
+   "fieldname": "allergies",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Allergies"
+  },
+  {
+   "fieldname": "dietary_specifications",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Dietary Specifications",
+   "options": "\nYes\nNone"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-08-12 12:27:00.000803",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "Allergy Issues",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

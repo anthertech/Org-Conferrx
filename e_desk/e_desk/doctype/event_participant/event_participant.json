@@ -1,0 +1,447 @@
+{
+ "actions": [],
+ "allow_guest_to_view": 1,
+ "allow_rename": 1,
+ "autoname": "naming_series:",
+ "creation": "2024-08-03 12:27:53.901662",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "participant",
+  "event",
+  "event_role",
+  "abr",
+  "full_name",
+  "column_break_xncz",
+  "status",
+  "is_paid",
+  "invoice_no",
+  "reg_no",
+  "community_details_section",
+  "churchorganisation_you_represent",
+  "capacity",
+  "youth",
+  "column_break_eudp",
+  "layordained",
+  "visa_entrance",
+  "arrival_details_section",
+  "arrival_at",
+  "arrival_date_and_time",
+  "column_break_skl19",
+  "departure_from",
+  "departure_date_and_time",
+  "airline_details_section",
+  "airline_arrival",
+  "flight_number_arrival",
+  "airline_arrival_date",
+  "column_break_wr5dm",
+  "airline_departure",
+  "flight_number_departure",
+  "airline_departure_date",
+  "room_allotment_section",
+  "check_in_date",
+  "number_of_nights",
+  "room_type_and_price_tier",
+  "qr",
+  "column_break_rulto",
+  "check_out_date",
+  "accomodation_tab",
+  "hotel",
+  "column_break_xmwa1",
+  "hotel_address_link",
+  "get_directions",
+  "section_break_8vnr3",
+  "location_url",
+  "hotel_details",
+  "hotel_address",
+  "church_visit_tab",
+  "church_list",
+  "column_break_d6rlj",
+  "get_directions_church",
+  "section_break_xr5bb",
+  "location_url_church",
+  "church_details",
+  "church_address",
+  "reg_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "participant",
+   "fieldtype": "Link",
+   "label": "Participant",
+   "options": "Participant",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Open\nRegistered",
+   "read_only": 1,
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_paid",
+   "fieldtype": "Check",
+   "label": "Is Paid",
+   "read_only": 1
+  },
+  {
+   "fieldname": "invoice_no",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Invoice No"
+  },
+  {
+   "fieldname": "reg_no",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Reg No"
+  },
+  {
+   "fieldname": "community_details_section",
+   "fieldtype": "Section Break",
+   "label": "Community Details"
+  },
+  {
+   "fieldname": "churchorganisation_you_represent",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Church/Organisation you represent"
+  },
+  {
+   "fieldname": "capacity",
+   "fieldtype": "Link",
+   "label": "Capacity ",
+   "options": "Category Name"
+  },
+  {
+   "fieldname": "youth",
+   "fieldtype": "Select",
+   "label": "Youth",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "layordained",
+   "fieldtype": "Select",
+   "label": "Lay/Ordained",
+   "options": "\nLay\nOrdained"
+  },
+  {
+   "fieldname": "visa_entrance",
+   "fieldtype": "Select",
+   "label": "Do you need a letter of invitation to apply for a visa to enter India?",
+   "options": "\nYes\nNo"
+  },
+  {
+   "fieldname": "arrival_details_section",
+   "fieldtype": "Section Break",
+   "label": "Arrival Details"
+  },
+  {
+   "fieldname": "arrival_at",
+   "fieldtype": "Data",
+   "label": "Arrival at"
+  },
+  {
+   "fieldname": "arrival_date_and_time",
+   "fieldtype": "Datetime",
+   "label": "Arrival date and time"
+  },
+  {
+   "fieldname": "column_break_skl19",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "departure_from",
+   "fieldtype": "Data",
+   "label": "Departure from"
+  },
+  {
+   "fieldname": "departure_date_and_time",
+   "fieldtype": "Datetime",
+   "label": "Departure date and time"
+  },
+  {
+   "fieldname": "airline_details_section",
+   "fieldtype": "Section Break",
+   "label": "Airline Details"
+  },
+  {
+   "fieldname": "airline_arrival",
+   "fieldtype": "Data",
+   "label": "Airline (Arrival)"
+  },
+  {
+   "fieldname": "flight_number_arrival",
+   "fieldtype": "Data",
+   "label": "Flight number (Arrival)"
+  },
+  {
+   "fieldname": "airline_arrival_date",
+   "fieldtype": "Datetime",
+   "label": "Airline (Arrival Date)"
+  },
+  {
+   "fieldname": "column_break_wr5dm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "airline_departure",
+   "fieldtype": "Data",
+   "label": "Airline (Departure)"
+  },
+  {
+   "fieldname": "flight_number_departure",
+   "fieldtype": "Data",
+   "label": "Flight number (Departure)"
+  },
+  {
+   "fieldname": "airline_departure_date",
+   "fieldtype": "Datetime",
+   "label": "Airline (Departure Date)"
+  },
+  {
+   "fieldname": "room_allotment_section",
+   "fieldtype": "Section Break",
+   "label": "Room Allotment"
+  },
+  {
+   "fieldname": "check_in_date",
+   "fieldtype": "Datetime",
+   "label": "Check-in date"
+  },
+  {
+   "fieldname": "number_of_nights",
+   "fieldtype": "Data",
+   "label": "Number of nights"
+  },
+  {
+   "fieldname": "room_type_and_price_tier",
+   "fieldtype": "Data",
+   "label": "Room type and price tier"
+  },
+  {
+   "fieldname": "qr",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "QR"
+  },
+  {
+   "fieldname": "column_break_rulto",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "check_out_date",
+   "fieldtype": "Datetime",
+   "label": "Check-out date"
+  },
+  {
+   "fieldname": "hotel",
+   "fieldtype": "Link",
+   "label": "Hotel",
+   "options": "Hotel"
+  },
+  {
+   "fieldname": "column_break_xmwa1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "get_directions",
+   "fieldtype": "Button",
+   "label": "<p class=\"fa fa-hand-o-right\" style=\"background-color: #4169E1; color: #fff; padding: 10px; font-size: 16px;\">Get Direct</p>"
+  },
+  {
+   "fieldname": "section_break_8vnr3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "hotel.location_url",
+   "fieldname": "location_url",
+   "fieldtype": "Small Text",
+   "label": "Location URL",
+   "read_only": 1
+  },
+  {
+   "fieldname": "hotel_details",
+   "fieldtype": "Small Text",
+   "label": "Hotel Details",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "hotel.address",
+   "fieldname": "hotel_address_link",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Hotel Address",
+   "options": "Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "hotel_address",
+   "fieldtype": "Small Text",
+   "label": "Hotel Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "church_list",
+   "fieldtype": "Link",
+   "label": "Church to Visit",
+   "options": "Church"
+  },
+  {
+   "fieldname": "column_break_d6rlj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "get_directions_church",
+   "fieldtype": "Button",
+   "label": "<p class=\"fa fa-hand-o-right\" style=\"background-color: #4169E1; color: #fff; padding: 10px; font-size: 16px;\">Get Direct</p>"
+  },
+  {
+   "fieldname": "section_break_xr5bb",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fetch_from": "church_list.location_url",
+   "fieldname": "location_url_church",
+   "fieldtype": "Small Text",
+   "label": "Location URL Church",
+   "read_only": 1
+  },
+  {
+   "fieldname": "church_details",
+   "fieldtype": "Small Text",
+   "label": "Church Details",
+   "read_only": 1
+  },
+  {
+   "fieldname": "church_address",
+   "fieldtype": "Small Text",
+   "label": "Church Address",
+   "read_only": 1
+  },
+  {
+   "fieldname": "reg_status",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Registration Status",
+   "options": "Approved\nDeclined\nPending",
+   "read_only": 1
+  },
+  {
+   "fieldname": "event_role",
+   "fieldtype": "Data",
+   "label": "Event Role",
+   "read_only": 1
+  },
+  {
+   "fieldname": "event",
+   "fieldtype": "Link",
+   "label": "Event",
+   "options": "Confer",
+   "read_only": 1
+  },
+  {
+   "fieldname": "accomodation_tab",
+   "fieldtype": "Tab Break",
+   "label": "Accomodation"
+  },
+  {
+   "fieldname": "church_visit_tab",
+   "fieldtype": "Tab Break",
+   "hidden": 1,
+   "label": "Church visit"
+  },
+  {
+   "fieldname": "column_break_eudp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xncz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fetch_from": "event.abr",
+   "fieldname": "abr",
+   "fieldtype": "Data",
+   "label": "Abr",
+   "read_only": 1
+  },
+  {
+   "fetch_from": "participant.full_name",
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Full Name"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Participant Series",
+   "options": ".{abr}.-.YYYY.-.#####",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-10-07 13:10:56.047422",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "Event Participant",
+ "naming_rule": "By \"Naming Series\" field",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Participant",
+   "select": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Volunteer",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "E-Desk Admin",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

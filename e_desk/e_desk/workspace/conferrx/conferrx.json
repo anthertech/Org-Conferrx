@@ -1,0 +1,146 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"moJWlIER1F\",\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 16px;\\\">Conferrx</span>\",\"col\":12}},{\"id\":\"ChdI8wG-D9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Participant\",\"col\":3}},{\"id\":\"_A-14y-UjS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User\",\"col\":3}},{\"id\":\"0hZz0S2ouU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Registration Desk\",\"col\":3}},{\"id\":\"5NQvwE1sbS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Program Agenda\",\"col\":3}},{\"id\":\"YJl7IdIDNZ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conference\",\"col\":3}},{\"id\":\"A4ueePk2s6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conferrx Settings\",\"col\":3}},{\"id\":\"4Ld8m0fM_Y\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Hotel\",\"col\":3}},{\"id\":\"miXfIPtv_p\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Additional informations\",\"col\":3}},{\"id\":\"1CBPaH91hv\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"voCRpejopm\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"Rd7ZK9AuOx\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}},{\"id\":\"GeJbC9F0Uz\",\"type\":\"card\",\"data\":{\"card_name\":\"Dashboard\",\"col\":4}}]",
+ "creation": "2023-08-04 18:48:47.583950",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "project",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Conferrx",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Masters",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Attendance Scan",
+   "link_count": 0,
+   "link_to": "Conf Programme Attendee",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Dashboard",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Conferrx Dashboard",
+   "link_count": 0,
+   "link_to": "dashboard-view",
+   "link_type": "Page",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reports",
+   "link_count": 1,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Event Attendee",
+   "link_count": 0,
+   "link_to": "Attendee Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-10-07 13:14:52.662716",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "Conferrx",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 35.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Additional informations",
+   "link_to": "Event Participant",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Conference",
+   "link_to": "Confer",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "Calendar",
+   "label": "Program Agenda",
+   "link_to": "Confer",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Conferrx Settings",
+   "link_to": "Conferrx Settings",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "User",
+   "link_to": "User",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Participant",
+   "link_to": "Participant",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Hotel",
+   "link_to": "Hotel",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Registration Desk",
+   "link_to": "Registration Desk",
+   "type": "DocType"
+  }
+ ],
+ "title": "Conferrx"
+}
