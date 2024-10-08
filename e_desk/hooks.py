@@ -224,3 +224,5 @@ doc_events = {
 # auth_hooks = [
 #	"e_desk.auth.validate"
 # ]
+
+website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
