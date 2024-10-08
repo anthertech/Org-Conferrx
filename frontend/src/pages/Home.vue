@@ -1,26 +1,20 @@
 <template>
-
-
-<h1>Check thiss</h1>
+  <h1>Check this</h1>
 </template>
 
 <script setup>
-import {createListResource} from "frappe-ui";
 import { ref } from 'vue'
-import { Dialog } from 'frappe-ui'
-import { createResource } from 'frappe-ui'
+import { Dialog, createListResource } from 'frappe-ui'  // Consolidate imports from frappe-ui
 import { session } from '../data/session'
 
-
-
-
-ConferList = createListResource({
-doctype:"Confer",
-fields:["name",'start_date'],
-auto:true,
-onSuccess(data){
-console.log(data);
-}
+// Declare ConferList using const
+const ConferList = createListResource({
+  doctype: "Confer",
+  fields: ["name", "start_date"],
+  auto: true,
+  onSuccess(data) {
+    console.log(data);
+  }
 })
 
 </script>
