@@ -16,13 +16,17 @@
   "first_name",
   "last_name",
   "full_name",
-  "gender",
-  "column_break_sylpb",
   "mobile_number",
   "e_mail",
+  "gender",
+  "column_break_sylpb",
+  "business_category",
+  "role",
+  "chapter",
   "date_of_birth",
   "profile_photo",
-  "qr_preview"
+  "qr_preview",
+  "qr"
  ],
  "fields": [
   {
@@ -48,21 +52,20 @@
   {
    "fieldname": "last_name",
    "fieldtype": "Data",
-   "label": "Last Name"
+   "label": "Last Name",
+   "reqd": 1
   },
   {
    "fieldname": "full_name",
    "fieldtype": "Data",
-   "label": "Full Name",
-   "reqd": 1
+   "label": "Full Name"
   },
   {
    "fieldname": "e_mail",
    "fieldtype": "Data",
    "label": "Email",
    "options": "email",
-   "reqd": 1,
-   "unique": 1
+   "reqd": 1
   },
   {
    "fieldname": "mobile_number",
@@ -74,6 +77,7 @@
   {
    "fieldname": "gender",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Gender",
    "options": "Gender"
   },
@@ -84,6 +88,7 @@
   {
    "fieldname": "date_of_birth",
    "fieldtype": "Date",
+   "hidden": 1,
    "label": "Date of birth"
   },
   {
@@ -113,12 +118,37 @@
    "fieldtype": "Link",
    "label": "Prefix",
    "options": "Salutation"
+  },
+  {
+   "fieldname": "business_category",
+   "fieldtype": "Link",
+   "label": "Business Category",
+   "options": "Business Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "chapter",
+   "fieldtype": "Link",
+   "label": "Chapter",
+   "options": "Chapter"
+  },
+  {
+   "fieldname": "role",
+   "fieldtype": "Link",
+   "label": "Role",
+   "options": "Roles"
+  },
+  {
+   "fieldname": "qr",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Qr"
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-07 16:38:31.579480",
+ "modified": "2024-10-07 21:02:36.528324",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",
