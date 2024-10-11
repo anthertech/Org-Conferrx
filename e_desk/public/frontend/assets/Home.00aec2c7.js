@@ -1,0 +1,1 @@
+import{l as t,e as o,o as s}from"./vendor.5575a534.js";import"./index.20cb7847.js";const l={setup(r){return ConferList=t({doctype:"Confer",fields:["name","start_date"],auto:!0,onSuccess(e){console.log(e)}}),(e,c)=>(s(),o("h1",null,"Check thiss"))}};export{l as default};

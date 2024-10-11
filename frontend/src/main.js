@@ -3,7 +3,7 @@ import './index.css'
 import { createApp } from 'vue'
 import router from './router'
 import App from './App.vue'
-
+import { createPinia } from 'pinia'
 import {
   Button,
   Card,
@@ -15,6 +15,8 @@ import {
 
 let app = createApp(App)
 
+const pinia = createPinia() 
+app.use(pinia)
 setConfig('resourceFetcher', frappeRequest)
 
 app.use(router)

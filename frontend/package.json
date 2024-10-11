@@ -10,8 +10,10 @@
   },
   "dependencies": {
     "feather-icons": "^4.28.0",
-    "frappe-ui": "^0.1.54",
+    "frappe-ui": "^0.1.70",
+    "pinia": "^2.2.4",
     "vue": "^3.2.25",
+    "vue-demi": "^0.14.10",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
