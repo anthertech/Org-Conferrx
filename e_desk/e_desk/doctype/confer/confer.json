@@ -12,8 +12,10 @@
   "abr",
   "venuelocation",
   "theme",
+  "column_break_mc7g",
   "start_date",
   "end_date",
+  "section_break_avxn",
   "agenda",
   "is_private",
   "attach_files"
@@ -75,12 +77,20 @@
    "fieldname": "theme",
    "fieldtype": "Data",
    "label": "Theme"
+  },
+  {
+   "fieldname": "column_break_mc7g",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_avxn",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2024-10-07 10:33:04.959485",
+ "modified": "2024-10-17 11:55:00.447683",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Confer",

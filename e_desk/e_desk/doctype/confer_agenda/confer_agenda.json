@@ -1,7 +1,6 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "format:{program_agenda}-{parent}-{##}",
  "creation": "2024-08-07 15:03:44.508357",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -10,39 +9,49 @@
   "program_agenda",
   "start_date",
   "end_date",
-  "description"
+  "description",
+  "scan"
  ],
  "fields": [
   {
    "fieldname": "program_agenda",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Program Agenda",
    "options": "Program Agenda"
   },
   {
    "fieldname": "start_date",
    "fieldtype": "Datetime",
+   "in_list_view": 1,
    "label": "Start Date"
   },
   {
    "fieldname": "end_date",
    "fieldtype": "Datetime",
+   "in_list_view": 1,
    "label": "End Date"
   },
   {
    "fieldname": "description",
    "fieldtype": "Long Text",
    "label": "Description"
+  },
+  {
+   "default": "0",
+   "fieldname": "scan",
+   "fieldtype": "Check",
+   "in_standard_filter": 1,
+   "label": "Scan"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-19 21:33:21.552856",
+ "modified": "2024-10-17 12:02:55.561141",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Confer Agenda",
- "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [],
  "sort_field": "modified",
