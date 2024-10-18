@@ -168,6 +168,9 @@
 <script setup>
 import { ref , defineProps , defineEmits , computed } from 'vue';
 import { FeatherIcon, Button ,Dialog , FormControl , FileUploader, createResource } from "frappe-ui";
+import { useOutletStore } from '../store/eventStore'
+
+const event = useOutletStore(); 
 import { data } from 'autoprefixer';
 const  formdata=ref({
     first_name:'',
@@ -179,12 +182,18 @@ const  formdata=ref({
     role:'',
     chapter:'',
     image:'',
+    // confer:
 
 })
 const dialog2 = ref(false);
+
+
 const props = defineProps({
     event: Object,
+    
   });
+ 
+
   let post = createResource({
         url: 'e_desk.e_desk.api.frontend_api.Getdoc', 
         method: 'GET',
@@ -205,12 +214,15 @@ const props = defineProps({
    post.fetch()
 }
 const handleCreate=()=>{
+    formdata.value ['confer']=event.event
+    console.log(formdata,"ppppppppppppppppppppppp");
+    
     let sent = createResource({
-        url: 'e_desk.e_desk.api.frontend_api.submit', 
+        url: 'e_desk.e_desk.api.frontend_api.ParticipantCreate', 
         method: 'POST',
         makeParams() {
             return {
-                data:formdata.value         
+                data:formdata.value        
             }
         },
         // auto: true,
