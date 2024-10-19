@@ -27,10 +27,9 @@ class Participant(Document):
 				"first_name":self.first_name,
 				"last_name":self.last_name,
 				"mobile_no":self.mobile_number,
-				"new_password":self.mobile_number,
-				"send_welcome_email":0,
+				# "new_password":self.mobile_number,
+				"send_welcome_email":1,
 				"role_profile_name":"Participant",
-				# "roles":frappe.get_roles("Participant"),
 				"user_type":"System User",
 				"module_profile":"Bni profile",
 				"participant_id":self.name
@@ -53,23 +52,16 @@ class Participant(Document):
 				event_participant_doc.update({
 					"participant": self.name,
 					"event": confer_id,
-					"event_role":"Participant"
+					"event_role":"Participant",
+					"business_category":self.business_category,
+					"role":self.role,
+					"chapter":self.chapter
+
+
+
 				})
 				event_participant_doc.save(ignore_permissions=True)
         
-    #   code 59 hide during test   
-			# user_permission_doc = frappe.new_doc('User Permission')
-			
-			# user_permission_doc.update({
-            #     "user": self.e_mail,
-            #     "allow": "Event Participant",
-            #     "for_value": event_participant_doc.name,
-            #     "apply_to_all_doctypes": True,
-            #     # "applicable_for": ["Confer"]
-            # })
-			# user_permission_doc.save(ignore_permissions=True)
-
-	# newpermission conf		
 			confer_permission_doc = frappe.new_doc('User Permission')
 		
 			confer_permission_doc.update({
@@ -79,36 +71,13 @@ class Participant(Document):
 				"apply_to_all_doctypes": False, 
 			})
 			confer_permission_doc.save(ignore_permissions=True)
+			# frappe.msgprint(
+            #     msg=f"User created successfully!<br>Login Email: {doc.email}<br>Login Password: {self.mobile_number}",
+            #     title="User Login Details",
+            #     indicator='green'
+            # )
 
-#added qr here
-	# code 59 hide during test 	
 
-
-			frappe.msgprint(
-                msg=f"User created successfully!<br>Login Email: {doc.email}<br>Login Password: {self.mobile_number}",
-                title="User Login Details",
-                indicator='green'
-            )
-
-		#attachment inside the participant -> category files
-		# category_files=frappe.get_all('Category Table', filters={'parent': self.capacity}, fields=['attach'])
-		# self.update({
-		# 	"category_files":category_files,
-		# })
-
-		
-		# if self.is_paid:
-		# 	qr=RegistrationDesk.create_qr_participant(self)
-		# 	self.status = "Registered"
-		# 	self.save()
-		
-		# permission=frappe.new_doc("User Permission")
-		# permission.user=self.e_mail
-		# permission.allow='Participant'
-		# permission.for_value=self.name
-		# permission.save()
-		# frappe.db.commit()
-	#getting the category file table
 
 	@frappe.whitelist()
 	def categoryfile_fetching(doc, a=None):

@@ -30,15 +30,17 @@ class RegistrationDesk(Document):
         "attached_to_name": pr_doc.name,
         "attached_to_field":"qr"
         })
-        for i in frappe.get_all("File", {
-        "attached_to_doctype":  pr_doc.doctype,
-        "attached_to_name": pr_doc.name,
-        "attached_to_field":"qr"}):
-            frappe.delete_doc("File", i.name)
+        print(pr_doc.doctype,"pr_doc.doctype",pr_doc.name,"pr_doc.name")
+        # for i in frappe.get_all("File", {
+        # "attached_to_doctype":  pr_doc.doctype,
+        # "attached_to_name": pr_doc.name,
+        # "attached_to_field":"qr"}):
+        #     frappe.delete_doc("File", i.name)
 
         _file.save(ignore_permissions=True)
         frappe.db.set_value(pr_doc.doctype, pr_doc.name, 'qr', _file.file_url, update_modified=False)
         pr_doc.reload()
+        print("line 43 .........")
         return _file.file_url
     
     # Registration completed -> converting the participant status as registered
