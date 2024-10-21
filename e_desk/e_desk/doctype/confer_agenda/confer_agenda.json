@@ -15,10 +15,9 @@
  "fields": [
   {
    "fieldname": "program_agenda",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Program Agenda",
-   "options": "Program Agenda"
+   "label": "Program Agenda"
   },
   {
    "fieldname": "start_date",
@@ -48,7 +47,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-10-17 12:02:55.561141",
+ "modified": "2024-10-21 11:40:45.159731",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Confer Agenda",
