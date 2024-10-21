@@ -5,7 +5,8 @@ from e_desk.e_desk.doctype.registration_desk.registration_desk import Registrati
 
 @frappe.whitelist(allow_guest=True)
 def default_confer():
-    data=frappe.get_list('Confer', fields=['name', 'start_date', 'end_date'],filters=[{"is_default":True}])
+    data=frappe.get_value('Confer', {"is_default":True},['name', 'start_date', 'end_date' , "venuelocation"],as_dict=1)
+    print(data,"ddddddddddddddddddddddddddddddddd")
     return data
 
 @frappe.whitelist(allow_guest=True)
