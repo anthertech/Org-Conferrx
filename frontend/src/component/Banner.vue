@@ -2,14 +2,15 @@
     <div class="flex justify-between mx-64 mt-36 mb-28">
         <div class="flex flex-col gap-3 w-1/2 ">
             <p class="font-bold" style="font-size:45px;">
-                BNI India National Conference 2024
+                {{event.name}}
             </p>
             <p class="flex gap-2">
-                <FeatherIcon class="w-5 h-5" name="calendar"/> Jun 21 – 23, 2024  
-                <FeatherIcon class="w-5 h-5" name="clock"/> 08:00 AM
+                <FeatherIcon class="w-5 h-5" name="calendar"/> 
+                {{ formattedDateRange }}
+                <!-- <FeatherIcon class="w-5 h-5" name="clock"/> 08:00 AM -->
             </p>
             <p class="flex gap-2">
-                <FeatherIcon class="w-5 h-5" name="map-pin"/> Mumbai, Maharashtra - India
+                <FeatherIcon class="w-5 h-5" name="map-pin"/> {{event.venuelocation}}
             </p>
             <p class="border-2 p-2 w-fit" @click="handleRegisterDialog">
                 Event has ended
@@ -166,7 +167,7 @@
 </template>
 
 <script setup>
-
+    import { formatDateRange } from '../utils/dateFormatter';  
     import { ref , defineProps , computed } from 'vue';
     import { FeatherIcon, Button ,Dialog , FormControl , FileUploader, createResource } from "frappe-ui";
     const  formdata=ref({
@@ -188,7 +189,11 @@
     
     });
  
+    const formattedDateRange = computed(() => {
+    return formatDateRange(props.event.start_date, props.event.end_date);
+});
 
+    
     let post = createResource({
         url: 'e_desk.e_desk.api.frontend_api.Getdoc', 
         method: 'GET',

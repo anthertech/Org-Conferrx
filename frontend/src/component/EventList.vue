@@ -24,16 +24,13 @@
   import { defineProps  } from 'vue';
   import {Button} from 'frappe-ui';
   import { useRouter } from 'vue-router';
-  import { useOutletStore } from '../store/eventStore'
 
-  const eventStore = useOutletStore(); 
   // Define props for the component
   const router = useRouter();
   const props = defineProps({
     event: Object,
   });
 const handleevent=()=>{
-    eventStore.setOutlet(props.event.name);
     console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
     router.push({ name: 'Event' });
 }
