@@ -13,11 +13,6 @@ const routes = [
     path: '/account/login',
     component: () => import('@/pages/Login.vue'),
   },
-  {
-    name: 'Event',
-    path: '/event',
-    component: () => import('@/pages/Event.vue'),
-  },
 ]
 
 let router = createRouter({
