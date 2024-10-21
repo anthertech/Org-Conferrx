@@ -64,16 +64,23 @@
 // });
 frappe.ui.form.on('Conf Programme Attendee', {
     setup: function(frm) {
-        // Optionally disable the save button (uncomment if needed)
-        // frm.disable_save();
+        frm.set_query('event', function(doc, cdt, cdn) {
+            return {
+                filters: [
+                    // Filter to show conferences where either start_date or end_date is today or in the future
+                    ['end_date', '>=', frappe.datetime.get_today()]
+                ]
+            };
+        });
+    
     },
-
     submit: function(frm) {
         var name = JSON.parse(frm.doc.scan_qr).name;
         frm.set_value("scan_qr", "");
 
 		console.log("anything we got")
 		console.log(frm.doc.choose_programme,name,frm.doc.event);
+    
 		
 
         frappe.call({
@@ -93,6 +100,7 @@ frappe.ui.form.on('Conf Programme Attendee', {
                     frappe.model.set_value(item.doctype, item.name, "participant", r.message.event_participant_id);
                     frappe.model.set_value(item.doctype, item.name, "participant_name", r.message.full_name);
                     frappe.model.set_value(item.doctype, item.name, "programme", frm.doc.choose_programme);
+                    frappe.model.set_value(item.doctype, item.name, "programme_id", r.message.agenda_ids);
                     frappe.model.set_value(item.doctype, item.name, "date_time", frappe.datetime.now_datetime());
 
                     frm.refresh_field('scanned_list');

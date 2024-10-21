@@ -2,11 +2,11 @@
 # For license information, please see license.txt
 
 import frappe
-
+# from frappe.utils import today, getdate
+from datetime import datetime
 
 def execute(filters=None):
     columns = [
-    
         {
             'fieldname': 'programme',
             'fieldtype': 'Link',
@@ -41,45 +41,83 @@ def execute(filters=None):
     if filters:
         confer = filters.get('confer')
         programme = filters.get('programme')
+        date_value = filters.get('date')
         
-        # Fetch data based on confer and programme filters
-        if confer and programme:
-            # Adjust the SQL query to match your structure
-            query = """
-                SELECT
-           
-                    sl.programme AS programme,
-                    sl.date_time AS date_time,
-                    sl.participant_name,
-                    sl.participant
-                FROM
-                    `tabScanned List` AS sl
- 
-                WHERE
+        # Convert date string to date object
+        date_value_obj = datetime.strptime(date_value, '%Y-%m-%d')
+        formatted_date = date_value_obj.strftime('%Y-%m-%d')  # Ensure date is in YYYY-MM-DD format
 
-                 sl.programme = %(agenda_name)s
+        print(confer, programme, f"{formatted_date} 00:00:00", "this is programme...........")
+
+        # Fetch agenda_id from Confer Agenda
+        agenda_id = frappe.db.get_value(
+            "Confer Agenda",
+            filters={
+                "parent": confer,  
+                "program_agenda": programme,  # Using the programme name dynamically
+                "start_date": ["between", [f"{formatted_date} 00:00:00", f"{formatted_date} 23:59:59"]]
+            },
+            pluck="name"  
+        )
+
+        print(agenda_id, "agenda_id retrieved...")
+
+        # Only proceed if an agenda_id was found
+        if agenda_id:
+            query = """
+            SELECT
+                sl.programme AS programme,
+                sl.date_time AS date_time,
+                sl.participant_name,
+                sl.participant
+            FROM
+                `tabScanned List` AS sl
+            WHERE
+                sl.programme_id = %(agenda_id)s
+                AND DATE(sl.date_time) = %(date_val)s  
             """
+
             # Fetch data
             results = frappe.db.sql(query, {
-                'agenda_name': programme
+                'agenda_id': agenda_id,  # Pass the correct agenda_id to the query
+                'date_val': formatted_date  # Use the formatted date for comparison
             }, as_dict=True)
-            data.extend(results)
-        print(data)
 
-    return columns, data
+            data.extend(results)
+
+            print(data)
+
+        return columns, data
+
+    return columns, data  # Return empty data if no filters are provided
+
+
 
 
 
 
 @frappe.whitelist()
-def confer_agenda_list(confer):
-    print(confer,"this came here....................")
+def confer_agenda_list(confer, date_value):
+    print(confer, "this came here....................")
+    print(date_value, "dateeee...")
+
+    # Convert string date to a datetime object and reformat
+    date_value_obj = datetime.strptime(date_value, '%Y-%m-%d')
+    formatted_date = date_value_obj.strftime('%Y-%m-%d')
+    print(formatted_date, "this is the formatted date")
+
+    # SQL query with correct parameter placeholders
     programmes = frappe.db.sql("""
-        SELECT agenda.name
+        SELECT agenda.program_agenda
         FROM `tabConfer Agenda` AS agenda
         WHERE agenda.parent = %s
-    """, (confer,), as_list=1)  # The closing parentheses were missing
-    print(programmes,"query resultssss.....................")
+        AND agenda.custom_scannable = 1
+        AND DATE(agenda.start_date) = %s
+    """, (confer, formatted_date), as_list=1)
 
-    return [prog[0] for prog in programmes]  # Return only the first element of each row (programme name)
+    print(programmes, "query results.....................")
+
+    # Return only the first element of each row (programme name)
+    return [prog[0] for prog in programmes]
+
 

@@ -1,20 +1,25 @@
 frappe.query_reports["Attendee Report"] = {
     "filters": [
-        {
-            "fieldname": "programme",
-            "label": __("Programme"),
-            "fieldtype": "Select",
-            "depends_on": "eval:doc.confer"
-        },
+    
         {
             "fieldname": "confer",
             "label": __("Confer"),
             "fieldtype": "Link",
             "options": "Confer",
             "reqd": 1,
+       
+        },
+   
+        {
+            "fieldname": "date",
+            "label": __("Date"),
+            "fieldtype": "Date",
+            "default": frappe.datetime.get_today(),  // Optional: Sets the default to today's date
+            "depends_on": "eval:doc.confer",  // You can apply conditions similar to the programme field
             "on_change": function () {
                 // Trigger when confer is selected
                 var confer = frappe.query_report.get_filter_value('confer');
+                var date_value=frappe.query_report.get_filter_value('date');
                 if (confer) {
                     console.log(confer, "Selected confer...");
 
@@ -25,7 +30,8 @@ frappe.query_reports["Attendee Report"] = {
                     frappe.call({
                         method: "e_desk.e_desk.report.attendee_report.attendee_report.confer_agenda_list",
                         args: {
-                            confer: confer
+                            confer: confer,
+                            date_value:date_value
                         },
                         callback: function (r) {
                             var options = [];
@@ -54,6 +60,12 @@ frappe.query_reports["Attendee Report"] = {
                     });
                 }
             }
-        }
+        },
+        {
+            "fieldname": "programme",
+            "label": __("Programme"),
+            "fieldtype": "Select",
+            "depends_on": "eval:doc.confer"
+        },
     ]
 };

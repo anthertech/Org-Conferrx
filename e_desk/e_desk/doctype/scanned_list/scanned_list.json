@@ -6,10 +6,11 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "participant_name",
+  "programme",
   "date_time",
   "participant",
-  "programme",
-  "participant_name"
+  "programme_id"
  ],
  "fields": [
   {
@@ -21,26 +22,32 @@
   {
    "fieldname": "participant",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Participant",
    "options": "Event Participant"
   },
   {
-   "fieldname": "programme",
+   "fieldname": "participant_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Participant name"
+  },
+  {
+   "fieldname": "programme_id",
    "fieldtype": "Link",
-   "label": "Programme",
+   "label": "Programme_id",
    "options": "Confer Agenda"
   },
   {
-   "fieldname": "participant_name",
+   "fieldname": "programme",
    "fieldtype": "Data",
-   "label": "Participant name"
+   "in_list_view": 1,
+   "label": "Programme"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-09-03 12:14:09.196050",
+ "modified": "2024-10-21 12:13:23.976620",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Scanned List",
