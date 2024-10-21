@@ -124,13 +124,6 @@
    "options": "Salutation"
   },
   {
-   "fieldname": "business_category",
-   "fieldtype": "Link",
-   "label": "Business Category",
-   "options": "Business Category",
-   "reqd": 1
-  },
-  {
    "fieldname": "chapter",
    "fieldtype": "Link",
    "label": "Chapter",
@@ -168,12 +161,18 @@
    "fieldname": "submit",
    "fieldtype": "Button",
    "label": "Submit"
+  },
+  {
+   "fieldname": "business_category",
+   "fieldtype": "Link",
+   "label": "Business Category",
+   "options": "Business Category"
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-19 15:34:39.441258",
+ "modified": "2024-10-21 13:59:34.079676",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",
