@@ -3,7 +3,6 @@ import './index.css'
 import { createApp } from 'vue'
 import router from './router'
 import App from './App.vue'
-import { createPinia } from 'pinia'
 import ToastPlugin from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 import {
@@ -18,7 +17,6 @@ import {
 let app = createApp(App)
 
 const pinia = createPinia() 
-app.use(pinia)
 setConfig('resourceFetcher', frappeRequest)
 
 app.use(router)
