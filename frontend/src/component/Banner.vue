@@ -228,7 +228,7 @@ const handleCreate=()=>{
         // auto: true,
         onSuccess(data) {
             console.log(data, "Response from server");
-            dialog2.value = true;
+            dialog2.value = false;
 
         },
     });
