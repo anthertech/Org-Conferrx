@@ -881,7 +881,7 @@
    "property": "default",
    "property_type": "Text",
    "row_name": null,
-   "value": "GA15-.#####"
+   "value": "COC-.YYYY.-.####"
   },
   {
    "_assign": null,
@@ -904,7 +904,7 @@
    "property": "options",
    "property_type": "Text",
    "row_name": null,
-   "value": "GA15-.#####"
+   "value": "COC-.YYYY.-.####"
   }
  ],
  "sync_on_migrate": 1
