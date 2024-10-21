@@ -20,7 +20,8 @@
   "business_category",
   "chapter",
   "role",
-  "capacity"
+  "capacity",
+  "kit_provided"
  ],
  "fields": [
   {
@@ -108,11 +109,16 @@
    "fieldtype": "Link",
    "label": "Role",
    "options": "Roles"
+  },
+  {
+   "fieldname": "kit_provided",
+   "fieldtype": "Data",
+   "label": "kit provided"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-07 19:50:46.594334",
+ "modified": "2024-10-21 13:27:01.818862",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Event Participant",

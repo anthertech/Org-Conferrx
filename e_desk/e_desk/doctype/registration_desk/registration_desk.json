@@ -13,7 +13,8 @@
   "naming_series",
   "confer",
   "abr",
-  "participant",
+  "participant_id",
+  "participant_name",
   "kit_provided_",
   "section_break_sec1",
   "part_profile",
@@ -27,13 +28,6 @@
   "amended_from"
  ],
  "fields": [
-  {
-   "fieldname": "participant",
-   "fieldtype": "Table",
-   "label": "Participant ",
-   "options": "Participant Table",
-   "reqd": 1
-  },
   {
    "fieldname": "kit_provided_",
    "fieldtype": "Select",
@@ -65,8 +59,7 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Registration Series",
-   "options": ".{abr}.-.YY.-.####",
-   "read_only": 1
+   "options": ".{abr}.-.YY.-.####"
   },
   {
    "fetch_from": "participant.profile_photo",
@@ -106,6 +99,7 @@
   {
    "fieldname": "registration_process_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Registration Process "
   },
   {
@@ -127,12 +121,25 @@
    "label": "Abr",
    "read_only": 1,
    "reqd": 1
+  },
+  {
+   "fetch_from": "participant_id.full_name",
+   "fieldname": "participant_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Participant Name"
+  },
+  {
+   "fieldname": "participant_id",
+   "fieldtype": "Link",
+   "label": "participant id",
+   "options": "Event Participant"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-06 20:19:39.553792",
+ "modified": "2024-10-21 13:31:16.151841",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Registration Desk",

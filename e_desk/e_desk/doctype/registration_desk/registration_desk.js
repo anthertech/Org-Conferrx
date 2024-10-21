@@ -14,102 +14,98 @@ frappe.ui.form.on('Registration Desk', {
         });
 
 
-        // Set query for the participant link field inside the Participant child table
-        frm.set_query('participant_id', 'participant', function(doc, cdt, cdn) {
-			if (frm.doc.confer){
-            return {
-
-					query: 'e_desk.e_desk.doctype.registration_desk.registration_desk.event_participant_filter',
-					filters: {
-						conference: frm.doc.confer
-					}	
-				};
-			}
-			else{
+		frm.set_query('participant_id', function(doc) {
+            if (frm.doc.confer) {
+                return {
+                    query: 'e_desk.e_desk.doctype.registration_desk.registration_desk.event_participant_filter',
+                    filters: {
+                        conference: frm.doc.confer // Pass the selected confer (conference)
+                    }
+                };
+            }  else {
 				frappe.msgprint({
-                    title: __('Error'),
-                    indicator: 'red',
-                    message: __('Select the confer for fetching participant')
-                });
-				
-			}
-        });
-    },
-
-
-
-
-
-
-
-
-
-
-	refresh:function(frm){
-		
-		let imgList = [];
-		(frm.doc.participant || []).forEach(row => {
-			console.log(row,"this is row")
-			imgList.push({'img': row.profile_img})
-		});
-
-		let imgHTML = ''
-
-		imgList.forEach(img => {
-			if (img.img) {
-				imgHTML += `
-				<div>
-					<img src='${img.img}' alt='IMG' height="100" width="100">
-					<br>
-					<br>
-				</div>
-				`
+					title: __('Error'),
+					indicator: 'red',
+					message: __('Select the confer for fetching participants')
+				});
 			}
 		});
-
-		frm.get_field("profile_preview").$wrapper.html(imgHTML);
-
-
-		let qrList = [];
-		(frm.doc.participant || []).forEach(row => {
-			qrList.push({'img': row.qr_img})
-		});
-
-		let qrHTML = ''
-
-		qrList.forEach(img => {
-			if (img.img) {
-				qrHTML += `
-				<div>
-					<img src='${img.img}' alt='IMG' height="100" width="100">
-					<br>
-					<br>
-				</div>
-				`
-			}
-		});
-
-		frm.get_field("qr_preview").$wrapper.html(qrHTML);
+	}
 		
 
-	},
+});
+
+
+
+
+
+
+
+// 	refresh:function(frm){
+		
+// 		let imgList = [];
+// 		(frm.doc.participant || []).forEach(row => {
+// 			console.log(row,"this is row")
+// 			imgList.push({'img': row.profile_img})
+// 		});
+
+// 		let imgHTML = ''
+
+// 		imgList.forEach(img => {
+// 			if (img.img) {
+// 				imgHTML += `
+// 				<div>
+// 					<img src='${img.img}' alt='IMG' height="100" width="100">
+// 					<br>
+// 					<br>
+// 				</div>
+// 				`
+// 			}
+// 		});
+
+// 		frm.get_field("profile_preview").$wrapper.html(imgHTML);
+
+
+// 		let qrList = [];
+// 		(frm.doc.participant || []).forEach(row => {
+// 			qrList.push({'img': row.qr_img})
+// 		});
+
+// 		let qrHTML = ''
+
+// 		qrList.forEach(img => {
+// 			if (img.img) {
+// 				qrHTML += `
+// 				<div>
+// 					<img src='${img.img}' alt='IMG' height="100" width="100">
+// 					<br>
+// 					<br>
+// 				</div>
+// 				`
+// 			}
+// 		});
+
+// 		frm.get_field("qr_preview").$wrapper.html(qrHTML);
+		
+
+// 	},
 
 
 
 
 	
-	participant_profile:function(frm){
-		if(frm.doc.part_profile){
-			let $profileimg = `
-				<img
-				class="sign"
-				src=${frm.doc.part_profile} 
-				/>
-				`
-				frm.get_field("profile_preview").$wrapper.html($profileimg);
-		}
-	},
-});
+// 	participant_profile:function(frm){
+// 		if(frm.doc.part_profile){
+// 			let $profileimg = `
+// 				<img
+// 				class="sign"
+// 				src=${frm.doc.part_profile} 
+// 				/>
+// 				`
+// 				frm.get_field("profile_preview").$wrapper.html($profileimg);
+// 		}
+// 	},
+// });
 
 
 
