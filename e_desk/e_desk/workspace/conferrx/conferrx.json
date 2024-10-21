@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"moJWlIER1F\",\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 16px;\\\">Conferrx</span>\",\"col\":12}},{\"id\":\"ChdI8wG-D9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Participant\",\"col\":3}},{\"id\":\"_A-14y-UjS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User\",\"col\":3}},{\"id\":\"0hZz0S2ouU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Registration Desk\",\"col\":3}},{\"id\":\"5NQvwE1sbS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Program Agenda\",\"col\":3}},{\"id\":\"YJl7IdIDNZ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conference\",\"col\":3}},{\"id\":\"A4ueePk2s6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conferrx Settings\",\"col\":3}},{\"id\":\"4Ld8m0fM_Y\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Hotel\",\"col\":3}},{\"id\":\"miXfIPtv_p\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Additional informations\",\"col\":3}},{\"id\":\"1CBPaH91hv\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"voCRpejopm\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"Rd7ZK9AuOx\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}},{\"id\":\"GeJbC9F0Uz\",\"type\":\"card\",\"data\":{\"card_name\":\"Dashboard\",\"col\":4}}]",
+ "content": "[{\"id\":\"moJWlIER1F\",\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 16px;\\\">Conferrx</span>\",\"col\":12}},{\"id\":\"ChdI8wG-D9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Participant\",\"col\":3}},{\"id\":\"_A-14y-UjS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User\",\"col\":3}},{\"id\":\"0hZz0S2ouU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Registration Desk\",\"col\":3}},{\"id\":\"5NQvwE1sbS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Program Agenda\",\"col\":3}},{\"id\":\"YJl7IdIDNZ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conference\",\"col\":3}},{\"id\":\"A4ueePk2s6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conferrx Settings\",\"col\":3}},{\"id\":\"4Ld8m0fM_Y\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Hotel\",\"col\":3}},{\"id\":\"miXfIPtv_p\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Event Participant details\",\"col\":3}},{\"id\":\"1CBPaH91hv\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"voCRpejopm\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}},{\"id\":\"Rd7ZK9AuOx\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}},{\"id\":\"GeJbC9F0Uz\",\"type\":\"card\",\"data\":{\"card_name\":\"Dashboard\",\"col\":4}}]",
  "creation": "2023-08-04 18:48:47.583950",
  "custom_blocks": [],
  "docstatus": 0,
@@ -70,7 +70,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-10-07 13:14:52.662716",
+ "modified": "2024-10-21 10:24:37.291804",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conferrx",
@@ -85,7 +85,7 @@
   {
    "color": "Grey",
    "doc_view": "List",
-   "label": "Additional informations",
+   "label": "Event Participant details",
    "link_to": "Event Participant",
    "stats_filter": "[]",
    "type": "DocType"

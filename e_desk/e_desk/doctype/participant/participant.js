@@ -3,6 +3,47 @@
 
 frappe.ui.form.on('Participant', {
 
+
+	
+		submit: function(frm) {
+			// Parse the scanned QR data to get the Participant name (or ID)
+			try {
+				var scan_data = JSON.parse(frm.doc.scan_qr).name;  // Assuming QR contains JSON data
+				console.log(scan_data, "data.");
+	
+				if (scan_data) {
+					// Call the backend to fetch the participant details
+					frappe.call({
+						method: "e_desk.e_desk.doctype.participant.participant.connection_doc",
+						args: {
+							doc_name: scan_data
+						},
+						callback: function(r) {
+							if (r.message) {
+								console.log(r.message, "this is message");
+								// Populate the HTML field with the returned participant info
+								frm.set_value('address_html', r.message);
+								frm.refresh_field('address_html');  // Ensure the HTML field is updated
+								console.log("Participant details updated in the HTML field.");
+							} else {
+								frappe.msgprint("No participant details found for the scanned QR.");
+							}
+						}
+					});
+				} else {
+					frappe.msgprint("Invalid QR code scanned.");
+				}
+			} catch (e) {
+				console.error("Error parsing QR data: ", e);
+				frappe.msgprint("Failed to process the scanned QR code.");
+			}
+		
+
+		},
+
+
+
+
 	//Create button for converting the participant to volunteer
 	refresh: function(frm) {
 		var hasPermission = frappe.user.has_role('Volunteer'); 

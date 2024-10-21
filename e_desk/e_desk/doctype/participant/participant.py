@@ -343,6 +343,40 @@ def register_event_participant(email, confer_id):
 
 
 
+@frappe.whitelist(allow_guest=True)
+def connection_doc(doc_name):
+	print(doc_name,"this is name...............")
+
+	user_data = frappe.get_doc("Participant", doc_name)
+	print(user_data,"this is data")
+
+	if user_data:
+		# Prepare the data to be displayed in HTML format
+		participant_info = f"""
+			<p><strong>Full Name:</strong> {user_data.full_name}</p>
+			<p><strong>Email:</strong> {user_data.e_mail}</p>
+			<p><strong>Mobile:</strong> {user_data.mobile_number}</p>
+			<p><strong>Business Category:</strong> {user_data.business_category}</p>
+			<p><strong>Chapter:</strong> {user_data.chapter}</p>
+		"""
+		return participant_info
+	else:
+		frappe.throw("No participant found with the given QR code.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # @frappe.whitelist(allow_guest=True)
 # def testapi():

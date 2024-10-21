@@ -26,7 +26,11 @@
   "date_of_birth",
   "profile_photo",
   "qr_preview",
-  "qr"
+  "qr",
+  "connections_tab",
+  "scan_qr",
+  "submit",
+  "address_html"
  ],
  "fields": [
   {
@@ -143,12 +147,33 @@
    "fieldtype": "Data",
    "hidden": 1,
    "label": "Qr"
+  },
+  {
+   "fieldname": "connections_tab",
+   "fieldtype": "Tab Break",
+   "label": "Connections"
+  },
+  {
+   "fieldname": "address_html",
+   "fieldtype": "HTML",
+   "label": "Address html"
+  },
+  {
+   "fieldname": "scan_qr",
+   "fieldtype": "Data",
+   "label": "Scan QR",
+   "options": "Barcode"
+  },
+  {
+   "fieldname": "submit",
+   "fieldtype": "Button",
+   "label": "Submit"
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-07 21:02:36.528324",
+ "modified": "2024-10-19 15:34:39.441258",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",
