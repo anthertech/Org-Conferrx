@@ -16,7 +16,6 @@ import {
 
 let app = createApp(App)
 
-const pinia = createPinia() 
 setConfig('resourceFetcher', frappeRequest)
 
 app.use(router)
