@@ -166,35 +166,30 @@
 </template>
 
 <script setup>
-import { ref , defineProps , defineEmits , computed } from 'vue';
-import { FeatherIcon, Button ,Dialog , FormControl , FileUploader, createResource } from "frappe-ui";
-import { useOutletStore } from '../store/eventStore'
 
-const event = useOutletStore(); 
-import { data } from 'autoprefixer';
-const  formdata=ref({
-    first_name:'',
-    last_name:'',
-    mobile:'',
-    email:'',
-    prifix:'',
-    bussines:'',
-    role:'',
-    chapter:'',
-    image:'',
-    // confer:
-
-})
-const dialog2 = ref(false);
+    import { ref , defineProps , computed } from 'vue';
+    import { FeatherIcon, Button ,Dialog , FormControl , FileUploader, createResource } from "frappe-ui";
+    const  formdata=ref({
+        first_name:'',
+        last_name:'',
+        mobile:'',
+        email:'',
+        prifix:'',
+        bussines:'',
+        role:'',
+        chapter:'',
+        image:'',
+    })
+    const dialog2 = ref(false);
 
 
-const props = defineProps({
-    event: Object,
+    const props = defineProps({
+        event: Object,
     
-  });
+    });
  
 
-  let post = createResource({
+    let post = createResource({
         url: 'e_desk.e_desk.api.frontend_api.Getdoc', 
         method: 'GET',
         makeParams() {
@@ -210,44 +205,44 @@ const props = defineProps({
         },
     });
   
-  const handleRegisterDialog = () => {
-   post.fetch()
-}
-const handleCreate=()=>{
-    formdata.value ['confer']=event.event
-    console.log(formdata,"ppppppppppppppppppppppp");
+    const handleRegisterDialog = () => {
+        post.fetch()
+    }
+    const handleCreate=()=>{
+        formdata.value ['confer']=props.event.name
+        console.log(formdata,"ppppppppppppppppppppppp");
     
-    let sent = createResource({
-        url: 'e_desk.e_desk.api.frontend_api.ParticipantCreate', 
-        method: 'POST',
-        makeParams() {
-            return {
-                data:formdata.value        
-            }
-        },
-        // auto: true,
-        onSuccess(data) {
-            console.log(data, "Response from server");
-            dialog2.value = false;
+        let sent = createResource({
+            url: 'e_desk.e_desk.api.frontend_api.ParticipantCreate', 
+            method: 'POST',
+            makeParams() {
+                return {
+                    data:formdata.value        
+                }
+            },
+            // auto: true,
+            onSuccess(data) {
+                console.log(data, "Response from server");
+                dialog2.value = false;
 
-        },
+            },
+        });
+        sent.fetch()
+        }
+    let dummuy={
+        'Business':{},
+        'Category':{},
+        'Roles':{},
+        'Salutation':{},
+        'Chapter':{}
+    }
+    const feilds = computed(() => {
+        if (post.data && typeof post.data === 'object'){
+            console.log("Structured list with label and value:", post.data);
+            return  post.data
+        }
+        else{
+            return dummuy
+        }
     });
-    sent.fetch()
-}
-let dummuy={
-    'Business':{},
-    'Category':{},
-    'Roles':{},
-    'Salutation':{},
-    'Chapter':{}
-}
-const feilds = computed(() => {
-    if (post.data && typeof post.data === 'object'){
-        console.log("Structured list with label and value:", post.data);
-        return  post.data
-    }
-    else{
-        return dummuy
-    }
-  });
 </script>

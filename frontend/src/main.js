@@ -4,6 +4,8 @@ import { createApp } from 'vue'
 import router from './router'
 import App from './App.vue'
 import { createPinia } from 'pinia'
+import ToastPlugin from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-bootstrap.css';
 import {
   Button,
   Card,
@@ -25,5 +27,5 @@ app.use(resourcesPlugin)
 app.component('Button', Button)
 app.component('Card', Card)
 app.component('Input', Input)
-
+app.use(ToastPlugin); 
 app.mount('#app')
