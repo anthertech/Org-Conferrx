@@ -87,7 +87,7 @@ class RegistrationDesk(Document):
     #         first_item_name=first_item.participant_name
     #         self.name = parse_naming_series(f"{first_item_name}-.#")
 
-    
+
 
 
     def on_submit(self):
@@ -146,7 +146,7 @@ class RegistrationDesk(Document):
 
 
 
-@frappe.whitelist()
+@frappe.whitelist() 
 def event_participant_filter(doctype, txt, searchfield, start, page_len, filters):
     conference = filters.get('conference')
     print(conference, "confere.....")
@@ -175,10 +175,19 @@ def event_participant_filter(doctype, txt, searchfield, start, page_len, filters
 
 @frappe.whitelist()
 def registration_details(doc,confer):
+
     event_participant_id = frappe.db.get_value("Event Participant", {"participant": doc, "event": confer}, "name")
     if event_participant_id:
+   # Check if registration already exists in Registration Desk
+        existed_registration = frappe.db.get_value("Registration Desk", {"participant_id": event_participant_id, "confer": confer}, "name")
+        if existed_registration:
+            frappe.throw(f"User already completed the registration. Registration ID: {existed_registration}")
+
         participant_details=frappe.get_doc("Participant",doc)
-        return participant_details
+        participant_details_dict = participant_details.as_dict()  # Convert to dictionary
+        participant_details_dict["event_participant_id"] = event_participant_id 
+        print( participant_details_dict,"participant_details..............")
+        return participant_details_dict
     else:
         frappe.throw("Please Register for the Event")
 

@@ -22,7 +22,7 @@ frappe.ui.form.on('Registration Desk', {
 							console.log(r.message,"this is messageee..")
 
 							frm.set_value('custom_scan_qr',"");
-							frm.set_value('participant_id',r.message.name);
+							frm.set_value('participant_id',r.message.event_participant_id);
 							frm.set_value('participant_name', r.message.full_name);
 							frm.set_value('part_profile', r.message.profile_photo);
 							frm.set_value('qr_profile', r.message.qr);
@@ -60,6 +60,31 @@ frappe.ui.form.on('Registration Desk', {
 			frappe.msgprint(__('Failed to parse QR code. Please check the QR data format.'));
 			console.error(error);
 		}
+	},
+
+
+	refresh:function(frm){
+
+		if (frm.doc.part_profile) {
+			let imgHTML = `
+				<div>
+					<img src="${frm.doc.part_profile}" alt="Profile Image" height="100" width="100">
+				</div>`;
+			frm.get_field("profile_preview").$wrapper.html(imgHTML);
+		}
+
+		// Display the QR code in the qr_preview field	
+		if (frm.doc.qr_profile) {
+			console.log("qrrr,,,reached here...............")
+			console.log(frm.doc.qr_profile,"this is form qr")
+			let qrHTML = `
+				<div>
+					<img src="${frm.doc.qr_profile}" alt="QR Code" height="100" width="100">
+				</div>`;
+			frm.get_field("qr_preview").$wrapper.html(qrHTML);
+		}
+
+		
 	},
 
 	onload: function(frm) {
