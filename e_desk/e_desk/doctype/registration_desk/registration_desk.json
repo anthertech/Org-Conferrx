@@ -65,10 +65,10 @@
    "options": ".{abr}.-.YY.-.####"
   },
   {
-   "fetch_from": "participant.profile_photo",
    "fieldname": "part_profile",
    "fieldtype": "Attach Image",
-   "label": "Profile"
+   "label": "Profile",
+   "read_only": 1
   },
   {
    "fieldname": "mode_of_payment",
@@ -84,7 +84,8 @@
   {
    "fieldname": "qr_profile",
    "fieldtype": "Attach Image",
-   "label": "QR Profile"
+   "label": "QR Profile",
+   "read_only": 1
   },
   {
    "fieldname": "qr_preview",
@@ -125,7 +126,8 @@
    "fieldname": "participant_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Participant Name"
+   "label": "Participant Name",
+   "read_only": 1
   },
   {
    "fieldname": "participant_id",
@@ -137,17 +139,20 @@
   {
    "fieldname": "business_category",
    "fieldtype": "Data",
-   "label": "Business Category"
+   "label": "Business Category",
+   "read_only": 1
   },
   {
    "fieldname": "chapter",
    "fieldtype": "Data",
-   "label": "Chapter"
+   "label": "Chapter",
+   "read_only": 1
   },
   {
    "fieldname": "role",
    "fieldtype": "Data",
-   "label": "Role"
+   "label": "Role",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
