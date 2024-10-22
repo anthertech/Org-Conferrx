@@ -62,13 +62,15 @@
    "fieldname": "naming_series",
    "fieldtype": "Select",
    "label": "Registration Series",
-   "options": ".{abr}.-.YY.-.####"
+   "options": ".{abr}.-.YY.-.####",
+   "hidden": 1
   },
   {
    "fieldname": "part_profile",
    "fieldtype": "Attach Image",
    "label": "Profile",
-   "read_only": 1
+   "read_only": 1,
+   "hidden": 1
   },
   {
    "fieldname": "mode_of_payment",
@@ -85,7 +87,8 @@
    "fieldname": "qr_profile",
    "fieldtype": "Attach Image",
    "label": "QR Profile",
-   "read_only": 1
+   "read_only": 1,
+   "hidden": 1
   },
   {
    "fieldname": "qr_preview",
