@@ -21,7 +21,7 @@ frappe.ui.form.on('Registration Desk', {
 						if (r.message) {
 							console.log(r.message,"this is messageee..")
 
-
+							frm.set_value('custom_scan_qr',"");
 							frm.set_value('participant_id',r.message.name);
 							frm.set_value('participant_name', r.message.full_name);
 							frm.set_value('part_profile', r.message.profile_photo);
