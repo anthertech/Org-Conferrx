@@ -25,7 +25,10 @@
   "registration_fee_collected_section",
   "mode_of_payment",
   "qr",
-  "amended_from"
+  "amended_from",
+  "business_category",
+  "chapter",
+  "role"
  ],
  "fields": [
   {
@@ -65,9 +68,7 @@
    "fetch_from": "participant.profile_photo",
    "fieldname": "part_profile",
    "fieldtype": "Attach Image",
-   "hidden": 1,
-   "label": "Profile",
-   "options": "Participant"
+   "label": "Profile"
   },
   {
    "fieldname": "mode_of_payment",
@@ -83,9 +84,7 @@
   {
    "fieldname": "qr_profile",
    "fieldtype": "Attach Image",
-   "hidden": 1,
-   "label": "QR Profile",
-   "options": "Participant Table"
+   "label": "QR Profile"
   },
   {
    "fieldname": "qr_preview",
@@ -118,12 +117,11 @@
    "fetch_from": "confer.abr",
    "fieldname": "abr",
    "fieldtype": "Data",
+   "hidden": 1,
    "label": "Abr",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
-   "fetch_from": "participant_id.full_name",
    "fieldname": "participant_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -134,12 +132,27 @@
    "fieldtype": "Link",
    "label": "participant id",
    "options": "Event Participant"
+  },
+  {
+   "fieldname": "business_category",
+   "fieldtype": "Data",
+   "label": "Business Category"
+  },
+  {
+   "fieldname": "chapter",
+   "fieldtype": "Data",
+   "label": "Chapter"
+  },
+  {
+   "fieldname": "role",
+   "fieldtype": "Data",
+   "label": "Role"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2024-10-21 13:31:16.151841",
+ "modified": "2024-10-22 12:33:12.254727",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Registration Desk",

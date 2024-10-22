@@ -87,6 +87,8 @@ class RegistrationDesk(Document):
     #         first_item_name=first_item.participant_name
     #         self.name = parse_naming_series(f"{first_item_name}-.#")
 
+    
+
 
     def on_submit(self):
         # Retrieve the participant ID from the Participant Table using self.participant[0]
@@ -140,7 +142,7 @@ class RegistrationDesk(Document):
         event_participant.save()
 
         # Optionally, show a confirmation message
-        frappe.msgprint("Participant {participant_name} registration has been updated successfully.")
+        frappe.msgprint("Participant  registration has been updated successfully.")
 
 
 
@@ -170,6 +172,15 @@ def event_participant_filter(doctype, txt, searchfield, start, page_len, filters
 
     return participants
 
+
+@frappe.whitelist()
+def registration_details(doc,confer):
+    event_participant_id = frappe.db.get_value("Event Participant", {"participant": doc, "event": confer}, "name")
+    if event_participant_id:
+        participant_details=frappe.get_doc("Participant",doc)
+        return participant_details
+    else:
+        frappe.throw("Please Register for the Event")
 
 
 
