@@ -131,7 +131,8 @@
    "fieldname": "participant_id",
    "fieldtype": "Link",
    "label": "participant id",
-   "options": "Event Participant"
+   "options": "Event Participant",
+   "hidden": 1
   },
   {
    "fieldname": "business_category",
