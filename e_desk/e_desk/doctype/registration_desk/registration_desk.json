@@ -98,7 +98,7 @@
   {
    "fieldname": "registration_process_section",
    "fieldtype": "Section Break",
-   "hidden": 1,
+   "hidden": 0,
    "label": "Registration Process "
   },
   {
