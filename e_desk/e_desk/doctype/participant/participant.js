@@ -115,7 +115,7 @@ frappe.ui.form.on('Participant', {
 
 
 
-		if (frm.doc.name) {
+		if (!frm.is_new()) {
 			frappe.call({
 				method: "e_desk.e_desk.doctype.participant.participant.connection_details",
 				args: {
