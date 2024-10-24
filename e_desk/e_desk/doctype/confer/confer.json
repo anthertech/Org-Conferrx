@@ -14,6 +14,7 @@
   "theme",
   "time_zone",
   "is_default",
+  "currency",
   "column_break_mc7g",
   "start_date",
   "end_date",
@@ -99,12 +100,18 @@
    "fieldname": "time_zone",
    "fieldtype": "Autocomplete",
    "label": "Time Zone"
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2024-10-24 13:14:17.357023",
+ "modified": "2024-10-24 16:48:31.008646",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Confer",

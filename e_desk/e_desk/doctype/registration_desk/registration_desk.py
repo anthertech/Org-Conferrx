@@ -134,7 +134,7 @@ class RegistrationDesk(Document):
                     break 
         # Update the Event Participant table with payment and registration status
         event_participant.is_paid = is_paid
-        event_participant.reg_status = "Approved"
+        # event_participant.reg_status = "Approved"
         event_participant.status = "Registered"
         event_participant.kit_provided=self.kit_provided_
 
@@ -176,8 +176,13 @@ def event_participant_filter(doctype, txt, searchfield, start, page_len, filters
 @frappe.whitelist()
 def registration_details(doc,confer):
 
+
     event_participant_id = frappe.db.get_value("Event Participant", {"participant": doc, "event": confer}, "name")
+    event_status=frappe.db.get_value("Event Participant", {"participant": doc, "event": confer}, "status")
+    print(event_status,"this is status")
     if event_participant_id:
+        if event_status != "Approved": 
+            frappe.throw("Admin is not Approved this User")
    # Check if registration already exists in Registration Desk
         existed_registration = frappe.db.get_value("Registration Desk", {"participant_id": event_participant_id, "confer": confer}, "name")
         if existed_registration:

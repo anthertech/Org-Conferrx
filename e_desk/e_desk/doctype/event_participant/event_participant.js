@@ -2,6 +2,25 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Event Participant", {
+
+
+	refresh: function(frm) {
+        // Check if the current user has the 'E Desk Admin' role
+        frappe.call({
+            method: 'frappe.client.get',
+            args: {
+                doctype: 'User',
+                name: frappe.session.user
+            },
+            callback: function(r) {
+                if (r.message && r.message.roles) {
+                    let roles = r.message.roles.map(role => role.role);
+					let is_admin = roles.includes('E-Desk Admin')
+                    frm.set_df_property('status', 'read_only',!is_admin)
+                }
+            } // Close callback function
+        }); // Close frappe.call
+    },
 	
 	get_directions:function(frm){
 	
@@ -57,17 +76,6 @@ frappe.ui.form.on("Event Participant", {
 			});
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
 
 
 

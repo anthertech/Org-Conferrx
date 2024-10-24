@@ -14,6 +14,9 @@ from frappe import _
 class Participant(Document):
 	# @frappe.whitelist(allow_guest=True)
 	def after_insert(self):
+		time_zone = frappe.get_value("Confer", {"is_default": 1}, "time_zone")
+		if not time_zone:
+			frappe.throw("PLease add Conference Time zone")
 		if not self.full_name:
 			self.full_name = f"{self.first_name} {self.last_name}"
 			self.save(ignore_permissions=True)
@@ -24,6 +27,7 @@ class Participant(Document):
 			doc=frappe.new_doc('User')
 			doc.update({
 				"email":self.e_mail,
+				"time_zone":time_zone,
 				"first_name":self.first_name,
 				"last_name":self.last_name,
 				"mobile_no":self.mobile_number,

@@ -3,6 +3,7 @@
 
 import frappe
 from frappe.model.document import Document
+# from frappe.utils import get_timezones
 
 class Confer(Document):
 
@@ -79,6 +80,16 @@ def update_is_default_for_others(confer_name):
 		frappe.db.set_value("Confer", confer['name'], "is_default", 0)
 
 	frappe.db.commit()
+
+
+
+
+# @frappe.whitelist()
+# def get_system_timezone() -> str:
+
+# 	return get_timezones()
+	# """Return the system timezone."""
+	# return frappe.get_system_settings("time_zone")
 
 
     

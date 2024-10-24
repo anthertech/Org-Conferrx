@@ -51,6 +51,12 @@ def ParticipantCreate(data):
     confer_id = data.get('confer', '')
     participant_id = frappe.get_value("User", {"email": email}, "participant_id")
     print(participant_id, "participant exist..........")
+    event_participant_id = frappe.get_value("Event Participant", {"participant": participant_id, "event": confer_id})
+
+    if event_participant_id:
+        message = "You are already registered for this event"
+        return {"message": message}
+
 
     if not participant_id:
 
@@ -73,6 +79,14 @@ def ParticipantCreate(data):
         return {"message": message}
          
     else:
+        time_zone = frappe.get_value("Confer", {"is_default": 1}, "time_zone")
+        print(time_zone,"this is time zone")
+        user = frappe.get_doc("User", {"participant_id": participant_id})
+        user.time_zone=time_zone
+        print(user,"thi is user")
+        # user.mobile_no=
+        user.save(ignore_permissions=True)
+        
 
         participant_doc = frappe.get_doc("Participant", participant_id)
         participant_doc.first_name=first_name
