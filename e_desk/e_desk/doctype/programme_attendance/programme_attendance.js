@@ -1,3 +1,11 @@
+// Copyright (c) 2024, sathya and contributors
+// For license information, please see license.txt
+
+// frappe.ui.form.on("Programme Attendance", {
+// 	refresh(frm) {
+
+// 	},
+// });
 // // Copyright (c) 2024, sathya and contributors
 // // For license information, please see license.txt
 // frappe.ui.form.on('Conf Programme Attendee', {
@@ -62,18 +70,35 @@
 
 
 // });
-frappe.ui.form.on('Conf Programme Attendee', {
-    setup: function(frm) {
-        frm.set_query('event', function(doc, cdt, cdn) {
+frappe.ui.form.on('Programme Attendance', {
+    // setup: function(frm) {
+    //     frm.set_query('event', function(doc, cdt, cdn) {
+    //         return {
+    //             filters: [
+    //                 // Filter to show conferences where either start_date or end_date is today or in the future
+    //                 ['end_date', '>=', frappe.datetime.get_today()]
+    //             ]
+    //         };
+    //     });
+    
+    // },
+
+    onload: function(frm) {
+    
+        frm.set_query('event', function() {
             return {
-                filters: [
-                    // Filter to show conferences where either start_date or end_date is today or in the future
-                    ['end_date', '>=', frappe.datetime.get_today()]
-                ]
+                filters: {
+                    is_default: 1
+                }
             };
         });
-    
     },
+
+
+
+
+
+
     submit: function(frm) {
         var name = JSON.parse(frm.doc.scan_qr).name;
         frm.set_value("scan_qr", "");
@@ -84,7 +109,7 @@ frappe.ui.form.on('Conf Programme Attendee', {
 		
 
         frappe.call({
-            method: "e_desk.e_desk.doctype.conf_programme_attendee.conf_programme_attendee.scanning_validations",
+            method: "e_desk.e_desk.doctype.programme_attendance.programme_attendance.scanning_validations",
             args: {
                 doc: name,
                 programme: frm.doc.choose_programme,
@@ -139,7 +164,7 @@ frappe.ui.form.on('Conf Programme Attendee', {
 
 function setlist (frm) {
 	frappe.call({
-		method: "e_desk.e_desk.doctype.conf_programme_attendee.conf_programme_attendee.get_programmes",
+		method: "e_desk.e_desk.doctype.programme_attendance.programme_attendance.get_programmes",
 		args: {
 			confer: frm.doc.event
 		},

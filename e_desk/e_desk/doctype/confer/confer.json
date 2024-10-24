@@ -12,6 +12,7 @@
   "abr",
   "venuelocation",
   "theme",
+  "time_zone",
   "is_default",
   "column_break_mc7g",
   "start_date",
@@ -93,12 +94,17 @@
    "fieldtype": "Check",
    "label": "Is default",
    "read_only": 1
+  },
+  {
+   "fieldname": "time_zone",
+   "fieldtype": "Autocomplete",
+   "label": "Time Zone"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2024-10-17 13:17:33.354615",
+ "modified": "2024-10-24 13:14:17.357023",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Confer",

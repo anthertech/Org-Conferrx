@@ -73,11 +73,12 @@ class Confer(Document):
 @frappe.whitelist()
 def update_is_default_for_others(confer_name):
 
-    confer_list = frappe.get_all("Confer", filters={"is_default": 1, "name": ["!=", confer_name]}, fields=["name"])
-    for confer in confer_list:
-        frappe.db.set_value("Confer", confer['name'], "is_default", 0)
+	confer_list = frappe.get_all("Confer", filters={"is_default": 1, "name": ["!=", confer_name]}, fields=["name"])
+	frappe.db.set_value("Conferrx Settings", None, "event", confer_name)
+	for confer in confer_list:
+		frappe.db.set_value("Confer", confer['name'], "is_default", 0)
 
-    frappe.db.commit()
+	frappe.db.commit()
 
 
     

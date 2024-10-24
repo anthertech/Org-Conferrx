@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "creation": "2024-08-09 15:41:44.765103",
+ "creation": "2024-10-24 12:20:56.551203",
  "default_view": "List",
  "doctype": "DocType",
  "editable_grid": 1,
@@ -19,35 +19,6 @@
  ],
  "fields": [
   {
-   "fieldname": "scan_qr",
-   "fieldtype": "Data",
-   "label": "Scan QR",
-   "options": "Barcode"
-  },
-  {
-   "fieldname": "submit",
-   "fieldtype": "Button",
-   "label": "Submit"
-  },
-  {
-   "fieldname": "scanned_list",
-   "fieldtype": "Table",
-   "label": "Scanned List",
-   "options": "Scanned List"
-  },
-  {
-   "fieldname": "section_break_epxh",
-   "fieldtype": "Section Break"
-  },
-  {
-   "depends_on": "eval:doc.event",
-   "fieldname": "choose_programme",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Choose Programme",
-   "reqd": 1
-  },
-  {
    "fieldname": "event",
    "fieldtype": "Link",
    "in_list_view": 1,
@@ -60,21 +31,50 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.event",
+   "fieldname": "choose_programme",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Choose Programme",
+   "reqd": 1
+  },
+  {
    "fieldname": "section_break_v2in",
    "fieldtype": "Section Break"
   },
   {
    "fieldname": "column_break_yhtq",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "scan_qr",
+   "fieldtype": "Data",
+   "label": "Scan QR",
+   "options": "Barcode"
+  },
+  {
+   "fieldname": "submit",
+   "fieldtype": "Button",
+   "label": "Submit"
+  },
+  {
+   "fieldname": "section_break_epxh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "scanned_list",
+   "fieldtype": "Table",
+   "label": "Scanned List",
+   "options": "Scanned List"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2024-09-27 14:32:51.274207",
+ "modified": "2024-10-24 12:20:56.551203",
  "modified_by": "Administrator",
  "module": "E Desk",
- "name": "Conf Programme Attendee",
+ "name": "Programme Attendance",
  "owner": "Administrator",
  "permissions": [
   {

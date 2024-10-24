@@ -5,8 +5,12 @@ import frappe
 from frappe.model.document import Document
 from frappe.utils import today, getdate
 
-class ConfProgrammeAttendee(Document):
+
+class ProgrammeAttendance(Document):
 	pass
+
+
+
 
 
 @frappe.whitelist()
@@ -79,6 +83,3 @@ def get_programmes(confer):
 
     print(programmes)
     return [prog[0] for prog in programmes]
-
-
-	
