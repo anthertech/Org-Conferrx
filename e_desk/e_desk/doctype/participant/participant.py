@@ -344,24 +344,72 @@ def register_event_participant(email, confer_id):
 
 
 @frappe.whitelist(allow_guest=True)
-def connection_doc(doc_name):
+def connection_doc(doc_name,email):
 	print(doc_name,"this is name...............")
 
 	user_data = frappe.get_doc("Participant", doc_name)
 	print(user_data,"this is data")
+	participant_id = frappe.db.get_value("Participant", {"e_mail": email}, "name")
+	event_id = frappe.db.get_value("Confer", {"is_default": 1}, "name")
 
 	if user_data:
-		# Prepare the data to be displayed in HTML format
-		participant_info = f"""
-			<p><strong>Full Name:</strong> {user_data.full_name}</p>
-			<p><strong>Email:</strong> {user_data.e_mail}</p>
-			<p><strong>Mobile:</strong> {user_data.mobile_number}</p>
-			<p><strong>Business Category:</strong> {user_data.business_category}</p>
-			<p><strong>Chapter:</strong> {user_data.chapter}</p>
-		"""
-		return participant_info
+		new_connection = frappe.new_doc('Connections')
+		new_connection.update({
+			"participant_id": participant_id,     
+            "full_name": user_data.full_name,  # Participant who scanned the QR
+            "email": user_data.e_mail, 
+			"mobile_phone":user_data.mobile_number,
+			"business_category":user_data.business_category,
+			"profile_photo":user_data.profile_photo,
+			"event":event_id
+        })
+		new_connection.save(ignore_permissions=True)
+		return "Updated Connectionsss"
+
 	else:
 		frappe.throw("No participant found with the given QR code.")
+
+
+@frappe.whitelist(allow_guest=True)
+def connection_details(email):
+	participant = frappe.db.get_value("Participant", {"e_mail": email}, "name")
+
+	if not participant:
+		frappe.throw("No participant found with the given email.")
+
+	# Get all connections related to the participant
+	connections = frappe.get_all("Connections", 
+		filters={"participant_id": participant}, 
+		fields=["full_name", "email", "mobile_phone as phone", "business_category","profile_photo"]
+	)
+
+	print(connections,"this is connectiosnss")
+	return connections
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		# Prepare the data to be displayed in HTML format
+		# participant_info = f"""
+		# 	<p><strong>Full Name:</strong> {user_data.full_name}</p>
+		# 	<p><strong>Email:</strong> {user_data.e_mail}</p>
+		# 	<p><strong>Mobile:</strong> {user_data.mobile_number}</p>
+		# 	<p><strong>Business Category:</strong> {user_data.business_category}</p>
+		# 	<p><strong>Chapter:</strong> {user_data.chapter}</p>
+		# """
+		# return participant_info
+
 
 
 
