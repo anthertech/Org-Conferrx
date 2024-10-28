@@ -13,14 +13,17 @@
   "venuelocation",
   "theme",
   "time_zone",
-  "column_break_mc7g",
   "currency",
+  "column_break_mc7g",
+  "is_default",
   "start_date",
   "end_date",
-  "is_default",
+  "registration_close_date",
+  "banner_image",
   "section_break_avxn",
   "agenda",
   "is_private",
+  "resources",
   "attach_files"
  ],
  "fields": [
@@ -87,7 +90,8 @@
   },
   {
    "fieldname": "section_break_avxn",
-   "fieldtype": "Section Break"
+   "fieldtype": "Section Break",
+   "label": "Programme Agenda"
   },
   {
    "default": "0",
@@ -106,12 +110,28 @@
    "fieldtype": "Link",
    "label": "Currency",
    "options": "Currency"
+  },
+  {
+   "fieldname": "registration_close_date",
+   "fieldtype": "Datetime",
+   "label": "Registration Close Date"
+  },
+  {
+   "fieldname": "banner_image",
+   "fieldtype": "Attach Image",
+   "label": "Banner image"
+  },
+  {
+   "fieldname": "resources",
+   "fieldtype": "Section Break",
+   "label": "Resources"
   }
  ],
+ "image_field": "banner_image",
  "index_web_pages_for_search": 1,
  "is_calendar_and_gantt": 1,
  "links": [],
- "modified": "2024-10-28 11:48:40.808796",
+ "modified": "2024-10-28 13:31:11.758651",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Confer",
