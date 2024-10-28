@@ -30,7 +30,9 @@
   "connections_tab",
   "scan_qr",
   "submit",
-  "address_html"
+  "address_html",
+  "eventsconferences_tab",
+  "list_of_events"
  ],
  "fields": [
   {
@@ -41,10 +43,10 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Participant Series",
    "options": "COC-.YYYY.-.####",
-   "read_only": 1,
-   "reqd": 1
+   "read_only": 1
   },
   {
    "fieldname": "first_name",
@@ -167,12 +169,22 @@
    "fieldtype": "Link",
    "label": "Business Category",
    "options": "Business Category"
+  },
+  {
+   "fieldname": "eventsconferences_tab",
+   "fieldtype": "Tab Break",
+   "label": "Events/Conferences"
+  },
+  {
+   "fieldname": "list_of_events",
+   "fieldtype": "HTML",
+   "label": "List of Events"
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-21 13:59:34.079676",
+ "modified": "2024-10-28 11:06:45.977039",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",

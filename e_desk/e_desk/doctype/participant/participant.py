@@ -349,12 +349,19 @@ def register_event_participant(email, confer_id):
 
 @frappe.whitelist(allow_guest=True)
 def connection_doc(doc_name,email):
-	print(doc_name,"this is name...............")
 
 	user_data = frappe.get_doc("Participant", doc_name)
 	print(user_data,"this is data")
 	participant_id = frappe.db.get_value("Participant", {"e_mail": email}, "name")
+	print(participant_id,"participant_id")
+	print(email,"emailemail")
+	connection_id = frappe.db.get_value("Connections", {"participant_id": participant_id, "email": email}, "name")
+	print(connection_id,"this is connection id..................")
+	if connection_id:
+		frappe.throw("This participant is already connected")
+
 	event_id = frappe.db.get_value("Confer", {"is_default": 1}, "name")
+	print(event_id,"this is even")
 
 	if user_data:
 		new_connection = frappe.new_doc('Connections')
@@ -377,14 +384,13 @@ def connection_doc(doc_name,email):
 @frappe.whitelist(allow_guest=True)
 def connection_details(email):
 	participant = frappe.db.get_value("Participant", {"e_mail": email}, "name")
-
 	if not participant:
 		frappe.throw("No participant found with the given email.")
 
 	# Get all connections related to the participant
 	connections = frappe.get_all("Connections", 
 		filters={"participant_id": participant}, 
-		fields=["full_name", "email", "mobile_phone as phone", "business_category","profile_photo"]
+		fields=["full_name", "email", "mobile_phone as phone", "business_category","profile_photo","event"]
 	)
 
 	print(connections,"this is connectiosnss")

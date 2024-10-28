@@ -4,6 +4,26 @@
 frappe.ui.form.on('Participant', {
 
 
+	setup: function(frm) {  // Alternatively, use refresh instead of setup
+        frappe.call({
+            method: 'frappe.client.get_list',
+            args: {
+                doctype: 'Confer',
+                fields: ['name'],
+                filters: {
+                    is_default: 1
+                }
+            },
+            callback: function(r) {
+                if (r.message && r.message.length === 1) {
+                    console.log(r.message, "this is message");
+                    frm.set_value('event', r.message[0].name);
+                }
+            }
+        });
+    },
+
+
 	
 		submit: function(frm) {
 			// Parse the scanned QR data to get the Participant name (or ID)
@@ -42,7 +62,8 @@ frappe.ui.form.on('Participant', {
 		},
 
 
-
+		
+			
 
 	//Create button for converting the participant to volunteer
 	refresh: function(frm) {
@@ -113,7 +134,31 @@ frappe.ui.form.on('Participant', {
 		frm.get_field("qr_preview").$wrapper.html(qrHTML);
 
 
+		if (!frm.is_new()) {
 
+			frappe.call({
+				method: 'frappe.client.get_list',
+				args: {
+					doctype: 'Event Participant',
+					filters: {
+						'participant': frm.doc.name
+					},
+					fields: ['name', 'event']  // Adjust fields as needed
+				},
+				callback: function(r) {
+					if (r.message) {
+						let html_content = "<ul>";
+						r.message.forEach(event => {
+							html_content += `<li>${event.event}</li>`;
+						});
+						html_content += "</ul>";
+						frm.set_df_property('list_of_events', 'options', html_content);
+						frm.refresh_field('list_of_events');
+					}
+				}
+			});
+		}
+		
 
 		if (!frm.is_new()) {
 			frappe.call({
@@ -141,6 +186,7 @@ frappe.ui.form.on('Participant', {
 									<div style="flex-grow: 1;">
 										<div style="font-weight: bold; font-size: 1.2em; color: #333;">${connection.full_name}</div>
 											<div style="color: #777; font-style: italic;">${connection.business_category}</div>
+												<div style="color: #555;">${connection.event}</div>
 										<div style="color: #555;">${connection.email}</div>
 										<div style="color: #555;">${connection.phone}</div>
 									
@@ -165,17 +211,6 @@ frm.get_field("address_html").$wrapper.find('.card-container').append(card_html)
 
 	},
 
-
-
-
-
-
-
-	
-
-	onload:function(frm){
-		
-	},
 
 }
 
