@@ -9,6 +9,8 @@ class Confer(Document):
 
 	def before_save(self):
         # Create a folder for this confer if it doesn't already exist
+		if self.custom_registration_close_date>self.end_date:
+			frappe.throw("The registration closing date cannot be greater than the event end date.")
 		self.create_confer_folder()
 
 	def  on_update(self):

@@ -355,7 +355,7 @@ def connection_doc(doc_name,email):
 	participant_id = frappe.db.get_value("Participant", {"e_mail": email}, "name")
 	print(participant_id,"participant_id")
 	print(email,"emailemail")
-	connection_id = frappe.db.get_value("Connections", {"participant_id": participant_id, "email": email}, "name")
+	connection_id = frappe.db.get_value("Connections", {"participant_id": participant_id, "email": user_data.e_mail}, "name")
 	print(connection_id,"this is connection id..................")
 	if connection_id:
 		frappe.throw("This participant is already connected")

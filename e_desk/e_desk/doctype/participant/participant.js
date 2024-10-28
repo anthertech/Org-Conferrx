@@ -43,6 +43,7 @@ frappe.ui.form.on('Participant', {
 						callback: function(r) {
 							if (r.message) {
 								console.log(r.message, "this is message");
+								frm.set_value('scan_qr',"");
 				
 							} else {
 								frappe.msgprint("No participant details found for the scanned QR.");
