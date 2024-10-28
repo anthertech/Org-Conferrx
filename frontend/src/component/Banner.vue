@@ -1,6 +1,6 @@
 <template>
-    <div class="flex justify-between mx-64 mt-36 mb-28">
-        <div class="flex flex-col gap-3 w-1/2 ">
+    <div class="flex flex-col  lg:flex-row justify-between lg:mx-64 mt-36 mb-28">
+        <div class="lg:block  flex  items-center flex-col gap-3 w-full lg:w-1/2 ">
             <p class="font-bold" style="font-size:45px;">
                 {{event.name}}
             </p>
@@ -16,7 +16,7 @@
                 Event has ended
             </p>
         </div>
-        <div class="w-1/2">
+        <div class="w-full lg:w-1/2">
             <img src="https://previewengine-accl.zohopublic.in/image/BACKSTAGE/18033000000113044?cli-msg=eyJtb2R1bGUiOiJFdmVudEltYWdlUmVzb3VyY2UiLCJ0eXBlIjowLCJwb3J0YWxJZCI6IjYwMDI4OTQ1ODE3Iiwic3ViUmVzb3VyY2VJZCI6IjYwMDI4OTQ1ODE3IiwiaWQiOiIxODAzMzAwMDAwMDExMzA0NCJ9" alt="Conference Image">
         </div>
     </div>
@@ -31,116 +31,107 @@
         </template>
         <template #body-content>
             <div class="flex flex-col gap-5">
-
                 <div class="flex gap-5">
-                    
                     <FormControl
-                    :type="'text'"
-                    size="sm"
-                    variant="subtle"
-                    placeholder="Placeholder"
-                    :disabled="false"
-                    label="First Name"
-                    v-model="formdata.first_name"
+                        :type="'text'"
+                        size="sm"
+                        variant="subtle"
+                        placeholder="Placeholder"
+                        :disabled="false"
+                        label="First Name"
+                        v-model="formdata.first_name"
                     />
-                <FormControl
-                :type="'text'"
-                    size="sm"
-                    variant="subtle"
-                    placeholder="Placeholder"
-                    :disabled="false"
-                    label="Last Name"
-                    v-model="formdata.last_name"
+                    <FormControl
+                        :type="'text'"
+                            size="sm"
+                            variant="subtle"
+                            placeholder="Placeholder"
+                            :disabled="false"
+                            label="Last Name"
+                            v-model="formdata.last_name"
                     />
                 </div>
                 <div class="flex gap-5">
                     <FormControl
-                    :type="'text'"
-                    size="sm"
-                    variant="subtle"
-                    placeholder="Placeholder"
-                    :disabled="false"
-                    label="Mobile Phone"
-                    v-model="formdata.mobile"
+                        :type="'text'"
+                        size="sm"
+                        variant="subtle"
+                        placeholder="Placeholder"
+                        :disabled="false"
+                        label="Mobile Phone"
+                        v-model="formdata.mobile"
                     />
                     <FormControl
-                    :type="'text'"
-                    size="sm"
-                    variant="subtle"
-                    placeholder="Placeholder"
-                    :disabled="false"
-                    label="Email"
-                    v-model="formdata.email"
-                />
+                        :type="'text'"
+                        size="sm"
+                        variant="subtle"
+                        placeholder="Placeholder"
+                        :disabled="false"
+                        label="Email"
+                        v-model="formdata.email"
+                    />
 
-            </div>
-            <div class="flex gap-5">
-                <div class="w-1/2">
-                    
-                    <FormControl
-                    type="autocomplete"
-                    :options="feilds.Salutation"
-                    size="sm"
-                    variant="subtle"
-                    placeholder="Placeholder"
-                    :disabled="false"
-                    label="Prefix"
-                    v-model="formdata.prifix"
-                    />
                 </div>
-                <div class="w-1/2">
-
-                    <FormControl
-                    type="autocomplete"
-                    :options="feilds['Business Category']"
-                    size="sm"
-                    variant="subtle"
-                    placeholder="Placeholder"
-                    :disabled="false"
-                    label="Business Category"
-                    v-model="formdata.bussines"
-                    />
+                <div class="flex gap-5">
+                    <div class="w-1/2">
+                        <FormControl
+                            type="autocomplete"
+                            :options="feilds.Salutation"
+                            size="sm"
+                            variant="subtle"
+                            placeholder="Placeholder"
+                            :disabled="false"
+                            label="Prefix"
+                            v-model="formdata.prifix"
+                        />
+                    </div>
+                    <div class="w-1/2">
+                        <FormControl
+                            type="autocomplete"
+                            :options="feilds['Business Category']"
+                            size="sm"
+                            variant="subtle"
+                            placeholder="Placeholder"
+                            :disabled="false"
+                            label="Business Category"
+                            v-model="formdata.bussines"
+                        />
+                    </div>
                 </div>
-            </div>
-            <div class="flex gap-5">
-                <div class="w-1/2">
-
-                    <FormControl
-                    type="autocomplete"
-                    :options="feilds.Roles"
-                    size="sm"
-                    variant="subtle"
-                    placeholder="Placeholder"
-                    :disabled="false"
-                    label="Role"
-                    v-model="formdata.role"
-                    />
+                <div class="flex gap-5">
+                    <div class="w-1/2">
+                        <FormControl
+                            type="autocomplete"
+                            :options="feilds.Roles"
+                            size="sm"
+                            variant="subtle"
+                            placeholder="Placeholder"
+                            :disabled="false"
+                            label="Role"
+                            v-model="formdata.role"
+                        />
+                    </div>
+                    <div class="w-1/2">
+                        <FormControl
+                            type="autocomplete"
+                            :options="feilds.Chapter"
+                            size="sm"
+                            variant="subtle"
+                            placeholder="Placeholder"
+                            :disabled="false"
+                            label="Chapter"
+                            v-model="formdata.chapter"
+                        />
+                    </div>
                 </div>
-                <div class="w-1/2">
-
-                    
-                    <FormControl
-                type="autocomplete"
-                :options="feilds.Chapter"
-                    size="sm"
-                    variant="subtle"
-                    placeholder="Placeholder"
-                    :disabled="false"
-                    label="Chapter"
-                    v-model="formdata.chapter"
-                    />
-                </div>
-            </div>
-            <FileUploader
-                :fileTypes="['image/*']"
-                :validateFile="(fileObject) => {
-                }"
-               @success="(file) => {
-                    //  handlefile(file);
-                    console.log(file);
-                    formdata.image=file
-
-                }"
+                <FileUploader
+                    :fileTypes="['image/*']"
+                    :validateFile="(fileObject) => {
+                    }"
+                    @success="(file) => {
+                        console.log(file);
+                        formdata.image=file
+                    }"
                 >
                 <template #default="{ file, uploading, progress, uploaded, message, error, total, success, openFileSelector }">
                     <Button
@@ -150,19 +141,17 @@
                         Uploading {{ progress }}%
                     </Button>
                 </template>
-            </FileUploader>
-            
-            
-        </div>
+                </FileUploader>
+            </div>
         </template>
-        <template #actions>
-            <Button variant="solid" @click="handleCreate">
-                Confirm
-            </Button>
-            <Button class="ml-2" @click="dialog2 = false">
-                Close
-            </Button>
-        </template>
+            <template #actions>
+                <Button variant="solid" @click="handleCreate">
+                    Confirm
+                </Button>
+                <Button class="ml-2" @click="dialog2 = false">
+                    Close
+                </Button>
+            </template>
     </Dialog>
 </template>
 
