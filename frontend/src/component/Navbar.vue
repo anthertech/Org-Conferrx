@@ -8,6 +8,7 @@
                 <li>Speakers</li>
                 <li>Sponsers</li>
                 <li>Venue</li>
+                <li>Login</li>
             </ul>
         </div>
     </div>
