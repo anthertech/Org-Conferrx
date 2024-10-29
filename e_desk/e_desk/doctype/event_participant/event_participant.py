@@ -182,7 +182,7 @@ def event_has_permission(user: str = None) -> str:
     print(user,participant_id,role_profile,"role profileeee..............")
 
     # If the user has the Participant or Volunteer role profile
-    if role_profile in ["Participant", "Volunteer"]:
+    if role_profile in ["Participant"]:
         # Return the condition to restrict access to only the user's participant_id
         return f"`tabEvent Participant`.participant = '{participant_id}'"
     

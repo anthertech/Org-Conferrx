@@ -184,6 +184,9 @@ frappe.ui.form.on('Participant', {
                                 });
                             });
 
+
+
+							console.log(events_with_dates,"event with dates")
                             // Sort each year's events by start date (latest first)
 							// sorts events within each year in descending order based on their start date 
                             Object.keys(events_with_dates).forEach(year => {
@@ -195,6 +198,7 @@ frappe.ui.form.on('Participant', {
                             Object.keys(events_with_dates).sort((a, b) => b - a).forEach(year => {
                                 timeline_html += `<h3>${year}</h3><ul>`;
                                 events_with_dates[year].forEach(event => {
+									// Date object into a string,
                                     let start_date = new Date(event.start_date).toLocaleDateString();
                                     timeline_html += `<li><strong>${event.name}</strong> - ${start_date}</li>`;
                                 });
