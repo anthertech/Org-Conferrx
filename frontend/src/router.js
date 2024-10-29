@@ -9,6 +9,11 @@ const routes = [
     component: () => import('@/pages/Home.vue'),
   },
   {
+    path: '/:id',
+    name: 'Event',
+    component: () => import('@/pages/Event.vue'),
+  },
+  {
     name: 'Login',
     path: '/account/login',
     component: () => import('@/pages/Login.vue'),
@@ -16,7 +21,7 @@ const routes = [
 ]
 
 let router = createRouter({
-  history: createWebHistory('/frontend'),
+  history: createWebHistory('/home'),
   routes,
 })
 
