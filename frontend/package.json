@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build --base=/assets/e_desk/frontend/ && yarn copy-html-entry",
+    "build": "vite build --base=/assets/e_desk/home/ && yarn copy-html-entry",
     "preview": "vite preview",
-    "copy-html-entry": "cp ../e_desk/public/frontend/index.html ../e_desk/www/frontend.html"
+    "copy-html-entry": "cp ../e_desk/public/home/index.html ../e_desk/www/home.html"
   },
   "dependencies": {
     "feather-icons": "^4.28.0",

@@ -1,11 +1,11 @@
 import frappe
 from frappe import _
 from e_desk.e_desk.doctype.registration_desk.registration_desk import RegistrationDesk 
-
+import json
 
 @frappe.whitelist(allow_guest=True)
 def default_confer():
-    data=frappe.get_value('Confer', {"is_default":True},['name', 'start_date', 'end_date' , "venuelocation"],as_dict=1)
+    data=frappe.get_value('Confer', {"is_default":True},['name', 'start_date', 'end_date' , "venuelocation","banner_image","registration_close_date"],as_dict=1)
     print(data,"ddddddddddddddddddddddddddddddddd")
     return data
 
@@ -32,9 +32,13 @@ def Getdoc(doctype):
 
 
 @frappe.whitelist(allow_guest=True)
-def submit(data):
-    print(data)
-
+def GetValue(doctype, filter, field, dict):
+    filter = json.loads(filter)
+    print(filter,"filterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+    print(field,"fieldddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
+    data = frappe.get_value(doctype, filter, field, as_dict=dict)
+    print(data, "Retrieved data +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    return data
 
 
 @frappe.whitelist(allow_guest=True)

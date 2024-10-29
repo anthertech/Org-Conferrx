@@ -1,23 +1,31 @@
 <template>
-    <div class="flex flex-col  lg:flex-row justify-between lg:mx-64 mt-36 mb-28">
-        <div class="lg:block  flex  items-center flex-col gap-3 w-full lg:w-1/2 ">
-            <p class="font-bold" style="font-size:45px;">
-                {{event.name}}
-            </p>
-            <p class="flex gap-2">
-                <FeatherIcon class="w-5 h-5" name="calendar"/> 
-                {{ formattedDateRange }}
-                <!-- <FeatherIcon class="w-5 h-5" name="clock"/> 08:00 AM -->
-            </p>
-            <p class="flex gap-2">
-                <FeatherIcon class="w-5 h-5" name="map-pin"/> {{event.venuelocation}}
-            </p>
-            <p class="border-2 p-2 w-fit" @click="handleRegisterDialog">
-                Event has ended
-            </p>
+    <div class="flex flex-col  xl:flex-row justify-between xl:mx-64 mt-36 mb-28">
+        <div class="xl:block  flex  items-center flex-col  w-full xl:w-1/2 ">
+            <div class="flex flex-col gap-5 ">
+                <p class="font-bold" style="font-size:45px;">
+                    {{event.name}}
+                </p>
+                <p class="flex gap-2">
+                    <FeatherIcon class="w-5 h-5" name="calendar"/> 
+                    {{ formattedDateRange }}
+                    <FeatherIcon class="w-5 h-5" name="clock"/> {{ formattedStartTime }}
+                </p>
+                <p class="flex gap-2">
+                    <FeatherIcon class="w-5 h-5" name="map-pin"/> {{event.venuelocation}}
+                </p>
+
+                <p v-if="new Date(event.registration_close_date) < new Date()" class="border-2 p-2 w-fit hover:cursor-not-allowed">
+    Event has ended
+</p>
+<p v-else class="border-2 p-2 w-fit hover:cursor-pointer" @click="handleRegisterDialog">
+    Register Now
+</p>
+            </div>
         </div>
-        <div class="w-full lg:w-1/2">
-            <img src="https://previewengine-accl.zohopublic.in/image/BACKSTAGE/18033000000113044?cli-msg=eyJtb2R1bGUiOiJFdmVudEltYWdlUmVzb3VyY2UiLCJ0eXBlIjowLCJwb3J0YWxJZCI6IjYwMDI4OTQ1ODE3Iiwic3ViUmVzb3VyY2VJZCI6IjYwMDI4OTQ1ODE3IiwiaWQiOiIxODAzMzAwMDAwMDExMzA0NCJ9" alt="Conference Image">
+        <div class="w-full sm:flex sm:justify-center sm:items-center xl:block  xl:w-1/2">
+            <div class="sm:w-3/6 xl:w-full ">
+                <img :src="event.banner_image" alt="Conference Image">
+            </div>
         </div>
     </div>
     
@@ -36,7 +44,7 @@
                         :type="'text'"
                         size="sm"
                         variant="subtle"
-                        placeholder="Placeholder"
+                        placeholder="First Name"
                         :disabled="false"
                         label="First Name"
                         v-model="formdata.first_name"
@@ -45,7 +53,7 @@
                         :type="'text'"
                             size="sm"
                             variant="subtle"
-                            placeholder="Placeholder"
+                            placeholder="Last Name"
                             :disabled="false"
                             label="Last Name"
                             v-model="formdata.last_name"
@@ -56,7 +64,7 @@
                         :type="'text'"
                         size="sm"
                         variant="subtle"
-                        placeholder="Placeholder"
+                        placeholder="Mobile"
                         :disabled="false"
                         label="Mobile Phone"
                         v-model="formdata.mobile"
@@ -65,7 +73,7 @@
                         :type="'text'"
                         size="sm"
                         variant="subtle"
-                        placeholder="Placeholder"
+                        placeholder="Email"
                         :disabled="false"
                         label="Email"
                         v-model="formdata.email"
@@ -79,7 +87,7 @@
                             :options="feilds.Salutation"
                             size="sm"
                             variant="subtle"
-                            placeholder="Placeholder"
+                            placeholder="Prefix"
                             :disabled="false"
                             label="Prefix"
                             v-model="formdata.prifix"
@@ -91,7 +99,7 @@
                             :options="feilds['Business Category']"
                             size="sm"
                             variant="subtle"
-                            placeholder="Placeholder"
+                            placeholder="Business Category"
                             :disabled="false"
                             label="Business Category"
                             v-model="formdata.bussines"
@@ -105,7 +113,7 @@
                             :options="feilds.Roles"
                             size="sm"
                             variant="subtle"
-                            placeholder="Placeholder"
+                            placeholder="Role"
                             :disabled="false"
                             label="Role"
                             v-model="formdata.role"
@@ -117,7 +125,7 @@
                             :options="feilds.Chapter"
                             size="sm"
                             variant="subtle"
-                            placeholder="Placeholder"
+                            placeholder="Chapter"
                             :disabled="false"
                             label="Chapter"
                             v-model="formdata.chapter"
@@ -145,12 +153,14 @@
             </div>
         </template>
             <template #actions>
-                <Button variant="solid" @click="handleCreate">
-                    Confirm
-                </Button>
-                <Button class="ml-2" @click="dialog2 = false">
-                    Close
-                </Button>
+                <div class="w-full flex justify-between">
+                    <Button class="ml-2" @click="dialog2 = false">
+                        Close
+                    </Button>
+                    <Button variant="solid" @click="handleCreate">
+                        Confirm
+                    </Button>
+                </div>
             </template>
     </Dialog>
 </template>
@@ -181,6 +191,17 @@
     const formattedDateRange = computed(() => {
     return formatDateRange(props.event.start_date, props.event.end_date);
 });
+const formattedStartTime = computed(() => {
+        if (props.event.start_date) {
+            let date = new Date(props.event.start_date);
+            return date.toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            });
+        }
+        return '';
+    });
 
     
     let post = createResource({
