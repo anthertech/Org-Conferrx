@@ -5,7 +5,8 @@ frappe.ui.form.on('Registration Desk', {
 	custom_submit: function(frm) {
 		try {
 			// Parse the scanned QR data to get the Participant name (or ID)
-			var scan_data = JSON.parse(frm.doc.custom_scan_qr).name;  // Assuming QR contains JSON data
+			// var scan_data = JSON.parse(frm.doc.custom_scan_qr).name;  // Assuming QR contains JSON data
+			var scan_data=frm.doc.custom_scan_qr
 			console.log(scan_data, "data.");
 		
 

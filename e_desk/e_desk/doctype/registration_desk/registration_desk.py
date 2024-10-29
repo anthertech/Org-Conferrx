@@ -15,8 +15,8 @@ class RegistrationDesk(Document):
     @classmethod
     def create_qr_participant(self, pr_doc):
         qr_image = io.BytesIO()
-        data={"name":pr_doc.name}
-        data=json.dumps(data,indent=4,sort_keys=True,default=str)
+        data=pr_doc.name
+        # data=json.dumps(data,indent=4,sort_keys=True,default=str)
         data_ = qr_create(data, error='L')
         data_.png(qr_image, scale=4, quiet_zone=1)
         name = frappe.generate_hash('', 5)

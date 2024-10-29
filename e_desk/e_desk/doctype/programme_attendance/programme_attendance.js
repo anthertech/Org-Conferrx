@@ -100,7 +100,8 @@ frappe.ui.form.on('Programme Attendance', {
 
 
     submit: function(frm) {
-        var name = JSON.parse(frm.doc.scan_qr).name;
+        // var name = JSON.parse(frm.doc.scan_qr).name;
+        var name=frm.doc.scan_qr
         frm.set_value("scan_qr", "");
 
 		console.log("anything we got")
