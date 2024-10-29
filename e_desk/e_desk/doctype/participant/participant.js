@@ -28,7 +28,8 @@ frappe.ui.form.on('Participant', {
 		submit: function(frm) {
 			// Parse the scanned QR data to get the Participant name (or ID)
 			try {
-				var scan_data = JSON.parse(frm.doc.scan_qr).name;  // Assuming QR contains JSON data
+				// var scan_data = JSON.parse(frm.doc.scan_qr).name;  // Assuming QR contains JSON data
+				var scan_data = frm.doc.scan_qr
 				console.log(scan_data, "data.");
 				console.log(frm.doc.e_mail,"this is doc name")
 	
@@ -139,31 +140,79 @@ frappe.ui.form.on('Participant', {
 		frm.get_field("qr_preview").$wrapper.html(qrHTML);
 
 
-		if (!frm.is_new()) {
 
-			frappe.call({
-				method: 'frappe.client.get_list',
-				args: {
-					doctype: 'Event Participant',
-					filters: {
-						'participant': frm.doc.name
-					},
-					fields: ['name', 'event']  // Adjust fields as needed
-				},
-				callback: function(r) {
-					if (r.message) {
-						let html_content = "<ul>";
-						r.message.forEach(event => {
-							html_content += `<li>${event.event}</li>`;
-						});
-						html_content += "</ul>";
-						frm.set_df_property('list_of_events', 'options', html_content);
-						frm.refresh_field('list_of_events');
-					}
-				}
-			});
-		}
-		
+	if (!frm.is_new()) {
+    frappe.call({
+        method: 'frappe.client.get_list',
+        args: {
+            doctype: 'Event Participant',
+            filters: {
+                'participant': frm.doc.name
+            },
+            fields: ['name', 'event']
+        },
+        callback: function(r) {
+            if (r.message) {
+                // Fetch start dates from linked Confer events
+                let events = r.message;
+                let event_names = events.map(event => event.event);
+
+                frappe.call({
+                    method: 'frappe.client.get_list',
+                    args: {
+                        doctype: 'Confer',
+                        filters: {
+                            'name': ['in', event_names]
+                        },
+                        fields: ['name', 'start_date']
+                    },
+                    callback: function(res) {
+                        if (res.message) {
+                            // Combine event details and group by year, then sort by date within each year
+                            let events_with_dates = {};
+                            res.message.forEach(event => {
+                                let event_participant = events.find(e => e.event === event.name);
+								// convert the start date to a year.
+                                let event_year = new Date(event.start_date).getFullYear();
+
+                                if (!events_with_dates[event_year]) {
+                                    events_with_dates[event_year] = [];
+                                }
+                                events_with_dates[event_year].push({
+                                    name: event_participant.event,
+                                    start_date: event.start_date
+                                });
+                            });
+
+                            // Sort each year's events by start date (latest first)
+							// sorts events within each year in descending order based on their start date 
+                            Object.keys(events_with_dates).forEach(year => {
+                                events_with_dates[year].sort((a, b) => new Date(b.start_date) - new Date(a.start_date));
+                            });
+
+                            // Create HTML for timeline, with highest year at the top and latest events first within each year
+                            let timeline_html = "<div class='timeline'>";
+                            Object.keys(events_with_dates).sort((a, b) => b - a).forEach(year => {
+                                timeline_html += `<h3>${year}</h3><ul>`;
+                                events_with_dates[year].forEach(event => {
+                                    let start_date = new Date(event.start_date).toLocaleDateString();
+                                    timeline_html += `<li><strong>${event.name}</strong> - ${start_date}</li>`;
+                                });
+                                timeline_html += "</ul>";
+                            });
+                            timeline_html += "</div>";
+
+                            // Set the timeline in the field
+                            frm.set_df_property('list_of_events', 'options', timeline_html);
+                            frm.refresh_field('list_of_events');
+                        }
+                    }
+                });
+            }
+        }
+    });
+}
+
 
 
 
