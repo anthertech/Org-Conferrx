@@ -81,7 +81,15 @@ class Participant(Document):
             #     indicator='green'
             # )
 
-
+	def validate(self):
+		# Check if profile_photo is set and find related User document
+		if self.profile_photo:
+			# Attempt to find an existing User with this participant_id
+			user = frappe.db.get_value("User", {"participant_id": self.name}, "name")
+			
+			# Only update if a User with this participant_id already exists
+			if user:
+				frappe.db.set_value("User", user, "user_image", self.profile_photo)
 
 	@frappe.whitelist()
 	def categoryfile_fetching(doc, a=None):
