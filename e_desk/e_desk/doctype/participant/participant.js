@@ -43,6 +43,7 @@ frappe.ui.form.on('Participant', {
 						callback: function(r) {
 							if (r.message) {
 								console.log(r.message, "this is message");
+								connectionlist(frm)
 								frm.set_value('scan_qr',"");
 				
 							} else {
@@ -68,6 +69,9 @@ frappe.ui.form.on('Participant', {
 
 	//Create button for converting the participant to volunteer
 	refresh: function(frm) {
+
+
+		connectionlist(frm)
 		var hasPermission = frappe.user.has_role('Volunteer'); 
 		if (!frm.is_new()){
 			toggleEditFields(frm, false); 
@@ -161,53 +165,6 @@ frappe.ui.form.on('Participant', {
 		}
 		
 
-		if (!frm.is_new()) {
-			frappe.call({
-				method: "e_desk.e_desk.doctype.participant.participant.connection_details",
-				args: {
-					email:frm.doc.e_mail
-				},
-				callback: function(response) {
-					if (response.message) {
-						// Clear the existing HTML field content
-						frm.get_field("address_html").$wrapper.empty();
-	
-						// Loop through each connection and append as card
-						response.message.forEach(function(connection) {
-
-							if (!frm.get_field("address_html").$wrapper.find('.card-container').length) {
-								frm.get_field("address_html").$wrapper.append('<div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: flex-start;"></div>');
-							}
-							
-							let card_html = `
-								<div class="card" style="margin: 10px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); flex: 1 1 calc(33% - 20px); min-width: 250px; max-width: 300px;">
-									${connection.profile_photo ? 
-									`<img src="${connection.profile_photo}" alt="Profile Photo" style="border-radius: 50%; width: 70px; height: 70px; margin-right: 15px;">` : 
-									`<div style="width: 70px; height: 70px; margin-right: 15px; background-color: #eee; border-radius: 50%;"></div>`}
-									<div style="flex-grow: 1;">
-										<div style="font-weight: bold; font-size: 1.2em; color: #333;">${connection.full_name}</div>
-											<div style="color: #777; font-style: italic;">${connection.business_category}</div>
-												<div style="color: #555;">${connection.event}</div>
-										<div style="color: #555;">${connection.email}</div>
-										<div style="color: #555;">${connection.phone}</div>
-									
-									</div>
-								</div>
-							`;
-
-// Append the card to the card container
-frm.get_field("address_html").$wrapper.find('.card-container').append(card_html);
-
-
-						
-						});
-					}
-				}
-			});
-		}
-
-
-
 
 
 	},
@@ -216,6 +173,55 @@ frm.get_field("address_html").$wrapper.find('.card-container').append(card_html)
 }
 
 );
+
+
+function connectionlist(frm){
+
+	if (!frm.is_new()) {
+		frappe.call({
+			method: "e_desk.e_desk.doctype.participant.participant.connection_details",
+			args: {
+				email:frm.doc.e_mail
+			},
+			callback: function(response) {
+				if (response.message) {
+					// Clear the existing HTML field content
+					frm.get_field("address_html").$wrapper.empty();
+
+					// Loop through each connection and append as card
+					response.message.forEach(function(connection) {
+
+						if (!frm.get_field("address_html").$wrapper.find('.card-container').length) {
+							frm.get_field("address_html").$wrapper.append('<div class="card-container" style="display: flex; flex-wrap: wrap; justify-content: flex-start;"></div>');
+						}
+						
+						let card_html = `
+							<div class="card" style="margin: 10px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; display: flex; align-items: center; background-color: #fff; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); flex: 1 1 calc(33% - 20px); min-width: 250px; max-width: 300px;">
+								${connection.profile_photo ? 
+								`<img src="${connection.profile_photo}" alt="Profile Photo" style="border-radius: 50%; width: 70px; height: 70px; margin-right: 15px;">` : 
+								`<div style="width: 70px; height: 70px; margin-right: 15px; background-color: #eee; border-radius: 50%;"></div>`}
+								<div style="flex-grow: 1;">
+									<div style="font-weight: bold; font-size: 1.2em; color: #333;">${connection.full_name}</div>
+										<div style="color: #777; font-style: italic;">${connection.business_category}</div>
+											<div style="color: #555;">${connection.event}</div>
+									<div style="color: #555;">${connection.email}</div>
+									<div style="color: #555;">${connection.phone}</div>
+								
+								</div>
+							</div>
+						`;
+
+// Append the card to the card container
+frm.get_field("address_html").$wrapper.find('.card-container').append(card_html);
+
+
+					
+					});
+				}
+			}
+		});
+	}
+}
 
 function toggleEditFields(frm, isEditable) {
 	var user= 'mathew@gmail.com'
