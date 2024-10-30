@@ -35,7 +35,7 @@ class Participant(Document):
 				"send_welcome_email":1,
 				"role_profile_name":"Participant",
 				"user_type":"System User",
-				"module_profile":"Bni profile",
+				"module_profile":"E-desk profile",
 				"participant_id":self.name
 
 			})
