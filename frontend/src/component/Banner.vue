@@ -145,8 +145,25 @@
                     <Button
                         @click="openFileSelector"
                         :loading="uploading"
+                        class="bg-green"
+                        
                     >
-                        Uploading {{ progress }}%
+                    <div class="flex">
+
+                        <p v-if="progress==100">
+                            Uploaded 
+                        </p>
+                        <p v-else-if="progress > 0 && progress < 100">
+                            Uploading
+                        </p>
+                        <p v-else>
+                            Upload 
+                        </p>
+                        
+                        <p v-if="progress > 0 && progress < 100">
+                            {{ progress }}%
+                        </p>
+                    </div>
                     </Button>
                 </template>
                 </FileUploader>
@@ -163,10 +180,12 @@
                 </div>
             </template>
     </Dialog>
+
 </template>
 
 <script setup>
     import { formatDateRange } from '../utils/dateFormatter';  
+    
     import { ref , defineProps , computed } from 'vue';
     import { FeatherIcon, Button ,Dialog , FormControl , FileUploader, createResource } from "frappe-ui";
     const  formdata=ref({
@@ -205,7 +224,7 @@ const formattedStartTime = computed(() => {
 
     
     let post = createResource({
-        url: 'e_desk.e_desk.api.frontend_api.Getdoc', 
+        url: 'e_desk.e_desk.api.frontend_api.Getlist', 
         method: 'GET',
         makeParams() {
             return {

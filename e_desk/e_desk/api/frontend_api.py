@@ -6,15 +6,11 @@ import json
 @frappe.whitelist(allow_guest=True)
 def default_confer():
     data=frappe.get_value('Confer', {"is_default":True},['name', 'start_date', 'end_date' , "venuelocation","banner_image","registration_close_date"],as_dict=1)
-    print(data,"ddddddddddddddddddddddddddddddddd")
     return data
 
 @frappe.whitelist(allow_guest=True)
-def Getdoc(doctype):
-    # Split doctype string by comma or use it as a list
+def Getlist(doctype):
     doctype_list = doctype.split(",") if isinstance(doctype, str) else doctype
-    
-    # Fetch and structure data for each doctype
     value = {}
     for doc in doctype_list:
         try:
@@ -30,14 +26,15 @@ def Getdoc(doctype):
     
     return value
 
+@frappe.whitelist(allow_guest=True)
+def GetDoc(doctype,name):
+    data = frappe.get_doc(doctype,name)
+    return data
 
 @frappe.whitelist(allow_guest=True)
 def GetValue(doctype, filter, field, dict):
     filter = json.loads(filter)
-    print(filter,"filterrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
-    print(field,"fieldddddddddddddddddddddddddddddddddddddddddddddddddddddddddd")
     data = frappe.get_value(doctype, filter, field, as_dict=dict)
-    print(data, "Retrieved data +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     return data
 
 
@@ -54,7 +51,6 @@ def ParticipantCreate(data):
     prefix = data.get('prifix', {}).get('value', '') 
     confer_id = data.get('confer', '')
     participant_id = frappe.get_value("User", {"email": email}, "participant_id")
-    print(participant_id, "participant exist..........")
     event_participant_id = frappe.get_value("Event Participant", {"participant": participant_id, "event": confer_id})
 
     if event_participant_id:
@@ -65,7 +61,6 @@ def ParticipantCreate(data):
     if not participant_id:
 
         p_doc = frappe.new_doc('Participant')
-        print(email,"email",first_name,"first_name",last_name,"last_name",business_value,"business_value",role_value,"role_value",chapter_value,"chapter_value",prefix,"prefix")
         p_doc.update({
             "e_mail": email,
             "first_name": first_name,
@@ -88,7 +83,6 @@ def ParticipantCreate(data):
         user = frappe.get_doc("User", {"participant_id": participant_id})
         user.time_zone=time_zone
         print(user,"thi is user")
-        # user.mobile_no=
         user.save(ignore_permissions=True)
         
 
