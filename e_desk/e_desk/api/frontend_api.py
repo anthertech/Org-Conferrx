@@ -55,7 +55,7 @@ def ParticipantCreate(data):
 
     if event_participant_id:
         message = "You are already registered for this event"
-        return {"message": message}
+        return {"status": 409,"message": message}
 
 
     if not participant_id:
@@ -75,7 +75,7 @@ def ParticipantCreate(data):
         })
         p_doc.save(ignore_permissions=True)
         message = f"Participant {p_doc.full_name} registered successfully for the event!"
-        return {"message": message}
+        return {"status": 200,"message": message}
          
     else:
         time_zone = frappe.get_value("Confer", {"is_default": 1}, "time_zone")
@@ -123,4 +123,4 @@ def ParticipantCreate(data):
         confer_permission_doc.save(ignore_permissions=True)
 
     message = f"Participant {participant_doc.full_name} registered successfully for the event!"
-    return {"message": message}
+    return {"status": 200,"message": message}
