@@ -2,6 +2,7 @@ import frappe
 from frappe import _
 from e_desk.e_desk.doctype.registration_desk.registration_desk import RegistrationDesk 
 import json
+from werkzeug.wrappers import Response
 
 @frappe.whitelist(allow_guest=True)
 def default_confer():
@@ -37,10 +38,8 @@ def GetValue(doctype, filter, field, dict):
     data = frappe.get_value(doctype, filter, field, as_dict=dict)
     return data
 
-
 @frappe.whitelist(allow_guest=True)
 def ParticipantCreate(data):
-  
     first_name = data.get('first_name', '')
     last_name = data.get('last_name', '')
     mobile = data.get('mobile', '')
@@ -50,16 +49,21 @@ def ParticipantCreate(data):
     business_value = data.get('bussines', {}).get('value', '') 
     prefix = data.get('prifix', {}).get('value', '') 
     confer_id = data.get('confer', '')
+
+    # Check if the participant already exists
     participant_id = frappe.get_value("User", {"email": email}, "participant_id")
     event_participant_id = frappe.get_value("Event Participant", {"participant": participant_id, "event": confer_id})
 
     if event_participant_id:
+        status = 403
         message = "You are already registered for this event"
-        return {"status": 409,"message": message}
+        return {
+            "message": message,
+            "status": status
+        }
 
-
+    # If participant doesn't exist, create a new one
     if not participant_id:
-
         p_doc = frappe.new_doc('Participant')
         p_doc.update({
             "e_mail": email,
@@ -71,56 +75,49 @@ def ParticipantCreate(data):
             "chapter": chapter_value,
             "prefix": prefix,
             "full_name": f"{first_name} {last_name}",
-            "event":confer_id
+            "event": confer_id
         })
         p_doc.save(ignore_permissions=True)
         message = f"Participant {p_doc.full_name} registered successfully for the event!"
-        return {"status": 200,"message": message}
-         
+        status = 200
+        return {
+            "message": message,
+            "status": status
+        }
+    
+    # Update participant and register for the event if needed
     else:
-        time_zone = frappe.get_value("Confer", {"is_default": 1}, "time_zone")
-        print(time_zone,"this is time zone")
-        user = frappe.get_doc("User", {"participant_id": participant_id})
-        user.time_zone=time_zone
-        print(user,"thi is user")
-        user.save(ignore_permissions=True)
-        
-
         participant_doc = frappe.get_doc("Participant", participant_id)
-        participant_doc.first_name=first_name
-        participant_doc.last_name=last_name
-        participant_doc.full_name=f"{first_name} {last_name}"
-        participant_doc.prefix=prefix
-        participant_doc.role = role_value
-        participant_doc.mobile_number=mobile,
-        participant_doc.business_category = business_value
-        participant_doc.chapter = chapter_value
-        participant_doc.event=confer_id
+        participant_doc.update({
+            "first_name": first_name,
+            "last_name": last_name,
+            "full_name": f"{first_name} {last_name}",
+            "prefix": prefix,
+            "role": role_value,
+            "mobile_number": mobile,
+            "business_category": business_value,
+            "chapter": chapter_value,
+            "event": confer_id
+        })
         participant_doc.save(ignore_permissions=True)
-        if confer_id:
 
-				
-            # Create an Event Participant document
+        if confer_id:
             event_participant_doc = frappe.new_doc('Event Participant')
             event_participant_doc.update({
                 "participant": participant_id,
                 "event": confer_id,
-                "event_role":"Participant",
-                "business_category":business_value,
-                "role":role_value ,
-                "chapter":chapter_value
+                "event_role": "Participant",
+                "business_category": business_value,
+                "role": role_value,
+                "chapter": chapter_value
             })
             event_participant_doc.save(ignore_permissions=True)
-    
-        confer_permission_doc = frappe.new_doc('User Permission')
-    
-        confer_permission_doc.update({
-            "user": participant_doc.e_mail,
-            "allow": "Confer",
-            "for_value": confer_id,
-            "apply_to_all_doctypes": False, 
-        })
-        confer_permission_doc.save(ignore_permissions=True)
 
-    message = f"Participant {participant_doc.full_name} registered successfully for the event!"
-    return {"status": 200,"message": message}
+        message = f"Participant {participant_doc.full_name} updated and registered for the event!"
+        status = 200
+        return {
+            "message": message,
+            "status": status
+        }
+
+

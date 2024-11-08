@@ -10,20 +10,71 @@
             </template>
             <template #body-content>
                 <div>
-                    <div class="" v-if="participant && !view_qr ">
-                        <div class="flex justify-between">
-                            <p >Name: {{ participant.prefix }} {{ participant.first_name }}</p>
-                            <p>Business Category: {{ participant.business_category }}</p>
-                        </div>
-                        <div class="flex justify-between">
-                            <p>Chapter: {{ participant.chapter }}</p>
-                            <p>Email: {{ participant.e_mail }}</p>
-                        </div>
-                        <div class="flex justify-between">
-                            <p>Mobile: {{ participant.mobile_number }}</p>
+                    <div class="" v-if="participant && !view_qr">
+                        <div class="grid  gap-2 sm:grid-cols-2 grid-cols-1">
+                            <FormControl
+                                :type="'text'"
+                                :ref_for="true"
+                                size="xl"
+                                variant="subtle"
+                                placeholder="Placeholder"
+                                :disabled="true"
+                                label="Name:"
+                                v-model="participant.first_name"
+                            />
+                            <div class="flex justify-center items-end">
+                                <Button variant="solid" @click="view_qr = !view_qr ">
+                                    <span v-if="view_qr">
+                                        Hide Qr
+                                    </span>
+                                    <span v-else>
+                                        View Qr
+                                    </span>
+                                </Button>
+                            </div>
+                            <FormControl
+                                :type="'text'"
+                                :ref_for="true"
+                                size="xl"
+                                variant="subtle"
+                                placeholder="Placeholder"
+                                :disabled="true"
+                                label="Business Category:"
+                                v-model="participant.business_category"
+                            />
+                            <FormControl
+                                :type="'text'"
+                                :ref_for="true"
+                                size="xl"
+                                variant="subtle"
+                                placeholder="Placeholder"
+                                :disabled="true"
+                                label="Chapter:"
+                                v-model="participant.chapter"
+                            />
+                            <FormControl
+                                :type="'text'"
+                                :ref_for="true"
+                                size="xl"
+                                variant="subtle"
+                                placeholder="Placeholder"
+                                :disabled="true"
+                                label="Email:"
+                                v-model="participant.e_mail"
+                            />
+                            <FormControl
+                                :type="'text'"
+                                :ref_for="true"
+                                size="xl"
+                                variant="subtle"
+                                placeholder="Placeholder"
+                                :disabled="true"
+                                label="Mobile:"
+                                v-model="participant.mobile_number"
+                            />
                         </div>
                     </div>
-                    <div v-else-if=" participant && view_qr" class="w-full h-full flex justify-center">
+                    <div v-else-if=" participant && view_qr" class="w-full h-[200px] flex justify-center">
                         <img :src="participant.qr" alt="">
 
                     </div>
@@ -32,12 +83,9 @@
             </template>
             <template #actions>
                 <div class="flex justify-center">
-                    <Button variant="solid" @click="view_qr = !view_qr ">
-                        <span v-if="view_qr">
-                            hide Qr
-                        </span>
-                        <span v-else>
-                            View Qr
+                    <Button variant="solid" v-if="view_qr" @click="view_qr = !view_qr ">
+                        <span >
+                            Hide Qr
                         </span>
                     </Button>
                 </div>      

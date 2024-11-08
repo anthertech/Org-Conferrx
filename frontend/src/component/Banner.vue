@@ -185,7 +185,8 @@
 
 <script setup>
     import { formatDateRange } from '../utils/dateFormatter';  
-    
+    import {useToast} from 'vue-toast-notification';
+    import 'vue-toast-notification/dist/theme-sugar.css';
     import { ref , defineProps , computed } from 'vue';
     import { FeatherIcon, Button ,Dialog , FormControl , FileUploader, createResource } from "frappe-ui";
     const  formdata=ref({
@@ -201,6 +202,7 @@
     })
     const dialog2 = ref(false);
 
+    const toast = useToast();
 
     const props = defineProps({
         event: Object,
@@ -244,7 +246,6 @@ const formattedStartTime = computed(() => {
     }
     const handleCreate=()=>{
         formdata.value ['confer']=props.event.name
-        console.log(formdata,"ppppppppppppppppppppppp");
     
         let sent = createResource({
             url: 'e_desk.e_desk.api.frontend_api.ParticipantCreate', 
@@ -254,10 +255,19 @@ const formattedStartTime = computed(() => {
                     data:formdata.value        
                 }
             },
-            // auto: true,
             onSuccess(data) {
                 console.log(data, "Response from server");
-                dialog2.value = false;
+                // console.log();
+
+                if (data.status!=200){
+                    toast.warning(data.message);
+                }else{
+                    toast.success(data.message)
+                    setTimeout(() => {
+                        dialog2.value = false;
+                    }, 3000);
+                }
+                
 
             },
         });
