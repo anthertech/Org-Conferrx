@@ -212,6 +212,25 @@
     const formattedDateRange = computed(() => {
     return formatDateRange(props.event.start_date, props.event.end_date);
 });
+const validateForm = () => {
+    let errors = [];
+    if (!formdata.value.first_name.trim()) errors.push('First Name is required');
+    if (!formdata.value.last_name.trim()) errors.push('Last Name is required');
+    if (!formdata.value.mobile.trim()) errors.push('Mobile Phone is required');
+    if (!formdata.value.email.trim()) errors.push('Email is required');
+    if (!formdata.value.prifix) errors.push('Prefix is required');
+    if (!formdata.value.bussines) errors.push('Business Category is required');
+    if (!formdata.value.role) errors.push('Role is required');
+    if (!formdata.value.chapter) errors.push('Chapter is required');
+    
+    // Display errors if any
+    if (errors.length > 0) {
+        errors.forEach((error) => toast.warning(error));
+        return false;
+    }
+    return true;
+};
+
 const formattedStartTime = computed(() => {
         if (props.event.start_date) {
             let date = new Date(props.event.start_date);
@@ -245,6 +264,9 @@ const formattedStartTime = computed(() => {
         post.fetch()
     }
     const handleCreate=()=>{
+        if (!validateForm()) {
+        return;
+    }
         formdata.value ['confer']=props.event.name
     
         let sent = createResource({
