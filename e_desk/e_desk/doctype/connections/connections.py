@@ -1,4 +1,4 @@
-# Copyright (c) 2024, sathya and contributors
+# Copyright (c) 2024, anthertech and contributors
 # For license information, please see license.txt
 
 # import frappe
