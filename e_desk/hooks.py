@@ -2,9 +2,9 @@ from . import __version__ as app_version
 
 app_name = "e_desk"
 app_title = "E Desk"
-app_publisher = "sathya"
+app_publisher = "anthertech"
 app_description = "E Desk"
-app_email = "sathya@gmail.com"
+app_email = "anther.tech"
 app_license = "MIT"
 
 # Includes in <head>
