@@ -1,5 +1,5 @@
-# Copyright (c) 2024, anthertech and Contributors
-# See license.txt
+# Copyright (c) 2025, Anther Technologies Pvt Ltd and contributors
+# For license information, please see license.txt
 
 # import frappe
 from frappe.tests.utils import FrappeTestCase
