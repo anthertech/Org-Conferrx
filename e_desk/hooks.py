@@ -2,7 +2,7 @@ from . import __version__ as app_version
 
 app_name = "e_desk"
 app_title = "E Desk"
-app_publisher = "anthertech"
+app_publisher = "Anther Technologies Pvt Ltd"
 app_description = "E Desk"
 app_email = "anther.tech"
 app_license = "MIT"
