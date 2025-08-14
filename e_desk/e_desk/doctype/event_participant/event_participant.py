@@ -173,30 +173,34 @@ def get_confer_agenda_events(start, end):
 # code 173
 def event_has_permission(user: str = None) -> str:
     print("Checking permission for Conf Programme Attendee...")
-    
     # Get the current user if not provided
     user = user or frappe.session.user
-
-    # Get the user's role profile from the User doctype
-    email,role_profile, participant_id = frappe.db.get_value("User", {"name": user}, ["email","role_profile_name", "participant_id"])
-    print(user,participant_id,role_profile,"role profileeee..............")
-
+  
+    # email,role_profile, participant_id = frappe.db.get_value("User", {"name": user}, ["email","role_profile_name", "participant_id"])
+    email, participant_id = frappe.db.get_value("User", {"name": user}, ["email", "participant_id"])
+    print(user, participant_id, "checking roles..............")
     # If the user has the Participant or Volunteer role profile
-    if role_profile in ["Participant"]:
+    roles = frappe.get_roles(user)
+
+    # Allow only if user has "Participant" role
+    # AND does not have "E Desk Admin" or "Volunteer" role
+    if "Participant" in roles and not any(r in ["E-Desk Admin", "Volunteer","System Manager"] for r in roles):
+    # if role_profile in ["Participant"]:
         # Return the condition to restrict access to only the user's participant_id
         return f"`tabEvent Participant`.participant = '{participant_id}'"
-    
     # Deny access by default
     return None
-
 
 
 def participant_has_permission(doc, user):
     print(doc,"this si doc")
     # Get the current user if not provided
     user = user or frappe.session.user
-    email,role_profile, participant_id = frappe.db.get_value("User", {"name": user}, ["email","role_profile_name", "participant_id"])
-    if role_profile in ["Participant"]:
+    email, participant_id = frappe.db.get_value("User", {"name": user}, ["email", "participant_id"])
+    roles = frappe.get_roles(user)
+    # email,role_profile, participant_id = frappe.db.get_value("User", {"name": user}, ["email","role_profile_name", "participant_id"])
+    # if role_profile in ["Participant"]:
+    if "Participant" in roles and not any(r in ["E-Desk Admin", "Volunteer","System Manager"] for r in roles):
         if doc.e_mail==email:
             return True
         return False
@@ -205,9 +209,11 @@ def event_participant_has_permission(doc, user):
     print("welcomeeeeeeeeeeeeeeeeeeee")
     print(doc,"doc eventttt..............")
     user = user or frappe.session.user
-    email,role_profile, participant_id = frappe.db.get_value("User", {"name": user}, ["email","role_profile_name", "participant_id"])
-    print( email,role_profile, participant_id)
-    if role_profile in ["Participant"]:
+    email, participant_id = frappe.db.get_value("User", {"name": user}, ["email", "participant_id"])
+    roles = frappe.get_roles(user)
+    # email,role_profile, participant_id = frappe.db.get_value("User", {"name": user}, ["email","role_profile_name", "participant_id"])
+    # if role_profile in ["Participant"]:
+    if "Participant" in roles and not any(r in ["E-Desk Admin", "Volunteer","System Manager"] for r in roles):
         if doc.participant ==participant_id:
             return True
         return False

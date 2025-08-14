@@ -70,7 +70,11 @@ class Confer(Document):
 						file_doc.folder = folder_path	
 						file_doc.save()
 						frappe.msgprint(f"File '{file_doc.file_name}' moved to folder '{folder_name}'")
-	
+						
+	def before_insert(self):
+		# Reset is_default when duplicating
+		if self.is_new() and self.is_default:
+			self.is_default = 0
 
 
 @frappe.whitelist()

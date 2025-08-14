@@ -70,7 +70,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-10-24 12:26:04.337560",
+ "modified": "2025-08-11 11:33:53.063527",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conferrx",
@@ -79,8 +79,18 @@
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
- "roles": [],
- "sequence_id": 35.0,
+ "roles": [
+  {
+   "role": "Participant"
+  },
+  {
+   "role": "Volunteer"
+  },
+  {
+   "role": "E-Desk Admin"
+  }
+ ],
+ "sequence_id": 2.0,
  "shortcuts": [
   {
    "color": "Grey",

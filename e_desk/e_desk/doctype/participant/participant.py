@@ -9,6 +9,7 @@ from frappe.utils import get_datetime, add_to_date , now ,getdate
 from datetime import datetime, time, timedelta
 from e_desk.e_desk.doctype.registration_desk.registration_desk import RegistrationDesk 
 from frappe import _
+from antpoll.antpoll.doctype.community_poll_users.community_poll_users import createCommunityUser
 
 
 class Participant(Document):
@@ -22,8 +23,9 @@ class Participant(Document):
 			self.save(ignore_permissions=True)
 		if not self.e_mail:
 			frappe.throw("Email is required to create a new User.")
+
+		
 		if not frappe.db.exists('User',self.e_mail):
-			
 			doc=frappe.new_doc('User')
 			doc.update({
 				"email":self.e_mail,
@@ -33,15 +35,19 @@ class Participant(Document):
 				"mobile_no":self.mobile_number,
 				# "new_password":self.mobile_number,
 				"send_welcome_email":1,
-				"role_profile_name":"Participant",
+				# "role_profile_name":"Participant",
 				"user_type":"System User",
 				"module_profile":"E-desk profile",
 				"participant_id":self.name
 
 			})
-			roles = frappe.get_roles("Participant")
-			for role in roles:
-				doc.append("roles", {"role": role})
+
+			if frappe.db.exists("Role", "Participant"):
+				doc.append("roles", {"role": "Participant"})
+		
+			# roles = frappe.get_roles("Participant")
+			# for role in roles:
+			# 	doc.append("roles", {"role": role})
 			
 			doc.save(ignore_permissions=True)
 			qr=RegistrationDesk.create_qr_participant(self)
@@ -49,8 +55,6 @@ class Participant(Document):
 			self.save()
 			confer_id = self.event
 			if confer_id:
-
-				
 				# Create an Event Participant document
 				event_participant_doc = frappe.new_doc('Event Participant')
 				event_participant_doc.update({
@@ -60,8 +64,6 @@ class Participant(Document):
 					"business_category":self.business_category,
 					"role":self.role,
 					"chapter":self.chapter
-
-
 
 				})
 				event_participant_doc.save(ignore_permissions=True)
@@ -75,12 +77,19 @@ class Participant(Document):
 				"apply_to_all_doctypes": False, 
 			})
 			confer_permission_doc.save(ignore_permissions=True)
+
+
+			# integrate_poll = frappe.db.get_value("Conferrx Settings", None, "integrate_with_poll")
+			# if int(integrate_poll) == 1:
+			# 	createCommunityUser(self.full_name, self.e_mail, self.mobile_number)
+
+
 			# frappe.msgprint(
             #     msg=f"User created successfully!<br>Login Email: {doc.email}<br>Login Password: {self.mobile_number}",
             #     title="User Login Details",
             #     indicator='green'
             # )
-
+	
 	def validate(self):
 		# Check if profile_photo is set and find related User document
 		if self.profile_photo:
@@ -113,7 +122,21 @@ class Participant(Document):
 			user.save()
 
 
-	
+	# def create_community_poll_user(self):
+	# 	print("\n\n\n community poll userrrrrrrrrrrrr\n")
+	# 	if not frappe.db.exists("Community Poll Users", {"email": self.e_mail}):
+	# 		polluser_doc = frappe.new_doc("Community Poll Users")
+	# 		polluser_doc.update(
+	# 		{
+	# 			"first_name" : self.full_name,
+	# 			"mobile_number": self.mobile_number,
+	# 			"email": self.e_mail,
+	# 			"password": frappe.generate_hash(length=12)
+	# 		})
+	# 		polluser_doc.flags.ignore_validate = True 
+	# 		polluser_doc.insert(ignore_permissions=True)
+	# 		print("created poll user!!!!!!!!!!!!!!!!!!!!!!!!\n\n")
+
 # Converting the participant to volunteer
 @frappe.whitelist()
 def volunteer_creation(doc):
@@ -130,9 +153,12 @@ def volunteer_creation(doc):
 
 	# converting the user to volunteer profile
 	user=frappe.get_doc("User",doc.get('e_mail'))
+	existing_roles = [r.role for r in user.roles]
+	if "Volunteer" not in existing_roles:
+		user.append("roles", {"role": "Volunteer"})
 	user.update(
 		{
-			"role_profile_name":"Volunteer",
+			# "role_profile_name":"Volunteer",
 			"user_type":"System User"
 		}
 	)

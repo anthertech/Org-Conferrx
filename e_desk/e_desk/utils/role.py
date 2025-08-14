@@ -13,16 +13,22 @@ def update_user_role(user, role_name):
 
 @frappe.whitelist()
 def update_event_participant_role(participant,confer, role_name):
-    print(participant,confer,role_name,"this are the roles...........")
+    print("\n\n\n\n",participant,confer,role_name,"this are the roles...........\n\n\n")
     event_participant= frappe.db.get_value('Event Participant', {'event': confer,'participant':participant}, ['name'])
     frappe.db.set_value('Event Participant', event_participant, 'event_role', role_name, update_modified=False)
     user=frappe.get_doc('User',{'participant_id': participant})
-    print(user.role_profile_name,"user.role_profile_name")
-    user.role_profile_name = role_name
+    if user:
+        existing_roles = [r.role for r in user.roles]
+        if role_name not in existing_roles:
+            user.append("roles", {"role": role_name})
+            user.update(
+                {
+                    "user_type":"System User"
+                }
+            )
+       
     user.save()
     frappe.db.commit()
-    # update_user_role(user ,role_name)
-
 
 
 

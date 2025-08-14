@@ -95,9 +95,11 @@ frappe.ui.form.on('Programme Attendance', {
     },
 
 
-
-
-
+    scan_qr: function(frm) {
+        if (frm.doc.scan_qr) {
+            frm.events.submit(frm);
+        }
+    },
 
     submit: function(frm) {
         // var name = JSON.parse(frm.doc.scan_qr).name;

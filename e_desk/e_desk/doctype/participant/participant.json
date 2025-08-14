@@ -183,8 +183,17 @@
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
- "links": [],
- "modified": "2024-10-28 11:06:45.977039",
+ "links": [
+  {
+   "link_doctype": "Event Participant",
+   "link_fieldname": "participant"
+  },
+  {
+   "link_doctype": "Connections",
+   "link_fieldname": "participant_id"
+  }
+ ],
+ "modified": "2025-08-08 14:17:15.121353",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",
@@ -226,6 +235,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

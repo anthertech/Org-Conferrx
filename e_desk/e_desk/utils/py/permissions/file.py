@@ -52,13 +52,17 @@ def get_file_permission(user: str = None) -> str:
 
 def participant_query_conditions(user: str = None) -> str:
     user = user or frappe.session.user
+    roles = frappe.get_roles(user)
+    # If the user is a participant or volunteer, show only their own records
+    if any(r in ["Participant", "Volunteer"] for r in roles) and all(x not in roles for x in ["E-Desk Admin", "System Manager"]):
+        return f"`tabParticipant`.e_mail = '{user}'"
+    
     # Get the user's role profile from the User doctype
-    role_profile = frappe.db.get_value("User", {"name": user}, "role_profile_name")
-    print(role_profile,"role profile.......................")
+    # role_profile = frappe.db.get_value("User", {"name": user}, "role_profile_name")
 
     # If the user is a participant or volunteer, show only their own records
-    if role_profile in ["Participant", "Volunteer"]:
-        return f"`tabParticipant`.e_mail = '{user}'"
+    # if role_profile in ["Participant", "Volunteer"]:
+    #     return f"`tabParticipant`.e_mail = '{user}'"
     
     # If the user is not a participant or volunteer, restrict access entirely
     return None

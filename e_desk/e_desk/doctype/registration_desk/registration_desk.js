@@ -2,6 +2,12 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Registration Desk', {
+
+	custom_scan_qr: function(frm) {
+        if (frm.doc.custom_scan_qr) {
+            frm.events.custom_submit(frm);
+        }
+    },
 	custom_submit: function(frm) {
 		try {
 			// Parse the scanned QR data to get the Participant name (or ID)

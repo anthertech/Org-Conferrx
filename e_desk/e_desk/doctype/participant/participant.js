@@ -80,49 +80,50 @@ frappe.ui.form.on('Participant', {
 				toggleEditFields(frm, true); 
 			  });}
 		
-			if (hasPermission) {
-				frm.add_custom_button(__('Volunteer'), function() {
-					
-					let d = new frappe.ui.Dialog({
-						title: 'Enter details',
-						fields: [
-							{
-								label: 'Confer List',
-								fieldname: 'confer',
-								fieldtype: 'Link',
-								options: 'Confer',
-								reqd: 1 ,
-								get_query: function() {
-									return {
+			  if (hasPermission) {
+
+				function addRoleButton(label, role) {
+					frm.add_custom_button(__(label), function () {
+						let d = new frappe.ui.Dialog({
+							title: 'Enter details',
+							fields: [
+								{
+									label: 'Confer List',
+									fieldname: 'confer',
+									fieldtype: 'Link',
+									options: 'Confer',
+									reqd: 1,
+									get_query: () => ({
 										query: "e_desk.e_desk.utils.role.get_filtered_confer",
-										filters: {
-											participant: frm.doc.name,
-											 // Pass the participant name
-										}
-									};
+										filters: { participant: frm.doc.name }
+									})
 								}
-							}
-						],
-						primary_action_label: 'Submit',
-						primary_action(values) {    
+							],
+							primary_action_label: 'Submit',
+							primary_action(values) {
+								console.log("rrrrrrrrrrrrrrr",role)
 								frappe.call({
 									method: "e_desk.e_desk.utils.role.update_event_participant_role",
 									args: {
 										participant: frm.doc.name,
 										confer: values.confer,
-										role_name:'Volunteer'
+										role_name: role
 									},
-									callback: function() {
-										frappe.msgprint("Volunteer Created Successfully");
-										d.hide(); 
+									callback: () => {
+										frappe.msgprint(`${label} Updated Successfully`);
+										d.hide();
 									}
 								});
-						}
-					});
-					d.show();
-				}, __("Create"));
+							}
+						});
+						d.show();
+					}, __("Create"));
+				}
+			
+				addRoleButton('Volunteer', 'Volunteer');
+				if (1 === 1) addRoleButton('Poll Master', 'Poll Master');
 			}
-
+			
 		let qrHTML = ''
 		
 			if (frm.doc.qr) {
