@@ -6,8 +6,7 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_1jap",
-  "event",
-  "integrate_with_poll"
+  "event"
  ],
  "fields": [
   {
@@ -19,18 +18,12 @@
    "fieldtype": "Link",
    "label": "Event",
    "options": "Confer"
-  },
-  {
-   "default": "0",
-   "fieldname": "integrate_with_poll",
-   "fieldtype": "Check",
-   "label": "Integrate With Poll"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-08-13 11:39:32.046706",
+ "modified": "2025-08-14 10:28:45.284202",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conferrx Settings",

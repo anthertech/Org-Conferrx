@@ -24,47 +24,37 @@ frappe.ui.form.on('Participant', {
     },
 
 
+
+		scan_qr: function(frm) {
+			if (!frm.doc.scan_qr) return;
 	
-		submit: function(frm) {
-			// Parse the scanned QR data to get the Participant name (or ID)
 			try {
-				// var scan_data = JSON.parse(frm.doc.scan_qr).name;  // Assuming QR contains JSON data
-				var scan_data = frm.doc.scan_qr
-				console.log(scan_data, "data.");
-				console.log(frm.doc.e_mail,"this is doc name")
+				var scan_data = frm.doc.scan_qr;
+				console.log(scan_data, "scanned data");
+				console.log(frm.doc.e_mail, "email");
 	
-					if (scan_data) {
-						// Call the backend to fetch the participant details
-						frappe.call({
-							method: "e_desk.e_desk.doctype.participant.participant.connection_doc",
-							args: {
-								doc_name: scan_data,
-								email:frm.doc.e_mail
-						},
-						callback: function(r) {
-							if (r.message) {
-								console.log(r.message, "this is message");
-								connectionlist(frm)
-								frm.set_value('scan_qr',"");
-				
-							} else {
-								frappe.msgprint("No participant details found for the scanned QR.");
-							}
+				frappe.call({
+					method: "e_desk.e_desk.doctype.participant.participant.connection_doc",
+					args: {
+						doc_name: scan_data,
+						email: frm.doc.e_mail
+					},
+					callback: function(r) {
+						if (r.message) {
+							console.log(r.message, "backend response");
+							connectionlist(frm);
+							frm.set_value('scan_qr', ""); // clear after success
+						} else {
+							frappe.msgprint("No participant details found for the scanned QR.");
 						}
-					});
-				}
-				 else {
-					frappe.msgprint("Invalid QR code scanned.");
-				}
+					}
+				});
+	
 			} catch (e) {
-				console.error("Error parsing QR data: ", e);
+				console.error("Error processing QR:", e);
 				frappe.msgprint("Failed to process the scanned QR code.");
 			}
-		
-
 		},
-
-
 		
 			
 

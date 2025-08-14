@@ -162,6 +162,7 @@
   {
    "fieldname": "submit",
    "fieldtype": "Button",
+   "hidden": 1,
    "label": "Submit"
   },
   {
@@ -193,7 +194,7 @@
    "link_fieldname": "participant_id"
   }
  ],
- "modified": "2025-08-08 14:17:15.121353",
+ "modified": "2025-08-14 10:38:33.692502",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",

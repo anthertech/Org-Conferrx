@@ -8,8 +8,6 @@ from frappe.model.document import Document
 from frappe.utils import get_datetime, add_to_date , now ,getdate
 from datetime import datetime, time, timedelta
 from e_desk.e_desk.doctype.registration_desk.registration_desk import RegistrationDesk 
-from frappe import _
-from antpoll.antpoll.doctype.community_poll_users.community_poll_users import createCommunityUser
 
 
 class Participant(Document):
@@ -78,12 +76,6 @@ class Participant(Document):
 			})
 			confer_permission_doc.save(ignore_permissions=True)
 
-
-			# integrate_poll = frappe.db.get_value("Conferrx Settings", None, "integrate_with_poll")
-			# if int(integrate_poll) == 1:
-			# 	createCommunityUser(self.full_name, self.e_mail, self.mobile_number)
-
-
 			# frappe.msgprint(
             #     msg=f"User created successfully!<br>Login Email: {doc.email}<br>Login Password: {self.mobile_number}",
             #     title="User Login Details",
@@ -110,9 +102,6 @@ class Participant(Document):
 		# doc.save()
 		return category_files
 
-
-
-
 	def on_trash(self):
 		user_list=frappe.get_list("User",filters={"participant_id":self.name},pluck='name')
 		for i in user_list:
@@ -121,21 +110,6 @@ class Participant(Document):
 			user.participant_id=''
 			user.save()
 
-
-	# def create_community_poll_user(self):
-	# 	print("\n\n\n community poll userrrrrrrrrrrrr\n")
-	# 	if not frappe.db.exists("Community Poll Users", {"email": self.e_mail}):
-	# 		polluser_doc = frappe.new_doc("Community Poll Users")
-	# 		polluser_doc.update(
-	# 		{
-	# 			"first_name" : self.full_name,
-	# 			"mobile_number": self.mobile_number,
-	# 			"email": self.e_mail,
-	# 			"password": frappe.generate_hash(length=12)
-	# 		})
-	# 		polluser_doc.flags.ignore_validate = True 
-	# 		polluser_doc.insert(ignore_permissions=True)
-	# 		print("created poll user!!!!!!!!!!!!!!!!!!!!!!!!\n\n")
 
 # Converting the participant to volunteer
 @frappe.whitelist()
