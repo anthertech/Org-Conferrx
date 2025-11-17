@@ -18,3 +18,5 @@ class Hotel(Document):
 								'links':address.links+[{"link_doctype":"Hotel","link_name":self.name}]
 								})
 				address.save(ignore_permissions=True)
+
+############################################### test commit 
