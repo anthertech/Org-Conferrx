@@ -6,18 +6,24 @@
                 <li class="hover:overline decoration-4 decoration-red-800  duration-1000">                    
                     Home
                 </li>
-                <li class="hover:overline decoration-4 decoration-red-800">  
+                <!-- <li class="hover:overline decoration-4 decoration-red-800">  
                     Agenda
                 </li>
                 <li class="hover:overline decoration-4 decoration-red-800">  
                     Speakers
-                </li>
-                <li class="hover:overline decoration-4 decoration-red-800">  
+                </li> -->
+                <!-- <li class="hover:overline decoration-4 decoration-red-800">  
+                    Sponsors        
+                </li> -->
+                <li 
+                    class="hover:overline decoration-4 decoration-red-800"
+                    @click="goToSponsors">
                     Sponsors
                 </li>
-                <li class="hover:overline decoration-4 decoration-red-800">  
+
+                <!-- <li class="hover:overline decoration-4 decoration-red-800">  
                     Venue
-                </li>
+                </li> -->
                 <li v-if="session.isLoggedIn" class="rounded-full flex justify-center items-center" >  
                     <Dropdown
                         :options="[
@@ -72,10 +78,16 @@
                                 label: 'Speakers',
                                 icon: () => h(FeatherIcon, { name: 'mic' }),
                             },
+                            // {
+                            //     label: 'Sponsors',
+                            //     icon: () => h(FeatherIcon, { name: 'dollar-sign' }),
+                            // },
                             {
-                                label: 'Sponsors',
-                                icon: () => h(FeatherIcon, { name: 'dollar-sign' }),
-                            },
+    label: 'Sponsors',
+    icon: () => h(FeatherIcon, { name: 'dollar-sign' }),
+    onClick: () => goToSponsors(),
+},
+
                             {
                                 label: 'Venue',
                                 icon: () => h(FeatherIcon, { name: 'map-pin' }),
@@ -136,4 +148,9 @@ const redirectToLogin = () => {
     const redirectTo = encodeURIComponent('/home');
     window.location.href =`/login?redirect-to=${redirectTo}#login`; // Redirect to the login page
 };
+const goToSponsors = () => {
+    window.location.href = window.location.origin + "/sponsors";
+
+};
+
 </script>
