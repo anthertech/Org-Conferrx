@@ -33,6 +33,11 @@
                         icon: () => h(FeatherIcon, { name: 'user' }),
                         },
                         {
+                        label: 'Switch to Desk',
+                        icon: () => h(FeatherIcon, { name: 'grid' }),
+                        onClick: goToDesk,
+                        },
+                        {
                             label: 'Log out',
                             icon: () => h(FeatherIcon, { name: 'log-out' }),
                             // onClick:logout.fetch(),
@@ -70,28 +75,28 @@
                                 label: 'Home',
                                 icon: () => h(FeatherIcon, { name: 'home' }),
                             },
-                            {
-                                label: 'Agenda',
-                                icon: () => h(FeatherIcon, { name: 'calendar' }),
-                            },
-                            {
-                                label: 'Speakers',
-                                icon: () => h(FeatherIcon, { name: 'mic' }),
-                            },
+                            // {
+                            //     label: 'Agenda',
+                            //     icon: () => h(FeatherIcon, { name: 'calendar' }),
+                            // },
+                            // {
+                            //     label: 'Speakers',
+                            //     icon: () => h(FeatherIcon, { name: 'mic' }),
+                            // },
                             // {
                             //     label: 'Sponsors',
                             //     icon: () => h(FeatherIcon, { name: 'dollar-sign' }),
                             // },
                             {
-    label: 'Sponsors',
-    icon: () => h(FeatherIcon, { name: 'dollar-sign' }),
-    onClick: () => goToSponsors(),
-},
+                            label: 'Sponsors',
+                            icon: () => h(FeatherIcon, { name: 'dollar-sign' }),
+                            onClick: () => goToSponsors(),
+                        },
 
-                            {
-                                label: 'Venue',
-                                icon: () => h(FeatherIcon, { name: 'map-pin' }),
-                            },
+                            // {
+                            //     label: 'Venue',
+                            //     icon: () => h(FeatherIcon, { name: 'map-pin' }),
+                            // },
                             session.isLoggedIn
                             ? {
                                 label: 'Log out',
@@ -99,6 +104,13 @@
                                 // onClick:logout.fetch(),
                                 onClick:handleLogout,
                             }
+                            ? {
+                                label: 'Switch to Desk',
+                                icon: () => h(FeatherIcon, { name: 'grid' }),
+                                onClick: goToDesk,
+                            }
+                            : null
+
                             : {
                                 label: 'Log in',
                                 icon: () => h(FeatherIcon, { name: 'log-in' }),
@@ -144,13 +156,14 @@ const handleLogout = () => {
 }
 
 const redirectToLogin = () => {
-    
-    const redirectTo = encodeURIComponent('/home');
-    window.location.href =`/login?redirect-to=${redirectTo}#login`; // Redirect to the login page
+    window.location.href = "/login?redirect-to=/app";
 };
 const goToSponsors = () => {
     window.location.href = window.location.origin + "/sponsors";
 
+};
+const goToDesk = () => {
+    window.location.href = "/app";
 };
 
 </script>
