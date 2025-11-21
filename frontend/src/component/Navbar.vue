@@ -21,9 +21,6 @@
                     Sponsors
                 </li>
 
-                <!-- <li class="hover:overline decoration-4 decoration-red-800">  
-                    Venue
-                </li> -->
                 <li v-if="session.isLoggedIn" class="rounded-full flex justify-center items-center" >  
                     <Dropdown
                         :options="[
