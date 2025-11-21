@@ -1,6 +1,11 @@
 <template>
     <div class="border-b-2 w-full  h-[70px] flex lg:justify-around justify-between items-center fixed ">
-        <div class="lg:w-[70px] sm:w-1/2  p-5 lg:p-0 "><img src="" class="" alt="Logo" /></div>
+        <!-- <div class="lg:w-[70px] sm:w-1/2  p-5 lg:p-0 "><img src="" class="" alt="Logo" /></div> -->
+        <img
+        :src="logo"
+        alt="Logo"
+        class="h-12 object-contain"
+        />
         <div class="lg:flex hidden justify-center items-center">
             <ul class="flex justify-center items-center gap-6 text-sm hover:cursor-pointer">
                 <li class="hover:overline decoration-4 decoration-red-800  duration-1000">                    
@@ -136,6 +141,7 @@ import { defineProps, defineEmits, h } from 'vue';
 import { session  } from '../data/session';
 import { FeatherIcon, Dropdown, Button, createResource} from 'frappe-ui';
 import { useRouter } from 'vue-router'; // Import the useRouter hook
+import logo from "@/assets/logo_anther_1.png"
 
 const emit = defineEmits(['toggle-dialog']); // Declaring event
 const props = defineProps({
@@ -162,5 +168,7 @@ const goToSponsors = () => {
 const goToDesk = () => {
     window.location.href = "/app";
 };
+
+
 
 </script>
