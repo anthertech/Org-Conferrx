@@ -1,0 +1,79 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:CONTACT-{MM}-{###}",
+ "creation": "2025-11-21 17:09:07.711199",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "scan_qr",
+  "event",
+  "column_break_sfdq",
+  "added_by",
+  "scanned_participant",
+  "full_name"
+ ],
+ "fields": [
+  {
+   "fieldname": "column_break_sfdq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "added_by",
+   "fieldtype": "Link",
+   "label": "Added By",
+   "options": "Participant"
+  },
+  {
+   "fieldname": "scanned_participant",
+   "fieldtype": "Link",
+   "label": "Scanned Participant",
+   "options": "Participant"
+  },
+  {
+   "fieldname": "scan_qr",
+   "fieldtype": "Data",
+   "label": "Scan QR",
+   "options": "Barcode"
+  },
+  {
+   "fetch_from": "scanned_participant.event",
+   "fieldname": "event",
+   "fieldtype": "Data",
+   "label": "Event"
+  },
+  {
+   "fetch_from": "scanned_participant.full_name",
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "label": "Full Name"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-11-21 19:01:53.196386",
+ "modified_by": "ancy@gmail.com",
+ "module": "E Desk",
+ "name": "Add to Contacts",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
