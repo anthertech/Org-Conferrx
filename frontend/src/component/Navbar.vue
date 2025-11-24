@@ -2,22 +2,23 @@
     <div class="border-b-2 w-full  h-[70px] flex lg:justify-around justify-between items-center fixed ">
         <!-- <div class="lg:w-[70px] sm:w-1/2  p-5 lg:p-0 "><img src="" class="" alt="Logo" /></div> -->
         <div class="object-contain h-10 w-20 sm:h-12 sm:w-28 lg:h-14 lg:w-32">  
-        <img
-        :src="siteLogo || logo"
-        alt="Logo"
-        class="h-12 object-contain"
-        style="width: 100px !important;"/>
+            <img
+            :src="siteLogo"
+            alt="Logo"
+            class="h-12 object-contain"
+            />
 
         </div>
         <div class="lg:flex hidden justify-center items-center">
             <ul class="flex justify-center items-center gap-6 text-sm hover:cursor-pointer">
-                     <li
-                        v-for="item in navbarItems"
-                        :key="item.name"
-                        class="hover:overline decoration-4 decoration-red-800"
-                        @click="goTo(item.url)">
-                        {{ item.label }}
-                    </li>
+                <li
+                v-for="item in navbarItems"
+                :key="item.label"
+                class="hover:overline decoration-4 decoration-red-800"
+                @click="goTo(item.url)"
+                >
+                {{ item.label }}
+                </li>
 
                     <li v-if="session.isLoggedIn" class="rounded-full flex justify-center items-center" >  
                     <Dropdown
@@ -136,29 +137,24 @@ import { useRouter } from 'vue-router';
 // import logo from "@/assets/logo_anther_1.png";
 
 const navbarItems = ref([]);
-const siteLogo = ref("");  // <-- dynamic logo
+const siteLogo = ref("");
 
 const navbarResource = createResource({
-    url: "frappe.client.get",
+    url: "e_desk.e_desk.api.frontend_api.get_navbar_items",
     method: "GET",
-    makeParams() {
-        return {
-            doctype: "Website Settings",
-            name: "Website Settings"
-        };
-    },
     onSuccess(data) {
-        console.log("Website Settings Loaded:", data);
+        console.log("Navbar API Response:", data);
 
-        if (data && data.top_bar_items && Array.isArray(data.top_bar_items)) {
+        if (data?.top_bar_items) {
             navbarItems.value = data.top_bar_items;
         }
 
-        if (data.banner_image) {
-            siteLogo.value = data.banner_image;
+        if (data?.logo) {
+            siteLogo.value = data.logo;
         }
     }
 });
+
 
 onMounted(() => {
     navbarResource.fetch();

@@ -121,3 +121,10 @@ def ParticipantCreate(data):
         }
 
 
+@frappe.whitelist(allow_guest=True)
+def get_navbar_items():
+    ws = frappe.get_single("Website Settings")
+    return {
+        "top_bar_items": ws.top_bar_items,
+        "logo": ws.banner_image or ws.website_logo
+    }
