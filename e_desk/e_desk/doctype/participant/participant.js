@@ -111,7 +111,7 @@ frappe.ui.form.on('Participant', {
 				}
 			
 				addRoleButton('Volunteer', 'Volunteer');
-				if (1 === 1) addRoleButton('Poll Master', 'Poll Master');
+				// if (1 === 1) addRoleButton('Poll Master', 'Poll Master');
 			}
 			
 		let qrHTML = ''
@@ -267,25 +267,45 @@ frm.get_field("address_html").$wrapper.find('.card-container').append(card_html)
 	}
 }
 
+// function toggleEditFields(frm, isEditable) {
+// 	var user= 'mathew@gmail.com'
+//     var fieldnames = Object.keys(frm.fields_dict);
+// 	console.log(fieldnames,"this is field names...........")
+//     for (var i = 0; i < fieldnames.length; i++) {
+//         var fieldname = fieldnames[i];
+// 		if(frappe.session.user != user){
+// 			if (frm.fields_dict[fieldname].df.fieldtype !== 'Section Break' &&
+// 				frm.fields_dict[fieldname].df.fieldtype !== 'Column Break' &&
+// 				isEditable?!frm.fields_dict[fieldname].df.reqd:true )
+// 				{
+// 				frm.toggle_enable(fieldname, isEditable);
+//         }}
+// 		else{
+// 			if (frm.fields_dict[fieldname].df.fieldtype !== 'Section Break' &&
+// 				frm.fields_dict[fieldname].df.fieldtype !== 'Column Break')
+// 				{
+// 				frm.toggle_enable(fieldname, isEditable);
+//         }
+// 		}
+//     }
+// }
 function toggleEditFields(frm, isEditable) {
-	var user= 'mathew@gmail.com'
-    var fieldnames = Object.keys(frm.fields_dict);
-	console.log(fieldnames,"this is field names...........")
-    for (var i = 0; i < fieldnames.length; i++) {
-        var fieldname = fieldnames[i];
-		if(frappe.session.user != user){
-			if (frm.fields_dict[fieldname].df.fieldtype !== 'Section Break' &&
-				frm.fields_dict[fieldname].df.fieldtype !== 'Column Break' &&
-				isEditable?!frm.fields_dict[fieldname].df.reqd:true )
-				{
-				frm.toggle_enable(fieldname, isEditable);
-        }}
-		else{
-			if (frm.fields_dict[fieldname].df.fieldtype !== 'Section Break' &&
-				frm.fields_dict[fieldname].df.fieldtype !== 'Column Break')
-				{
-				frm.toggle_enable(fieldname, isEditable);
+    let fieldnames = Object.keys(frm.fields_dict);
+
+    for (let i = 0; i < fieldnames.length; i++) {
+        let fieldname = fieldnames[i];
+
+        // ❗ Keep scan_qr always editable
+        if (fieldname === "scan_qr") continue;
+
+        let df = frm.fields_dict[fieldname].df;
+
+        // Skip layout fields
+        if (df.fieldtype === "Section Break" || df.fieldtype === "Column Break") {
+            continue;
         }
-		}
+
+        // Default rule: disable all until editable = true
+        frm.toggle_enable(fieldname, isEditable);
     }
 }
