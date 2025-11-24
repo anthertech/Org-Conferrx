@@ -17,7 +17,7 @@
                 <p v-if="new Date(event.registration_close_date) < new Date()" class="border-2 p-2 w-fit hover:cursor-not-allowed">
     Event has ended
 </p>
-<p v-else class="border-2 p-2 w-fit hover:cursor-pointer" @click="handleRegisterDialog">
+<p v-else class="border-2 p-2 w-fit hover:cursor-pointer bg-red-600 text-white rounded-md" @click="handleRegisterDialog">
     Register Now
 </p>
             </div>

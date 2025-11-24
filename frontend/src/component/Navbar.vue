@@ -1,32 +1,25 @@
 <template>
     <div class="border-b-2 w-full  h-[70px] flex lg:justify-around justify-between items-center fixed ">
         <!-- <div class="lg:w-[70px] sm:w-1/2  p-5 lg:p-0 "><img src="" class="" alt="Logo" /></div> -->
+        <div class="object-contain h-10 w-20 sm:h-12 sm:w-28 lg:h-14 lg:w-32">  
         <img
-        :src="logo"
+        :src="siteLogo || logo"
         alt="Logo"
         class="h-12 object-contain"
-        />
+        style="width: 100px !important;"/>
+
+        </div>
         <div class="lg:flex hidden justify-center items-center">
             <ul class="flex justify-center items-center gap-6 text-sm hover:cursor-pointer">
-                <li class="hover:overline decoration-4 decoration-red-800  duration-1000">                    
-                    Home
-                </li>
-                <!-- <li class="hover:overline decoration-4 decoration-red-800">  
-                    Agenda
-                </li>
-                <li class="hover:overline decoration-4 decoration-red-800">  
-                    Speakers
-                </li> -->
-                <!-- <li class="hover:overline decoration-4 decoration-red-800">  
-                    Sponsors        
-                </li> -->
-                <li 
-                    class="hover:overline decoration-4 decoration-red-800"
-                    @click="goToSponsors">
-                    Sponsors
-                </li>
+                     <li
+                        v-for="item in navbarItems"
+                        :key="item.name"
+                        class="hover:overline decoration-4 decoration-red-800"
+                        @click="goTo(item.url)">
+                        {{ item.label }}
+                    </li>
 
-                <li v-if="session.isLoggedIn" class="rounded-full flex justify-center items-center" >  
+                    <li v-if="session.isLoggedIn" class="rounded-full flex justify-center items-center" >  
                     <Dropdown
                         :options="[
                         {
@@ -135,23 +128,51 @@
         </div>
     </div>
 </template>
-
 <script setup>
-import { defineProps, defineEmits, h } from 'vue';
-import { session  } from '../data/session';
-import { FeatherIcon, Dropdown, Button, createResource} from 'frappe-ui';
-import { useRouter } from 'vue-router'; // Import the useRouter hook
-import logo from "@/assets/logo_anther_1.png"
+import { defineProps, defineEmits, h, ref, onMounted } from 'vue';
+import { session } from '../data/session';
+import { FeatherIcon, Dropdown, Button, createResource } from 'frappe-ui';
+import { useRouter } from 'vue-router';
+// import logo from "@/assets/logo_anther_1.png";
 
-const emit = defineEmits(['toggle-dialog']); // Declaring event
+const navbarItems = ref([]);
+const siteLogo = ref("");  // <-- dynamic logo
+
+const navbarResource = createResource({
+    url: "frappe.client.get",
+    method: "GET",
+    makeParams() {
+        return {
+            doctype: "Website Settings",
+            name: "Website Settings"
+        };
+    },
+    onSuccess(data) {
+        console.log("Website Settings Loaded:", data);
+
+        if (data && data.top_bar_items && Array.isArray(data.top_bar_items)) {
+            navbarItems.value = data.top_bar_items;
+        }
+
+        if (data.banner_image) {
+            siteLogo.value = data.banner_image;
+        }
+    }
+});
+
+onMounted(() => {
+    navbarResource.fetch();
+});
+
+const emit = defineEmits(['toggle-dialog']);
 const props = defineProps({
     user: Object,
 });
 
-const router = useRouter(); // Initialize router
+const router = useRouter();
 
 const openDialog = () => {
-    emit('toggle-dialog'); // Emits the custom event
+    emit('toggle-dialog');
 };
 
 const handleLogout = () => {
@@ -161,14 +182,18 @@ const handleLogout = () => {
 const redirectToLogin = () => {
     window.location.href = "/login?redirect-to=/app";
 };
-const goToSponsors = () => {
-    window.location.href = window.location.origin + "/sponsors";
 
-};
 const goToDesk = () => {
     window.location.href = "/app";
 };
 
+// dynamic navigation handler
+const goTo = (url) => {
+    if (!url) return;
+    window.location.href = url;
+};
 
-
+const goToSponsors = () => {
+    window.location.href = window.location.origin + "/sponsors";
+};
 </script>
