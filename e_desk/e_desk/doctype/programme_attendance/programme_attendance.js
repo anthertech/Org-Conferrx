@@ -92,6 +92,13 @@ frappe.ui.form.on('Programme Attendance', {
                 }
             };
         });
+        if (!frm.doc.event) {
+            frappe.db.get_value("Confer", { is_default: 1 }, "name").then(r => {
+                if (r.message && r.message.name) {
+                    frm.set_value("event", r.message.name);
+                }
+            });
+        }
     },
 
 

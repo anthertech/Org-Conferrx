@@ -128,11 +128,13 @@ class RegistrationDesk(Document):
         is_paid = False  
         if self.mode_of_payment:
             for payment in self.mode_of_payment:
-                amount = frappe.get_value("Mode of payment", payment, "amount")
-                if amount:
-                    if float(amount) > 0:
-                        is_paid = True
-                        break 
+                if payment.amount and float(payment.amount) > 0:
+                # amount = frappe.get_value("Mode of payment", payment, "amount")
+                # if amount:
+                #     if float(amount) > 0:
+
+                    is_paid = True
+                    break 
         # Update the Event Participant table with payment and registration status
         event_participant.is_paid = is_paid
         # event_participant.reg_status = "Approved"
