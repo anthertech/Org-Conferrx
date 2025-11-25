@@ -61,88 +61,179 @@ def count_volunteer_registered():
     }
 
 
-
-
 @frappe.whitelist()
 def get_confer_agenda_events(start, end):
     """Fetches the events from Confer Agenda to display in the calendar view."""
 
     user = frappe.session.user
     user_roles = frappe.get_roles(user)
-    print( user_roles," user_roles..........")
     has_e_desk_admin_role = 'E-Desk Admin' in user_roles
 
     agenda_events = []
-    if user == "Administrator" or has_e_desk_admin_role:
-        print("Administrator logged in, showing all events.")
-        
-        confer_list = frappe.get_all('Confer', filters={
-            'start_date': ['<=', end],
-            'end_date': ['>=', start]
-        }, fields=['name'])
 
-        for confer in confer_list:
-            agenda = frappe.get_all('Confer Agenda', filters={
-                'parent': confer.name,
+    # ADMIN / SUPERUSER VIEW
+    if user == "Administrator" or has_e_desk_admin_role:
+        confer_list = frappe.get_all(
+            'Confer',
+            filters={
                 'start_date': ['<=', end],
                 'end_date': ['>=', start]
-            }, fields=['program_agenda', 'start_date', 'end_date'])
+            },
+            fields=['name']
+        )
 
-            # Add each agenda item to the calendar data with required fields
+        for conf in confer_list:
+            agenda = frappe.get_all(
+                'Confer Agenda',
+                filters={
+                    'parent': conf.name,
+                    'start_date': ['<=', end],
+                    'end_date': ['>=', start]
+                },
+                fields=['program_agenda', 'start_date', 'end_date']
+            )
+
             for item in agenda:
                 agenda_events.append({
+                    "doctype": "Confer",       # ⭐ Important
+                    "name": conf.name,         # ⭐ Parent doctype ID
                     "title": item.program_agenda,
                     "start": item.start_date,
                     "end": item.end_date,
-                    "color": "#FF5733"  # Static color, you can add dynamic logic
+                    "color": "#FF5733"
                 })
-        
+
         return agenda_events
-  
-    print(user,"this is the session user")
-    participant = frappe.get_value("Participant", {"e_mail": user}, "name") 
-    print(participant,"id......................................")
+
+    # NORMAL USER VIEW
+    participant = frappe.get_value("Participant", {"e_mail": user}, "name")
     if not participant:
-        # If the user doesn't have a participant ID, return an empty list
         return []
-    
-    joined_confer_list = frappe.get_all('Event Participant', filters={
-        'participant': participant
-    }, fields=['event']) 
 
-    joined_confer_ids = [confer['event'] for confer in joined_confer_list]
-    print(joined_confer_ids,"joined_confer_idsjoined_confer_idsjoined_confer_ids")
+    joined_confer_list = frappe.get_all(
+        'Event Participant',
+        filters={'participant': participant},
+        fields=['event']
+    )
 
-    if not joined_confer_ids:
-        # If the user hasn't joined any events, return an empty list
+    joined_ids = [c['event'] for c in joined_confer_list]
+    if not joined_ids:
         return []
-    
-    confer_list = frappe.get_all('Confer', filters={
-        'name': ['in', joined_confer_ids],  # Only events the user joined
-        'start_date': ['<=', end],
-        'end_date': ['>=', start]
-    }, fields=['name'])
 
-
-    # Step 2: Loop through each Confer and fetch the child table data (Confer Agenda)
-    for confer in confer_list:
-        agenda = frappe.get_all('Confer Agenda', filters={
-            'parent': confer.name,
+    confer_list = frappe.get_all(
+        'Confer',
+        filters={
+            'name': ["in", joined_ids],
             'start_date': ['<=', end],
             'end_date': ['>=', start]
-        }, fields=['program_agenda', 'start_date', 'end_date'])
-        
-        # Step 3: Add each agenda item to the calendar data with required fields
+        },
+        fields=['name']
+    )
+
+    for conf in confer_list:
+        agenda = frappe.get_all(
+            'Confer Agenda',
+            filters={
+                'parent': conf.name,
+                'start_date': ['<=', end],
+                'end_date': ['>=', start]
+            },
+            fields=['program_agenda', 'start_date', 'end_date']
+        )
+
         for item in agenda:
             agenda_events.append({
+                "doctype": "Confer",      # ⭐ Add here
+                "name": conf.name,        # ⭐ Add here
                 "title": item.program_agenda,
                 "start": item.start_date,
                 "end": item.end_date,
-                "color": "#FF5733"  # Example color, you can add dynamic logic for different colors
+                "color": "#FF5733"
             })
-    
-    
+
     return agenda_events
+
+
+# @frappe.whitelist()
+# def get_confer_agenda_events(start, end):
+#     """Fetches the events from Confer Agenda to display in the calendar view."""
+
+#     user = frappe.session.user
+#     user_roles = frappe.get_roles(user)
+#     print( user_roles," user_roles..........")
+#     has_e_desk_admin_role = 'E-Desk Admin' in user_roles
+
+#     agenda_events = []
+#     if user == "Administrator" or has_e_desk_admin_role:
+#         print("Administrator logged in, showing all events.")
+        
+#         confer_list = frappe.get_all('Confer', filters={
+#             'start_date': ['<=', end],
+#             'end_date': ['>=', start]
+#         }, fields=['name'])
+
+#         for confer in confer_list:
+#             agenda = frappe.get_all('Confer Agenda', filters={
+#                 'parent': confer.name,
+#                 'start_date': ['<=', end],
+#                 'end_date': ['>=', start]
+#             }, fields=['program_agenda', 'start_date', 'end_date'])
+
+#             # Add each agenda item to the calendar data with required fields
+#             for item in agenda:
+#                 agenda_events.append({
+#                     "title": item.program_agenda,
+#                     "start": item.start_date,
+#                     "end": item.end_date,
+#                     "color": "#FF5733"  # Static color, you can add dynamic logic
+#                 })
+        
+#         return agenda_events
+  
+#     print(user,"this is the session user")
+#     participant = frappe.get_value("Participant", {"e_mail": user}, "name") 
+#     print(participant,"id......................................")
+#     if not participant:
+#         # If the user doesn't have a participant ID, return an empty list
+#         return []
+    
+#     joined_confer_list = frappe.get_all('Event Participant', filters={
+#         'participant': participant
+#     }, fields=['event']) 
+
+#     joined_confer_ids = [confer['event'] for confer in joined_confer_list]
+#     print(joined_confer_ids,"joined_confer_idsjoined_confer_idsjoined_confer_ids")
+
+#     if not joined_confer_ids:
+#         # If the user hasn't joined any events, return an empty list
+#         return []
+    
+#     confer_list = frappe.get_all('Confer', filters={
+#         'name': ['in', joined_confer_ids],  # Only events the user joined
+#         'start_date': ['<=', end],
+#         'end_date': ['>=', start]
+#     }, fields=['name'])
+
+
+#     # Step 2: Loop through each Confer and fetch the child table data (Confer Agenda)
+#     for confer in confer_list:
+#         agenda = frappe.get_all('Confer Agenda', filters={
+#             'parent': confer.name,
+#             'start_date': ['<=', end],
+#             'end_date': ['>=', start]
+#         }, fields=['program_agenda', 'start_date', 'end_date'])
+        
+#         # Step 3: Add each agenda item to the calendar data with required fields
+#         for item in agenda:
+#             agenda_events.append({
+#                 "title": item.program_agenda,
+#                 "start": item.start_date,
+#                 "end": item.end_date,
+#                 "color": "#FF5733"  # Example color, you can add dynamic logic for different colors
+#             })
+    
+    
+#     return agenda_events
 
 
 # def has_permission(doc, ptype, user):
