@@ -295,7 +295,8 @@ def participant_has_permission(doc, user):
         if doc.e_mail==email:
             return True
         return False
-	return True
+    # else everyone has access
+    return True
 
 def event_participant_has_permission(doc, user):
     print("welcomeeeeeeeeeeeeeeeeeeee")
@@ -309,7 +310,8 @@ def event_participant_has_permission(doc, user):
         if doc.participant ==participant_id:
             return True
         return False
-	return True
+    # else everyone has access
+    return True
     
 # def confer_has_permission(doc, user):
 #     print("welcomeeeeeeeeeeeeeeeeeeee")
