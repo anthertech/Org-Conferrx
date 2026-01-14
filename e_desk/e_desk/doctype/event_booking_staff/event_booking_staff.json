@@ -1,5 +1,4 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "creation": "2025-12-04 10:27:51.537427",
@@ -10,11 +9,7 @@
   "full_name",
   "mobile",
   "email",
-  "column_break_dwsv",
-  "pass_type",
-  "registration_type",
-  "meal_access",
-  "select_fwgr"
+  "meal_access"
  ],
  "fields": [
   {
@@ -36,41 +31,18 @@
    "label": "Mobile"
   },
   {
-   "fieldname": "pass_type",
-   "fieldtype": "Data",
-   "label": "Pass Type",
-   "read_only": 1
-  },
-  {
-   "fieldname": "registration_type",
-   "fieldtype": "Link",
-   "label": "Registration Type",
-   "options": "Registration Type"
-  },
-  {
    "default": "0",
    "fieldname": "meal_access",
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Meal Access"
-  },
-  {
-   "fieldname": "select_fwgr",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "label": "Meal Source",
-   "options": "\nIncluded\nPurchased"
-  },
-  {
-   "fieldname": "column_break_dwsv",
-   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-19 09:23:08.573317",
+ "modified": "2026-01-14 16:16:40.000161",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Event Booking Staff",

@@ -1,0 +1,41 @@
+{
+ "cards": [
+  {
+   "card": "Participant Open Count"
+  },
+  {
+   "card": "Participant Registration Status"
+  },
+  {
+   "card": "Volunteer Count"
+  },
+  {
+   "card": "Event Speakers Count"
+  },
+  {
+   "card": "Event Sponsors Count"
+  }
+ ],
+ "charts": [
+  {
+   "chart": "Event Participant Count",
+   "width": "Half"
+  },
+  {
+   "chart": "Business Category-Wise Participant Count",
+   "width": "Half"
+  }
+ ],
+ "creation": "2026-01-14 23:34:15.164565",
+ "dashboard_name": "Conference Dashboard",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 0,
+ "is_standard": 1,
+ "modified": "2026-01-14 23:34:19.995181",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "Conference Dashboard",
+ "owner": "Administrator"
+}

@@ -10,7 +10,7 @@
   "programme",
   "date_time",
   "participant",
-  "programme_id"
+  "event"
  ],
  "fields": [
   {
@@ -23,31 +23,32 @@
    "fieldname": "participant",
    "fieldtype": "Link",
    "label": "Participant",
-   "options": "Event Participant"
+   "options": "Participant"
   },
   {
+   "fetch_from": "participant.full_name",
    "fieldname": "participant_name",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Participant name"
   },
   {
-   "fieldname": "programme_id",
-   "fieldtype": "Link",
-   "label": "Programme_id",
-   "options": "Conference Agenda"
-  },
-  {
    "fieldname": "programme",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Programme"
+  },
+  {
+   "fieldname": "event",
+   "fieldtype": "Link",
+   "label": "Event",
+   "options": "Conference"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-12-19 13:20:53.284085",
+ "modified": "2026-01-14 20:07:02.170846",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Scanned List",

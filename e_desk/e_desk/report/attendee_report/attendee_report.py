@@ -8,90 +8,70 @@ from datetime import datetime
 def execute(filters=None):
     columns = [
         {
-            'fieldname': 'programme',
-            'fieldtype': 'Link',
-            'label': 'Programme',
-            'options': 'Conference Agenda',
-            'width': 300
+            "fieldname": "programme",
+            "fieldtype": "Data",
+            "label": "Programme",
+            "width": 300
         },
         {
-            'fieldname': 'date_time',
-            'fieldtype': 'Datetime',
-            'label': 'Date_Time',
-            'width': 200
+            "fieldname": "date_time",
+            "fieldtype": "Datetime",
+            "label": "Date Time",
+            "width": 200
         },
         {
-            'fieldname': 'participant_name',
-            'fieldtype': 'Data',
-            'label': 'Participant Name',
-            'width': 200
+            "fieldname": "participant_name",
+            "fieldtype": "Data",
+            "label": "Participant Name",
+            "width": 200
         },
         {
-            'fieldname': 'participant',
-            'fieldtype': 'Link',
-            'label': 'Participant_Id',
-            'options': 'Event Participant',
-            'width': 200
+            "fieldname": "participant",
+            "fieldtype": "Link",
+            "label": "Participant ID",
+            "options": "Participant",
+            "width": 200
         },
     ]
-    
+
     data = []
 
-    # Ensure filters are not None
-    if filters:
-        confer = filters.get('confer')
-        programme = filters.get('programme')
-        date_value = filters.get('date')
-        
-        # Convert date string to date object
-        date_value_obj = datetime.strptime(date_value, '%Y-%m-%d')
-        formatted_date = date_value_obj.strftime('%Y-%m-%d')  # Ensure date is in YYYY-MM-DD format
-
-        print(confer, programme, f"{formatted_date} 00:00:00", "this is programme...........")
-
-        # Fetch agenda_id from Conference Agenda
-        agenda_id = frappe.db.get_value(
-            "Conference Agenda",
-            filters={
-                "parent": confer,  
-                "program_agenda": programme,  # Using the programme name dynamically
-                "start_date": ["between", [f"{formatted_date} 00:00:00", f"{formatted_date} 23:59:59"]]
-            },
-            pluck="name"  
-        )
-
-        print(agenda_id, "agenda_id retrieved...")
-
-        # Only proceed if an agenda_id was found
-        if agenda_id:
-            query = """
-            SELECT
-                sl.programme AS programme,
-                sl.date_time AS date_time,
-                sl.participant_name,
-                sl.participant
-            FROM
-                `tabScanned List` AS sl
-            WHERE
-                sl.programme_id = %(agenda_id)s
-                AND DATE(sl.date_time) = %(date_val)s  
-            """
-
-            # Fetch data
-            results = frappe.db.sql(query, {
-                'agenda_id': agenda_id,  # Pass the correct agenda_id to the query
-                'date_val': formatted_date  # Use the formatted date for comparison
-            }, as_dict=True)
-
-            data.extend(results)
-
-            print(data)
-
+    if not filters:
         return columns, data
 
-    return columns, data  # Return empty data if no filters are provided
+    confer = filters.get("confer")
+    programme = filters.get("programme")
+    date_value = filters.get("date")
 
+    if not (confer and programme and date_value):
+        return columns, data
 
+    formatted_date = datetime.strptime(date_value, "%Y-%m-%d").strftime("%Y-%m-%d")
+
+    query = """
+        SELECT
+            sl.programme,
+            sl.date_time,
+            sl.participant_name,
+            sl.participant
+        FROM
+            `tabScanned List` sl
+        WHERE
+            sl.event = %(event)s
+            AND sl.programme = %(programme)s
+            AND DATE(sl.date_time) = %(date_val)s
+        ORDER BY sl.date_time ASC
+    """
+
+    results = frappe.db.sql(query, {
+        "event": confer,
+        "programme": programme,
+        "date_val": formatted_date
+    }, as_dict=True)
+
+    data.extend(results)
+
+    return columns, data
 
 
 

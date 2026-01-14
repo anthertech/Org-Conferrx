@@ -1,4 +1,5 @@
 {
+ "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "autoname": "COC-.YYYY.-.####",
@@ -18,21 +19,25 @@
   "column_break_sylpb",
   "full_name",
   "profile_photo",
+  "volunteer",
+  "speaker",
   "qr_preview",
   "qr",
   "more_information_section",
+  "registration_type",
+  "sponsor",
+  "exhibitor",
+  "is_staff",
   "gender",
   "date_of_birth",
-  "stall_or_sponsor_booking",
-  "booked_by",
   "customer",
   "user",
   "column_break_gsdr",
-  "participant_type",
   "status",
   "meal_included",
-  "meal_preference",
   "is_paid",
+  "meal_preference",
+  "paid_amount",
   "kit_provided",
   "address_contact_tab",
   "address_and_contact_section",
@@ -166,7 +171,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Open\nRegistered\nApproved\nDeclined"
+   "options": "\nOpen\nRegistered\nApproved\nDeclined"
   },
   {
    "default": "0",
@@ -191,11 +196,6 @@
    "options": "Roles"
   },
   {
-   "fieldname": "participant_type",
-   "fieldtype": "Data",
-   "label": "Participant Type"
-  },
-  {
    "default": "0",
    "fieldname": "meal_included",
    "fieldtype": "Check",
@@ -216,7 +216,8 @@
    "fieldname": "participant_address",
    "fieldtype": "Link",
    "label": "Participant Primary Address",
-   "options": "Address"
+   "options": "Address",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_rjon",
@@ -228,7 +229,8 @@
    "fieldname": "participant_contact",
    "fieldtype": "Link",
    "label": "Participant Primary Contact",
-   "options": "Contact"
+   "options": "Contact",
+   "read_only": 1
   },
   {
    "fieldname": "mobile_number",
@@ -350,19 +352,6 @@
    "label": "Postal Code"
   },
   {
-   "fieldname": "stall_or_sponsor_booking",
-   "fieldtype": "Link",
-   "label": "Stall / Sponsor Booking",
-   "options": "Event Booking"
-  },
-  {
-   "fieldname": "booked_by",
-   "fieldtype": "Link",
-   "hidden": 1,
-   "label": "Booked by",
-   "options": "User"
-  },
-  {
    "fieldname": "contact_html",
    "fieldtype": "HTML",
    "label": "Contact",
@@ -401,12 +390,57 @@
    "fieldtype": "Link",
    "label": "Meal Preference",
    "options": "Meal Preference"
+  },
+  {
+   "fieldname": "paid_amount",
+   "fieldtype": "Float",
+   "label": "Paid Amount",
+   "read_only": 1
+  },
+  {
+   "fieldname": "registration_type",
+   "fieldtype": "Select",
+   "label": "Registration Type",
+   "options": "\nParticipant\nExhibitor\nSponsor"
+  },
+  {
+   "default": "0",
+   "depends_on": "eval:doc.registration_type == \"Exhibitor\" || doc.registration_type == \"Sponsor\"",
+   "fieldname": "is_staff",
+   "fieldtype": "Check",
+   "label": "Is Staff "
+  },
+  {
+   "default": "0",
+   "fieldname": "volunteer",
+   "fieldtype": "Check",
+   "label": "Volunteer"
+  },
+  {
+   "default": "0",
+   "fieldname": "speaker",
+   "fieldtype": "Check",
+   "label": "Speaker"
+  },
+  {
+   "depends_on": "eval:doc.registration_type == \"Sponsor\"",
+   "fieldname": "sponsor",
+   "fieldtype": "Link",
+   "label": "Sponsor",
+   "options": "Sponsor"
+  },
+  {
+   "depends_on": "eval:doc.registration_type == \"Exhibitor\"",
+   "fieldname": "exhibitor",
+   "fieldtype": "Link",
+   "label": "Exhibitor",
+   "options": "Exhibitor"
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-12-23 17:14:41.743330",
+ "modified": "2026-01-14 23:56:47.213778",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",

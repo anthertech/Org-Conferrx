@@ -54,6 +54,12 @@ fixtures = [
     "filters": [
         ["name", "in", ["E-desk profile"]]
     ]
+    },
+     {
+    "dt": "Role",
+    "filters": [
+        ["name", "in", ["Exhibitor", "Speaker", "Sponsor", "Participant", "E-Desk Admin", "Volunteer"]]
+    ]
     }
 
 ]

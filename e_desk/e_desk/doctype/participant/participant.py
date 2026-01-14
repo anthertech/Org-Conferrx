@@ -64,7 +64,7 @@ class Participant(Document):
 
 	def validate(self):
 		self.sync_contact_details()
-		self.sync_booked_by_from_event_booking()
+		
 		self.set_full_name()
 
 	def set_full_name(self):
@@ -212,19 +212,7 @@ class Participant(Document):
 		if phone:
 			self.mobile_number = phone
 
-	def sync_booked_by_from_event_booking(self):
-		if not self.stall_or_sponsor_booking:
-			return
-		booking = frappe.get_doc("Event Booking", self.stall_or_sponsor_booking)
-		if not booking.participant:
-			return
-		email = frappe.db.get_value(
-			"Participant",
-			booking.participant,
-			"e_mail"
-		)
-		if email:
-			self.booked_by = email
+	
 
 @frappe.whitelist()
 def get_contact_html(contact_name):

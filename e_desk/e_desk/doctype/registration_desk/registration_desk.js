@@ -8,63 +8,44 @@ frappe.ui.form.on('Registration Desk', {
             frm.events.submit(frm);
         }
     },
-	submit: function(frm) {
-		try {
-			// Parse the scanned QR data to get the Participant name (or ID)
-			// var scan_data = JSON.parse(frm.doc.scan_qr).name;  // Assuming QR contains JSON data
-			var scan_data=frm.doc.scan_qr
-			console.log(scan_data, "data.");
-		
+	scan_qr(frm) {
+        if (!frm.doc.scan_qr || !frm.doc.confer) return;
 
-			if (scan_data && frm.doc.confer) {
-				// Call the backend to fetch the participant details
-				frappe.call({
-					method: "e_desk.e_desk.doctype.registration_desk.registration_desk.registration_details",
-					args: {
-						doc: scan_data,   // Participant ID or Name from QR
-						confer: frm.doc.confer  // Conference (Event) ID
-					},
-					callback: function(r) {
-						if (r.message) {
-							console.log(r.message,"this is messageee..")
+        frappe.call({
+            method: "e_desk.e_desk.doctype.registration_desk.registration_desk.registration_details",
+            args: {
+                user: frm.doc.scan_qr,
+                confer: frm.doc.confer
+            },
+            callback(r) {
+                if (!r.message) return;
 
-							frm.set_value('scan_qr',"");
-							frm.set_value('participant_id',r.message.event_participant_id);
-							frm.set_value('participant_name', r.message.full_name);
-							frm.set_value('part_profile', r.message.profile_photo);
-							frm.set_value('qr_profile', r.message.qr);
+                // Clear scan
+                frm.set_value("scan_qr", "");
 
-							// Display the profile image in the profile_preview field
-							if (r.message.profile_photo) {
-								let imgHTML = `
-									<div>
-										<img src="${frm.doc.part_profile}" alt="Profile Image" height="100" width="100">
-									</div>`;
-								frm.get_field("profile_preview").$wrapper.html(imgHTML);
-							}
+                // Set fields
+                frm.set_value("participant_id", r.message.participant_id);
+                frm.set_value("participant_name", r.message.full_name);
+                frm.set_value("part_profile", r.message.profile_photo);
+                frm.set_value("qr_profile", r.message.qr);
 
-							// Display the QR code in the qr_preview field	
-							if (r.message.qr) {
-								console.log("qrrr,,,reached here...............")
-								console.log(frm.doc.qr_profile,"this is form qr")
-								let qrHTML = `
-									<div>
-										<img src="${frm.doc.qr_profile}" alt="QR Code" height="100" width="100">
-									</div>`;
-								frm.get_field("qr_preview").$wrapper.html(qrHTML);
-							}
-						}
-					
-					}
-				});
-			} else {
-				frappe.msgprint(__('Scan data or conference is missing.'));
-			}
-		} catch (error) {
-			frappe.msgprint(__('Failed to parse QR code. Please check the QR data format.'));
-			console.error(error);
-		}
-	},
+                // Render profile photo
+                if (r.message.profile_photo) {
+                    frm.get_field("profile_preview").$wrapper.html(`
+                        <img src="${r.message.profile_photo}" height="100">
+                    `);
+                }
+
+                // Render QR
+                if (r.message.qr) {
+                    frm.get_field("qr_preview").$wrapper.html(`
+                        <img src="${r.message.qr}" height="100">
+                    `);
+                }
+            }
+        });
+    },
+
 
 
 	refresh:function(frm){
@@ -90,35 +71,6 @@ frappe.ui.form.on('Registration Desk', {
 
 		
 	},
-
-	onload: function(frm) {
-    
-        frm.set_query('confer', function() {
-            return {
-                filters: {
-                    is_default: 1
-                }
-            };
-        });
-
-        frappe.call({
-            method: 'frappe.client.get_list',
-            args: {
-                doctype: 'Conference',
-                fields: ['name'],
-                filters: {
-                    is_default: 1
-                }
-            },
-            callback: function(r) {
-                if (r.message && r.message.length === 1) {
-                    frm.set_value('confer', r.message[0].name);
-                }
-            } 
-        });
-    },
-
-	
 		
 
 });

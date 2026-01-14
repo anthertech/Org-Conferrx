@@ -1,190 +1,70 @@
 // Copyright (c) 2025, Anther Technologies Pvt Ltd and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Programme Attendance", {
-// 	refresh(frm) {
 
-// 	},
-// });
-// // Copyright (c) 2024, sathya and contributors
-// // For license information, please see license.txt
-// frappe.ui.form.on('Conf Programme Attendee', {
-
-
-// 	setup: function(frm) {
-//         // frm.disable_save();
-//     },
-// 	submit: function(frm) {
-// 		var name = JSON.parse(frm.doc.scan_qr).name;
-// 		console.log(name,"this is name/.....................................................")
-// 		frm.set_value("scan_qr","")
-// 				frappe.call({
-// 				method: "e_desk.e_desk.doctype.conf_programme_attendee.conf_programme_attendee.scanning_validations",
-// 				args: {
-// 					doc: name,
-// 					programme:frm.doc.programme
-// 				},
-// 				callback:function(r){
-// 					if (r.message) {
-// 						// Show success alert
-// 						frappe.show_alert({message: "Attendance Scanned Successfully", indicator: 'green'});
-
-// 						// Add a new item to the scanned_list child table
-// 						var item = cur_frm.add_child("scanned_list");
-// 						frappe.model.set_value(item.doctype, item.name, "participant", r.message.event_participant_id);
-// 						frappe.model.set_value(item.doctype, item.name, "participant_name", r.message.full_name);
-// 						frappe.model.set_value(item.doctype, item.name, "programme", frm.doc.programme);
-// 						frappe.model.set_value(item.doctype, item.name, "date_time", frappe.datetime.now_datetime());
-
-// 						// Refresh and save the form
-// 						cur_frm.refresh_field('scanned_list');
-// 						cur_frm.save();
-					
-						
-// 					}
-// 					}
-
-// 			})
-// 		},
-
-//     refresh: function(frm) {
-
-// 		// frm.set_value('programme', '');
-		
-//         frm.set_query('programme', function() {
-			
-//             const today = frappe.datetime.get_today();
-//             const startOfDay = today + ' 00:00:00'; // Start of today
-//             const endOfDay = today + ' 23:59:59';   // End of today
-
-//             console.log(today, "Today’s date");
-
-//             return {
-//                 filters: [
-//                     ['Conference Agenda', 'start_date', '>=', startOfDay],
-//                     ['Conference Agenda', 'end_date', '<=', endOfDay]
-//                 ]
-//             };
-//         });
-//     },
-
-
-// });
 frappe.ui.form.on('Programme Attendance', {
-    // setup: function(frm) {
-    //     frm.set_query('event', function(doc, cdt, cdn) {
-    //         return {
-    //             filters: [
-    //                 // Filter to show conferences where either start_date or end_date is today or in the future
-    //                 ['end_date', '>=', frappe.datetime.get_today()]
-    //             ]
-    //         };
-    //     });
-    
-    // },
-
-    onload: function(frm) {
-    
-        frm.set_query('event', function() {
-            return {
-                filters: {
-                    is_default: 1
-                }
-            };
-        });
-        if (!frm.doc.event) {
-            frappe.db.get_value("Conference", { is_default: 1 }, "name").then(r => {
-                if (r.message && r.message.name) {
-                    frm.set_value("event", r.message.name);
-                }
-            });
-        }
-    },
-
 
     scan_qr: function(frm) {
         if (frm.doc.scan_qr) {
             frm.events.submit(frm);
         }
     },
+    submit: function (frm) {
+        if (!frm.doc.scan_qr) return;
+            frappe.call({
+                method: "e_desk.e_desk.doctype.programme_attendance.programme_attendance.process_scan",
+                args: {
+                    scan_qr: frm.doc.scan_qr,
+                    event: frm.doc.event,
+                    programme: frm.doc.choose_programme,
+                    docname: frm.doc.name
+                },
+                callback: function (r) {
+                    if (r.message) {
+                        frm.reload_doc();
+                        frm.set_value("scan_qr", "");
+                    }
+                }
+            });
+     },
 
-    submit: function(frm) {
-        // var name = JSON.parse(frm.doc.scan_qr).name;
-        var name=frm.doc.scan_qr
-        frm.set_value("scan_qr", "");
+    event: function (frm) {
+        frm.set_value("choose_programme", "");
+        frm.set_df_property("choose_programme", "options", "");
 
-		console.log("anything we got")
-		console.log(frm.doc.choose_programme,name,frm.doc.event);
-    
-		
+        if (!frm.doc.event) {
+            return;
+        }
 
         frappe.call({
-            method: "e_desk.e_desk.doctype.programme_attendance.programme_attendance.scanning_validations",
+            method: "e_desk.e_desk.doctype.programme_attendance.programme_attendance.get_programmes",
             args: {
-                doc: name,
-                programme: frm.doc.choose_programme,
-				confer:frm.doc.event
+                confer: frm.doc.event
             },
-            callback: function(r) {
-                if (r.message) {
-					console.log(r.message,"this is r,messageeee")
-                    frappe.show_alert({ message: "Attendance Scanned Successfully", indicator: 'green' });
+            callback: function (r) {
+                if (r.message && r.message.length) {
+                    let options = [""];
 
-                    // Add a new item to the scanned_list child table
-                    var item = frm.add_child("scanned_list");
-                    frappe.model.set_value(item.doctype, item.name, "participant", r.message.event_participant_id);
-                    frappe.model.set_value(item.doctype, item.name, "participant_name", r.message.full_name);
-                    frappe.model.set_value(item.doctype, item.name, "programme", frm.doc.choose_programme);
-                    frappe.model.set_value(item.doctype, item.name, "programme_id", r.message.agenda_ids);
-                    frappe.model.set_value(item.doctype, item.name, "date_time", frappe.datetime.now_datetime());
+                    r.message.forEach(programme => {
+                        options.push(programme);
+                    });
 
-                    frm.refresh_field('scanned_list');
-                    frm.save();
+                    frm.set_df_property(
+                        "choose_programme",
+                        "options",
+                        options.join("\n")
+                    );
+                } else {
+                    frm.set_df_property("choose_programme", "options", "");
                 }
             }
         });
-    },
-
-    event: function(frm) {
-
-        if (frm.doc.event) {
-			setlist(frm)
-        }
     },
 	
 	choose_programme: function(frm) {
         if (frm.doc.choose_programme) {
             console.log(frm.doc.choose_programme, "Programme selected, saving data...");
-
-            // Save the form once a programme is selected
-            frm.save_or_update();  // Use this to trigger save/update when programme is selected
+            frm.save_or_update();  
         }
     },
-	refresh:function(frm){
-
-		if (frm.doc.event) {
-			setlist(frm)
-        }
-	}
-
 	});
-
-
-
-
-function setlist (frm) {
-	frappe.call({
-		method: "e_desk.e_desk.doctype.programme_attendance.programme_attendance.get_programmes",
-		args: {
-			confer: frm.doc.event
-		},
-		callback: function(r) {
-			if (r.message) {
-				let options = r.message.map(prog => prog); // Assuming r.message contains programme names
-				frm.set_df_property("choose_programme", "options", options.join("\n")); // Set options for the Select field
-				frm.refresh_field("choose_programme");
-			}
-		}
-	});
-		
-} 

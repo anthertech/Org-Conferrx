@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class CategoryTable(Document):
+class Exhibitor(Document):
 	pass

@@ -65,9 +65,9 @@
    "options": ".{abr}.-.YY.-.####"
   },
   {
+   "fetch_from": "participant_id.profile_photo",
    "fieldname": "part_profile",
    "fieldtype": "Attach Image",
-   "hidden": 1,
    "label": "Profile",
    "read_only": 1
   },
@@ -83,9 +83,9 @@
    "fieldtype": "Section Break"
   },
   {
+   "fetch_from": "participant_id.qr",
    "fieldname": "qr_profile",
    "fieldtype": "Attach Image",
-   "hidden": 1,
    "label": "QR Profile",
    "read_only": 1
   },
@@ -118,6 +118,7 @@
    "read_only": 1
   },
   {
+   "fetch_from": "participant_id.full_name",
    "fieldname": "participant_name",
    "fieldtype": "Data",
    "in_list_view": 1,
@@ -129,7 +130,7 @@
    "fieldtype": "Link",
    "hidden": 1,
    "label": "participant id",
-   "options": "Event Participant"
+   "options": "Participant"
   },
   {
    "fieldname": "scan_qr",
@@ -151,7 +152,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-12-22 10:20:39.715275",
+ "modified": "2026-01-14 16:50:10.026353",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Registration Desk",

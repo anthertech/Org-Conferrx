@@ -1,5 +1,4 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "creation": "2024-10-24 12:20:56.551203",
@@ -36,8 +35,7 @@
    "fieldname": "choose_programme",
    "fieldtype": "Select",
    "in_list_view": 1,
-   "label": "Choose Programme",
-   "reqd": 1
+   "label": "Choose Programme"
   },
   {
    "fieldname": "section_break_v2in",
@@ -73,7 +71,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-12-22 10:20:54.701930",
+ "modified": "2026-01-14 20:36:03.602094",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Programme Attendance",

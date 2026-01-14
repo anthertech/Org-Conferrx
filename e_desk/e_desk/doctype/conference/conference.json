@@ -16,7 +16,6 @@
   "time_zone",
   "currency",
   "column_break_mc7g",
-  "is_default",
   "is_publish",
   "route",
   "start_date",
@@ -31,8 +30,8 @@
   "settings_tab",
   "online_payment_only",
   "column_break_auwp",
-  "section_break_ezdo",
-  "event_policy_details"
+  "project",
+  "default_warehouse"
  ],
  "fields": [
   {
@@ -97,13 +96,6 @@
    "label": "Programme Agenda"
   },
   {
-   "default": "0",
-   "fieldname": "is_default",
-   "fieldtype": "Check",
-   "label": "Is default",
-   "read_only": 1
-  },
-  {
    "fieldname": "time_zone",
    "fieldtype": "Autocomplete",
    "label": "Time Zone"
@@ -158,26 +150,27 @@
    "label": "Theme"
   },
   {
-   "fieldname": "section_break_ezdo",
-   "fieldtype": "Section Break",
-   "label": "Event Policies"
-  },
-  {
    "fieldname": "column_break_auwp",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "event_policy_details",
-   "fieldtype": "Table",
-   "label": "Event Policy Details",
-   "options": "Event Policy Details"
+   "fieldname": "project",
+   "fieldtype": "Link",
+   "label": "Project",
+   "options": "Project"
+  },
+  {
+   "fieldname": "default_warehouse",
+   "fieldtype": "Link",
+   "label": "Default Warehouse",
+   "options": "Warehouse"
   }
  ],
  "has_web_view": 1,
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2025-12-22 10:42:36.887119",
+ "modified": "2026-01-14 23:52:31.483338",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
