@@ -7,6 +7,9 @@ app_description = "E Desk"
 app_email = "anther.tech"
 app_license = "MIT"
 
+
+app_dependencies = ["webshop"]
+
 # Includes in <head>
 # ------------------
 
