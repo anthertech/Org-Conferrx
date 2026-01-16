@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestRoles(FrappeTestCase):
+class TestBusinessRole(FrappeTestCase):
 	pass

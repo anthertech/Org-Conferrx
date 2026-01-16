@@ -10,7 +10,7 @@
  "engine": "InnoDB",
  "field_order": [
   "personal_information_tab",
-  "participant_details_section",
+  "section_break_nbwk",
   "naming_series",
   "event",
   "prefix",
@@ -19,26 +19,25 @@
   "column_break_sylpb",
   "full_name",
   "profile_photo",
-  "volunteer",
-  "speaker",
   "qr_preview",
   "qr",
   "more_information_section",
   "registration_type",
-  "sponsor",
-  "exhibitor",
   "is_staff",
-  "gender",
-  "date_of_birth",
   "customer",
   "user",
   "column_break_gsdr",
+  "date_of_birth",
+  "gender",
+  "additional_info_section",
   "status",
+  "speaker",
+  "volunteer",
+  "column_break_qbhd",
+  "kit_provided",
+  "meal_preference",
   "meal_included",
   "is_paid",
-  "meal_preference",
-  "paid_amount",
-  "kit_provided",
   "address_contact_tab",
   "address_and_contact_section",
   "address_html",
@@ -65,11 +64,13 @@
   "business_category",
   "role",
   "references_tab",
+  "section_break_xuth",
   "invitee_name",
   "invitee_email",
   "column_break_mjqd",
   "invitee_phone",
   "travel_tab",
+  "section_break_fvqr",
   "flight_no",
   "departure_time",
   "column_break_hbtt",
@@ -80,11 +81,6 @@
    "fieldname": "personal_information_tab",
    "fieldtype": "Tab Break",
    "label": "Profile"
-  },
-  {
-   "fieldname": "participant_details_section",
-   "fieldtype": "Section Break",
-   "label": "Participant Details"
   },
   {
    "fieldname": "naming_series",
@@ -157,6 +153,7 @@
    "label": "Qr"
   },
   {
+   "collapsible": 1,
    "fieldname": "more_information_section",
    "fieldtype": "Section Break",
    "label": "More Information"
@@ -168,6 +165,7 @@
    "options": "Business Category"
   },
   {
+   "default": "Open",
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -193,7 +191,7 @@
    "fieldname": "role",
    "fieldtype": "Link",
    "label": "Role",
-   "options": "Roles"
+   "options": "Business Role"
   },
   {
    "default": "0",
@@ -271,13 +269,13 @@
   },
   {
    "fieldname": "departure_time",
-   "fieldtype": "Date",
-   "label": "Departure Time"
+   "fieldtype": "Datetime",
+   "label": "Departure"
   },
   {
    "fieldname": "arrival_time",
    "fieldtype": "Datetime",
-   "label": "Arrival Time"
+   "label": "Arrival"
   },
   {
    "fieldname": "organization_tab",
@@ -392,23 +390,16 @@
    "options": "Meal Preference"
   },
   {
-   "fieldname": "paid_amount",
-   "fieldtype": "Float",
-   "label": "Paid Amount",
-   "read_only": 1
-  },
-  {
    "fieldname": "registration_type",
    "fieldtype": "Select",
    "label": "Registration Type",
-   "options": "\nParticipant\nExhibitor\nSponsor"
+   "options": "Attendee\nMember\nExecutive Director\nSponsor\nExhibitor"
   },
   {
    "default": "0",
-   "depends_on": "eval:doc.registration_type == \"Exhibitor\" || doc.registration_type == \"Sponsor\"",
-   "fieldname": "is_staff",
+   "fieldname": "speaker",
    "fieldtype": "Check",
-   "label": "Is Staff "
+   "label": "Speaker"
   },
   {
    "default": "0",
@@ -418,29 +409,39 @@
   },
   {
    "default": "0",
-   "fieldname": "speaker",
+   "description": "Participant is staff of the Sponsor / Exhibitor",
+   "fieldname": "is_staff",
    "fieldtype": "Check",
-   "label": "Speaker"
+   "label": "Is Staff"
   },
   {
-   "depends_on": "eval:doc.registration_type == \"Sponsor\"",
-   "fieldname": "sponsor",
-   "fieldtype": "Link",
-   "label": "Sponsor",
-   "options": "Sponsor"
+   "fieldname": "section_break_nbwk",
+   "fieldtype": "Section Break"
   },
   {
-   "depends_on": "eval:doc.registration_type == \"Exhibitor\"",
-   "fieldname": "exhibitor",
-   "fieldtype": "Link",
-   "label": "Exhibitor",
-   "options": "Exhibitor"
+   "fieldname": "column_break_qbhd",
+   "fieldtype": "Column Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "additional_info_section",
+   "fieldtype": "Section Break",
+   "label": " Additional Info "
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "section_break_xuth",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_fvqr",
+   "fieldtype": "Section Break"
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-14 23:56:47.213778",
+ "modified": "2026-01-15 12:28:45.284683",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",

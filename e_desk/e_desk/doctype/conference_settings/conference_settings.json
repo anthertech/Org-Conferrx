@@ -1,5 +1,4 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "creation": "2024-09-04 17:39:09.391196",
@@ -7,7 +6,9 @@
  "engine": "InnoDB",
  "field_order": [
   "section_break_1jap",
-  "event",
+  "has_meal",
+  "meal_access",
+  "meal_item",
   "column_break_fvzq",
   "event_has_exhibitors"
  ],
@@ -15,12 +16,6 @@
   {
    "fieldname": "section_break_1jap",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "event",
-   "fieldtype": "Link",
-   "label": "Event",
-   "options": "Conference"
   },
   {
    "default": "0",
@@ -32,12 +27,37 @@
   {
    "fieldname": "column_break_fvzq",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "Free for All Participants",
+   "depends_on": "eval:doc.has_meal",
+   "description": "Controlled by Pricing requires a separate meal item to be purchased.",
+   "fieldname": "meal_access",
+   "fieldtype": "Select",
+   "label": "Meal Access ",
+   "options": "Free for All Participants\nControlled by Pricing"
+  },
+  {
+   "default": "0",
+   "description": "Indicates whether meals are included as part of the conference or event registration.",
+   "fieldname": "has_meal",
+   "fieldtype": "Check",
+   "label": "Has Meal"
+  },
+  {
+   "depends_on": "eval:doc.meal_access==\"Controlled by Pricing\"",
+   "fieldname": "meal_item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Meal Item",
+   "options": "Item",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2025-12-19 09:16:32.283114",
+ "modified": "2026-01-15 16:25:03.071164",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference Settings",

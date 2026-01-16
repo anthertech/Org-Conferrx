@@ -8,42 +8,35 @@ from frappe.model.document import Document
 from pyqrcode import create as qr_create
 # import png
 import os
-from frappe.model.naming import parse_naming_series
-from e_desk.e_desk.utils.role import update_event_participant_role
 
 class RegistrationDesk(Document):
 
     # method is for user doctype
-    @classmethod
-    def create_qr_participant(self, pr_doc):
-        qr_image = io.BytesIO()
-        data=pr_doc.name
-        # data=json.dumps(data,indent=4,sort_keys=True,default=str)
-        data_ = qr_create(data, error='L')
-        data_.png(qr_image, scale=4, quiet_zone=1)
-        name = frappe.generate_hash('', 5)
-        filename = f"QRCode-{name}.png".replace(os.path.sep, "__")
-        _file = frappe.get_doc({
-        "doctype": "File",
-        "file_name": filename,
-        "is_private": 0,
-        "content": qr_image.getvalue(),
-        "attached_to_doctype":  pr_doc.doctype,
-        "attached_to_name": pr_doc.name,
-        "attached_to_field":"qr"
-        })
-        print(pr_doc.doctype,"pr_doc.doctype",pr_doc.name,"pr_doc.name")
-        # for i in frappe.get_all("File", {
-        # "attached_to_doctype":  pr_doc.doctype,
-        # "attached_to_name": pr_doc.name,
-        # "attached_to_field":"qr"}):
-        #     frappe.delete_doc("File", i.name)
+    # @classmethod
+    # def create_qr_participant(self, pr_doc):
+    #     qr_image = io.BytesIO()
+    #     data=pr_doc.name
+    #     # data=json.dumps(data,indent=4,sort_keys=True,default=str)
+    #     data_ = qr_create(data, error='L')
+    #     data_.png(qr_image, scale=4, quiet_zone=1)
+    #     name = frappe.generate_hash('', 5)
+    #     filename = f"QRCode-{name}.png".replace(os.path.sep, "__")
+    #     _file = frappe.get_doc({
+    #     "doctype": "File",
+    #     "file_name": filename,
+    #     "is_private": 0,
+    #     "content": qr_image.getvalue(),
+    #     "attached_to_doctype":  pr_doc.doctype,
+    #     "attached_to_name": pr_doc.name,
+    #     "attached_to_field":"qr"
+    #     })
+    #     print(pr_doc.doctype,"pr_doc.doctype",pr_doc.name,"pr_doc.name")
 
-        _file.save(ignore_permissions=True)
-        frappe.db.set_value(pr_doc.doctype, pr_doc.name, 'qr', _file.file_url, update_modified=False)
-        pr_doc.reload()
-        print("line 43 .........")
-        return _file.file_url
+    #     _file.save(ignore_permissions=True)
+    #     frappe.db.set_value(pr_doc.doctype, pr_doc.name, 'qr', _file.file_url, update_modified=False)
+    #     pr_doc.reload()
+    #     print("line 43 .........")
+    #     return _file.file_url
 
 
     def on_trash(self):

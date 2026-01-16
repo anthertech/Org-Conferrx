@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class Roles(Document):
+class BusinessRole(Document):
 	pass

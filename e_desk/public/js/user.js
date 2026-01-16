@@ -69,6 +69,15 @@ frappe.ui.form.on('User', {
         
 		
 	},
+	onload(frm){
+		if (frm.doc.custom_qr) {
+            frm.fields_dict.custom_qr_preview.$wrapper.html(
+                `<div style="text-align:left">
+                    <img src="${frm.doc.custom_qr}" style="width:130px !important;">
+                 </div>`
+            );
+        }
+	},
 
 	custom_scan_qr(frm) {
 		if (!frm.doc.custom_scan_qr || !frm.doc.email) return;

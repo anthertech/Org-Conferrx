@@ -170,7 +170,7 @@
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-01-14 23:52:31.483338",
+ "modified": "2026-01-16 11:45:02.051603",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
@@ -186,6 +186,7 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "select": 1,
    "share": 1,
    "write": 1
   },

@@ -1,12 +1,6 @@
 import frappe
 
-# def get_file_permission(user: str = None) -> str:
-#     user = user or frappe.session.user
-#     has_role = frappe.get_all("Has Role", filters={"role": 'E-Desk Admin', "parent": frappe.session.user})
 
-#     if user == "Administrator" or len(has_role):
-#         return ""
-#     return """ `tabFile`.folder like "%GA Drive%" or `tabFile`.file_name = "GA Drive" """
 
 def get_file_permission(user: str = None) -> str:
     user = user or frappe.session.user
@@ -41,11 +35,8 @@ def get_file_permission(user: str = None) -> str:
             # Create SQL condition to allow access to folders matching the event names
             folder_conditions = " OR ".join([f"`tabFile`.folder = '{event}'" for event in event_names])
             print(folder_conditions,"folder_conditionsfolder_conditions")
-            return f"({folder_conditions})"
-        
-
-    # If the user is not registered for any event or no access, return a condition that blocks everything
-    return "1 = 0"  # Blocks access by returning a false condition
+            return f"({folder_conditions})" 
+    return "1 = 0" 
 
 
 
@@ -56,14 +47,5 @@ def participant_query_conditions(user: str = None) -> str:
     # If the user is a participant or volunteer, show only their own records
     if any(r in ["Participant", "Volunteer"] for r in roles) and all(x not in roles for x in ["E-Desk Admin", "System Manager"]):
         return f"`tabParticipant`.e_mail = '{user}'"
-    
-    # Get the user's role profile from the User doctype
-    # role_profile = frappe.db.get_value("User", {"name": user}, "role_profile_name")
-
-    # If the user is a participant or volunteer, show only their own records
-    # if role_profile in ["Participant", "Volunteer"]:
-    #     return f"`tabParticipant`.e_mail = '{user}'"
-    
-    # If the user is not a participant or volunteer, restrict access entirely
     return None
 
