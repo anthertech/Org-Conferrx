@@ -63,15 +63,20 @@ fixtures = [
     "filters": [
         ["name", "in", ["Exhibitor", "Speaker", "Sponsor", "Participant", "E-Desk Admin", "Volunteer"]]
     ]
+    },
+    {
+    "dt":"Item Group",
+    "filters": [
+    ["name", "in", ["Registration", "Sponsor", "Stall"]]
+    ]
+    },
+    {
+    "dt":"Event Role",
+    "filters": [
+    ["name", "in", ["Volunteer", "Speaker", "Participant"]]
+    ]
     }
-
 ]
-
-
-
-
-
-
 
 
 

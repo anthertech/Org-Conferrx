@@ -1,4 +1,5 @@
 {
+ "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "autoname": "format:EXHIBITOR-{####}",
@@ -13,6 +14,11 @@
   "column_break_jrwf",
   "event",
   "date",
+  "more_details_section",
+  "stall",
+  "max_staff_allowed",
+  "column_break_sxky",
+  "create_customer_for_other_attendees",
   "section_break_jstp",
   "other_attendees"
  ],
@@ -68,13 +74,40 @@
    "fieldtype": "Table",
    "label": "Other Attendees",
    "options": "Event Booking Staff"
+  },
+  {
+   "default": "0",
+   "fieldname": "create_customer_for_other_attendees",
+   "fieldtype": "Check",
+   "label": "Create Customer for Other Attendees"
+  },
+  {
+   "fieldname": "stall",
+   "fieldtype": "Link",
+   "label": "Stall",
+   "options": "Item"
+  },
+  {
+   "fetch_from": "stall.custom_max_staff_allowed",
+   "fieldname": "max_staff_allowed",
+   "fieldtype": "Int",
+   "label": "Max Staff Allowed"
+  },
+  {
+   "fieldname": "more_details_section",
+   "fieldtype": "Section Break",
+   "label": "More Details"
+  },
+  {
+   "fieldname": "column_break_sxky",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-14 16:18:35.759628",
+ "modified": "2026-01-18 23:03:27.555096",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Exhibitor",

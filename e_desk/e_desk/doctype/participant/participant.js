@@ -9,9 +9,8 @@ frappe.ui.form.on('Participant', {
 			frappe.user.has_role('System Manager') ||
 			frappe.user.has_role('E-Desk Admin')
 		) {
-			addVolunteerButton(frm);
-			addSpeakerButton(frm);
-			
+            addVolunteerButton(frm);
+            addSpeakerButton(frm);
 		}
 	
 		load_contact_html(frm);
@@ -22,6 +21,8 @@ frappe.ui.form.on('Participant', {
 		if (frm.doc.event) {
 			apply_meal_rules(frm);
 		}
+        apply_customer_rule(frm)
+        frm.trigger('sync_qr_from_user');
 	},
 	event(frm) {
 		apply_meal_rules(frm);
@@ -31,7 +32,31 @@ frappe.ui.form.on('Participant', {
 	},
 	address(frm) {
 		load_address_html(frm);
-	}
+	},
+    
+    sync_qr_from_user(frm) {
+        if (!frm.doc.user) return;
+    
+        frappe.db.get_value(
+            'User',
+            frm.doc.user,
+            'custom_qr'
+        ).then(r => {
+            const qr = r.message?.custom_qr;
+            if (!qr) return;
+    
+            // Store QR data
+            // frm.set_value('qr', qr);
+    
+            // Show preview
+            frm.fields_dict.qr_preview.$wrapper.html(`
+				<div style="text-align:left">
+					<img src="${qr}" style="width:120px !important; margin-top:10px; border:solid 1px black; border-radius:5px;">
+				</div>
+			`);
+        });
+    }
+    
 });
 
 function load_contact_html(frm) {
@@ -96,41 +121,64 @@ function apply_meal_rules(frm) {
         });
 }
 
+function apply_customer_rule(frm) {
+    frappe.db.get_single_value('Conference Settings', 'create_customer_on_participant_creation')
+        .then(has_create_customer => {
 
-function addSpeakerButton(frm) {
-    if (!frm.doc.event) return;
-    const label = frm.doc.speaker ? __('Remove Speaker') : __('Make Speaker');
-    frm.add_custom_button(label, () => {
-        frappe.call({
-            method: "e_desk.e_desk.doctype.participant.participant.update_event_speaker",
-            args: {
-                participant: frm.doc.name,
-            },
-            callback() {
-                frappe.msgprint(__('Speaker status updated successfully'));
-                frm.reload_doc();
+            if (!has_create_customer) {
+                frm.set_df_property('customer', 'hidden', 1);
+                return;
             }
         });
-    }, __('Actions'));
+}
+
+function addSpeakerButton(frm) {
+    if (!frm.doc.event_role) return;
+
+    if (frm.doc.event_role === "Speaker") {
+        frm.add_custom_button(__('Remove Speaker'), () => {
+            toggleSpeaker(frm);
+        }, __('Actions'));
+    } else if (frm.doc.event_role === "Participant") {
+        frm.add_custom_button(__('Make Speaker'), () => {
+            toggleSpeaker(frm);
+        }, __('Actions'));
+    }
+}
+
+function toggleSpeaker(frm) {
+    frappe.call({
+        method: "e_desk.e_desk.doctype.participant.participant.toggle_event_speaker",
+        args: { participant: frm.doc.name },
+        callback() {
+            frm.reload_doc();
+        }
+    });
 }
 
 
+
 function addVolunteerButton(frm) {
-    if (!frm.doc.event) return;
-    const label = frm.doc.volunteer ? __('Remove Volunteer') : __('Make Volunteer');
-    frm.add_custom_button(label, () => {
-        frappe.call({
-            method: "e_desk.e_desk.doctype.participant.participant.update_event_volunteer",
-            args: {
-                participant: frm.doc.name,
-                role_name: "Volunteer"
-            },
-            callback() {
-                frappe.msgprint(__('Volunteer role updated successfully'));
-                frm.reload_doc();
-            }
-        });
-    }, __('Actions'));
+    if (!frm.doc.event_role) return;
+
+    if (frm.doc.event_role === "Volunteer") {
+        frm.add_custom_button(__('Remove Volunteer'), () => {
+            toggleVolunteer(frm);
+        }, __('Actions'));
+    } else if (frm.doc.event_role === "Participant") {
+        frm.add_custom_button(__('Make Volunteer'), () => {
+            toggleVolunteer(frm);
+        }, __('Actions'));
+    }
+}
+function toggleVolunteer(frm) {
+    frappe.call({
+        method: "e_desk.e_desk.doctype.participant.participant.toggle_event_volunteer",
+        args: { participant: frm.doc.name },
+        callback() {
+            frm.reload_doc();
+        }
+    });
 }
 
 
@@ -175,4 +223,17 @@ function add_view_links(frm) {
             frappe.set_route('Form', 'User', frm.doc.user);
         }, __('View'));
     }
+    if (!frm.is_new()) {
+        frappe.db.get_value(
+            'Hotel',
+            { participant: frm.doc.name },
+            'name'
+        ).then(r => {
+            if (r?.message?.name) {
+                frm.add_custom_button(__('Hotel'), () => {
+                    frappe.set_route('Form', 'Hotel', r.message.name);
+                }, __('View'));
+            }
+        });
+    } 
 }

@@ -73,10 +73,6 @@ class Conference(WebsiteGenerator):
 						file_doc.save()
 						frappe.msgprint(f"File '{file_doc.file_name}' moved to folder '{folder_name}'")
 						
-	def before_insert(self):
-		# Reset is_default when duplicating
-		if self.is_new() and self.is_default:
-			self.is_default = 0
 
 	def get_context(self, context):
 		context.agenda_list = get_agenda_data(self)
@@ -85,15 +81,7 @@ class Conference(WebsiteGenerator):
 		return context
 
 
-@frappe.whitelist()
-def update_is_default_for_others(confer_name):
 
-	confer_list = frappe.get_all("Conference", filters={"is_default": 1, "name": ["!=", confer_name]}, fields=["name"])
-	frappe.db.set_value("Conference Settings", None, "event", confer_name)
-	for confer in confer_list:
-		frappe.db.set_value("Conference", confer['name'], "is_default", 0)
-
-	frappe.db.commit()
 
 def get_agenda_data(self):
 	agenda = self.agenda or []
@@ -110,25 +98,29 @@ def get_agenda_data(self):
 
 
 def get_speakers_for_event(event_name):
-	print("\n\n\n\n")
-	speakers = frappe.get_all(
-		"Event Speakers",
-		filters={"conference": event_name},
-		fields=["participant", "full_name"]
-	)
-	speaker_list = []
-	for s in speakers:
-		event_participant = frappe.get_doc("Event Participant", s.participant)
-		print("event participnt::",event_participant) 
-		partc = event_participant.participant
-		participant_doc = frappe.get_doc("Participant", partc)
-		speaker_list.append({
-			"full_name": s.full_name,
-			"event_participant_docname": s.participant,
-			"photo": participant_doc.profile_photo,
-			"participant_id": partc,
-		})
-	return speaker_list
+    speakers = frappe.get_all(
+        "Participant",
+        filters={
+            "event": event_name,
+            "speaker": 1
+        },
+        fields=[
+            "name",
+            "full_name",
+            "profile_photo"
+        ]
+    )
+
+    speaker_list = []
+    for s in speakers:
+        speaker_list.append({
+            "full_name": s.full_name,
+            "participant_id": s.name,
+            "photo": s.profile_photo
+        })
+
+    return speaker_list
+
 
 
 def get_registration_types():

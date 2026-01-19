@@ -10,7 +10,8 @@
   "meal_access",
   "meal_item",
   "column_break_fvzq",
-  "event_has_exhibitors"
+  "event_has_exhibitors",
+  "create_customer_on_participant_creation"
  ],
  "fields": [
   {
@@ -45,19 +46,25 @@
    "label": "Has Meal"
   },
   {
-   "depends_on": "eval:doc.meal_access==\"Controlled by Pricing\"",
+   "depends_on": "eval:doc.meal_access==\"Controlled by Pricing\" && doc.has_meal",
    "fieldname": "meal_item",
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Meal Item",
-   "options": "Item",
-   "reqd": 1
+   "mandatory_depends_on": "eval:doc.meal_access==\"Controlled by Pricing\" && doc.has_meal",
+   "options": "Item"
+  },
+  {
+   "default": "0",
+   "fieldname": "create_customer_on_participant_creation",
+   "fieldtype": "Check",
+   "label": "Create Customer on Participant Creation"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-01-15 16:25:03.071164",
+ "modified": "2026-01-19 01:03:38.780274",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference Settings",

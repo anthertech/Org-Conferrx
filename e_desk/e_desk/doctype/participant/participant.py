@@ -13,6 +13,15 @@ from e_desk.e_desk.doctype.registration_desk.registration_desk import Registrati
 class Participant(Document):
 
 	def after_insert(self):
+		if self.registration_type == "Exhibitor":
+			exhibitor = frappe.get_doc({
+				"doctype": "Exhibitor",
+				"participant": self.name,
+				"event":self.event,
+				"stall": self.stall,
+				"other_attendees": self.other_attendees
+			})
+			exhibitor.insert()
 		if not self.event:
 			frappe.throw("Event is required to determine time zone")
 		time_zone = frappe.db.get_value(
@@ -74,8 +83,8 @@ class Participant(Document):
 			self.create_user_permissions()
 			print("user permissions too created.")
 
-		if not self.customer:
-			print("no customer in this participant")
+		if not self.is_staff and not self.customer and self.is_customer_creation_enabled():
+			print("no customer in this participant and they are not staff")
 			existing_customer = self.get_existing_customer_from_previous_participant()
 			existing_customer2 = self.get_existing_customer_from_customer_portal()
 
@@ -89,7 +98,7 @@ class Participant(Document):
 				print("no where exist cus............")
 				self.create_customer()
 				print("cust created~~~~~~~~~~~~~~~")
-
+		
 		self.create_address_and_contact()
 		print("address and contact created and linked.............")
 
@@ -97,6 +106,16 @@ class Participant(Document):
 		self.sync_contact_details()
 		self.set_full_name()
 
+	def before_insert(self):
+		if not self.event_role:
+			self.event_role = "Participant"
+
+
+	def is_customer_creation_enabled(self):
+		return frappe.db.get_value(
+			"Conference Settings",
+			"create_customer_on_participant_creation"
+		)
 
 
 	def set_full_name(self):
@@ -135,96 +154,110 @@ class Participant(Document):
 			}).insert(ignore_permissions=True)
 
 	def create_address_and_contact(self):
-		if not self.customer:
+		self.ensure_address()
+		self.ensure_contact()
+
+	def ensure_address(self):
+		if self.is_staff:
 			return
-		print("customer exist", self.customer)
+
 		address_name = frappe.db.get_value(
 			"Dynamic Link",
 			{
-				"link_doctype": "Customer",
-				"link_name": self.customer,
+				"link_doctype": "Participant",
+				"link_name": self.name,
 				"parenttype": "Address",
 			},
-			"parent"
+			"parent",
 		)
 
 		if not address_name:
-			print("new address creating........")
-			address = frappe.get_doc({
-				"doctype": "Address",
-				"address_type": "Billing",
-				"address_line1": self.address_line_1,
-				"city": self.city,
-				"state": self.state,
-				"country": self.country,
-				"pincode": self.postal_code,
-				"links": [{"link_doctype": "Customer", "link_name": self.customer}],
-			})
-			address.insert(ignore_permissions=True)
-			address_name = address.name
+			links = [{
+				"link_doctype": "Participant",
+				"link_name": self.name
+			}]
 
-		# Set primary address if missing
-		if not frappe.db.get_value("Customer", self.customer, "customer_primary_address"):
+			if self.customer:
+				links.append({
+					"link_doctype": "Customer",
+					"link_name": self.customer
+				})
+			if self.address_title or self.address_line_1:
+				address = frappe.get_doc({
+					"doctype": "Address",
+					"address_type": "Billing",
+					"address_line1": self.address_line_1,
+					"city": self.city,
+					"state": self.state,
+					"country": self.country,
+					"pincode": self.postal_code,
+					"links": links,
+				})
+				address.insert(ignore_permissions=True)
+				address_name = address.name
+
+		# Set primary address ONLY if customer exists
+		if self.customer and not frappe.db.get_value(
+			"Customer", self.customer, "customer_primary_address"
+		):
 			frappe.db.set_value(
 				"Customer",
 				self.customer,
 				"customer_primary_address",
 				address_name
 			)
-			print("addrs linked to customer primary addrs")
-		# Link Address → Participant
-		if not frappe.db.exists(
-			"Dynamic Link",
-			{
-				"parenttype": "Address",
-				"parent": address_name,
-				"link_doctype": "Participant",
-				"link_name": self.name,
-			},
-		):
-			print("addrs linked with participant")
-			frappe.get_doc("Address", address_name).append(
-				"links",
-				{"link_doctype": "Participant", "link_name": self.name}
-			).save(ignore_permissions=True)
 
 		self.db_set("participant_address", address_name)
 
+	def ensure_contact(self):
 		contact_name = frappe.db.get_value(
 			"Dynamic Link",
 			{
-				"link_doctype": "Customer",
-				"link_name": self.customer,
+				"link_doctype": "Participant",
+				"link_name": self.name,
 				"parenttype": "Contact",
 			},
-			"parent"
+			"parent",
 		)
+
 		if not contact_name:
-			print("new contact in cust ............")
+			links = [{
+				"link_doctype": "Participant",
+				"link_name": self.name
+			}]
+
+			if self.customer:
+				links.append({
+					"link_doctype": "Customer",
+					"link_name": self.customer
+				})
+
 			contact = frappe.get_doc({
 				"doctype": "Contact",
-				"first_name": self.first_name or self.customer,
-				"links": [{"link_doctype": "Customer", "link_name": self.customer}],
+				"first_name": self.first_name,
+				"last_name": self.last_name,
+				"links": links,
 			})
 
 			if self.e_mail:
 				contact.append("email_ids", {
 					"email_id": self.e_mail,
-					"is_primary": 1,
+					"is_primary": 1
 				})
 
 			if self.mobile_number:
 				contact.append("phone_nos", {
 					"phone": self.mobile_number,
-					"is_primary_phone": 1,
+					"is_primary_phone": 1
 				})
 
 			contact.insert(ignore_permissions=True)
 			contact_name = contact.name
-			print("contact created")
 
-		# Set primary contact if missing
-		if not frappe.db.get_value("Customer", self.customer, "customer_primary_contact"):
+		# Set primary contact ONLY if customer exists
+		if self.customer and not frappe.db.get_value(
+			"Customer", self.customer, "customer_primary_contact"
+		):
 			frappe.db.set_value(
 				"Customer",
 				self.customer,
@@ -232,23 +265,7 @@ class Participant(Document):
 				contact_name
 			)
 
-		# Link Contact → Participant
-		if not frappe.db.exists(
-			"Dynamic Link",
-			{
-				"parenttype": "Contact",
-				"parent": contact_name,
-				"link_doctype": "Participant",
-				"link_name": self.name,
-			},
-		):
-			print("contact added in participant................")
-			frappe.get_doc("Contact", contact_name).append(
-				"links",
-				{"link_doctype": "Participant", "link_name": self.name}
-			).save(ignore_permissions=True)
 		self.db_set("participant_contact", contact_name)
-		print("contact address finished...................")
 
 
 	def create_customer(self):
@@ -412,60 +429,50 @@ def connection_details(email):
     )
 
 @frappe.whitelist()
-def update_event_volunteer(participant):
+def toggle_event_volunteer(participant):
     if not frappe.has_permission("Participant", "write"):
         frappe.throw("Not permitted")
 
     participant_doc = frappe.get_doc("Participant", participant)
-    make_volunteer = not participant_doc.volunteer
-    participant_doc.volunteer = 1 if make_volunteer else 0
+
+    if participant_doc.event_role == "Volunteer":
+        new_role = "Participant"
+        removing = True
+    else:
+        new_role = "Volunteer"
+        removing = False
+
+    participant_doc.event_role = new_role
     participant_doc.save(ignore_permissions=True)
 
     if not participant_doc.user:
         return
+
     user = frappe.get_doc("User", participant_doc.user)
-    if make_volunteer:
+    if removing:
+        user.roles = [r for r in user.roles if r.role != "Volunteer"]
+    else:
         if "Volunteer" not in [r.role for r in user.roles]:
             user.append("roles", {"role": "Volunteer"})
-            user.user_type = "System User"
-        perms = frappe.get_all(
-            "User Permission",
-            filters={
-                "user": user.name,
-                "allow": ["!=", "Conference"]
-            },
-            pluck="name"
-        )
-        for p in perms:
-            frappe.delete_doc("User Permission", p, ignore_permissions=True)
-    else:
-        user.roles = [r for r in user.roles if r.role != "Volunteer"]
-        if not frappe.db.exists(
-            "User Permission",
-            {
-                "user": user.name,
-                "allow": "User",
-                "for_value": user.name
-            }
-        ):
-            frappe.get_doc({
-                "doctype": "User Permission",
-                "user": user.name,
-                "allow": "User",
-                "for_value": user.name
-            }).insert(ignore_permissions=True)
-
+        user.user_type = "System User"
     user.save(ignore_permissions=True)
 
 
 @frappe.whitelist()
-def update_event_speaker(participant):
+def toggle_event_speaker(participant):
     if not frappe.has_permission("Participant", "write"):
         frappe.throw("Not permitted")
+
     participant_doc = frappe.get_doc("Participant", participant)
-    # Toggle speaker checkbox only
-    participant_doc.speaker = 0 if participant_doc.speaker else 1
+
+    # Toggle logic
+    if participant_doc.event_role == "Speaker":
+        participant_doc.event_role = "Participant"
+    else:
+        participant_doc.event_role = "Speaker"
+
     participant_doc.save(ignore_permissions=True)
+
 
 @frappe.whitelist(allow_guest=True)
 def get_meal_settings():
@@ -477,52 +484,18 @@ def get_meal_settings():
 @frappe.whitelist(allow_guest=True)
 def get_meal_settings_for_webform():
 	settings = frappe.get_single("Conference Settings")
-
 	result = {
 		"has_meal": settings.has_meal,
 		"meal_access": settings.meal_access,
-		"meal_item": settings.meal_item,
-		"has_purchased_meal": 0
-	}
+		"meal_item": settings.meal_item	}
 
-	# Stop early if no meal
 	if not settings.has_meal or not settings.meal_item:
 		return result
-
-	# Get Customer from User (portal user → contact → customer)
 	customer = frappe.db.get_value(
 		"Portal User",
 		{"user": frappe.session.user},
 		"parent"
 	)
-
 	if not customer:
-		return result
-
-	# Find delivered / active sales orders
-	sales_orders = frappe.get_all(
-		"Sales Order",
-		filters={
-			"customer": customer,
-			"docstatus": 1
-		},
-		pluck="name"
-	)
-
-	if not sales_orders:
-		return result
-
-	# Check if meal item exists in SO Items
-	exists = frappe.db.exists(
-		"Sales Order Item",
-		{
-			"parent": ["in", sales_orders],
-			"item_code": settings.meal_item,
-			"qty": [">", 0]
-		}
-	)
-
-	if exists:
-		result["has_purchased_meal"] = 1
-	print(result)
+		return result	
 	return result

@@ -16,25 +16,28 @@
   "prefix",
   "first_name",
   "last_name",
-  "column_break_sylpb",
   "full_name",
+  "column_break_sylpb",
+  "status",
   "profile_photo",
   "qr_preview",
-  "qr",
   "more_information_section",
   "registration_type",
-  "is_staff",
   "customer",
   "user",
   "column_break_gsdr",
+  "is_staff",
   "date_of_birth",
   "gender",
+  "exhibitor_details_section",
+  "stall",
+  "max_staff_allowed",
+  "column_break_atay",
+  "other_attendees",
   "additional_info_section",
-  "status",
-  "speaker",
-  "volunteer",
-  "column_break_qbhd",
   "kit_provided",
+  "event_role",
+  "column_break_qbhd",
   "meal_preference",
   "meal_included",
   "is_paid",
@@ -147,12 +150,6 @@
    "label": "QR"
   },
   {
-   "fieldname": "qr",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Qr"
-  },
-  {
    "collapsible": 1,
    "fieldname": "more_information_section",
    "fieldtype": "Section Break",
@@ -210,7 +207,6 @@
    "label": "Address and Contact"
   },
   {
-   "fetch_from": "customer.customer_primary_address",
    "fieldname": "participant_address",
    "fieldtype": "Link",
    "label": "Participant Primary Address",
@@ -222,7 +218,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fetch_from": "customer.customer_primary_contact",
    "fetch_if_empty": 1,
    "fieldname": "participant_contact",
    "fieldtype": "Link",
@@ -234,12 +229,14 @@
    "fieldname": "mobile_number",
    "fieldtype": "Data",
    "label": "Mobile Phone",
-   "options": "phone"
+   "options": "phone",
+   "reqd": 1
   },
   {
    "fieldname": "e_mail",
    "fieldtype": "Data",
-   "label": "Email"
+   "label": "Email",
+   "reqd": 1
   },
   {
    "fieldname": "kit_provided",
@@ -317,7 +314,8 @@
   {
    "fieldname": "address_line_1",
    "fieldtype": "Data",
-   "label": "Address Line 1"
+   "label": "Address Line 1",
+   "mandatory_depends_on": "eval:doc.address_title"
   },
   {
    "fieldname": "address_line_2",
@@ -332,22 +330,26 @@
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
+   "mandatory_depends_on": "eval:doc.address_line_1",
    "options": "Country"
   },
   {
    "fieldname": "state",
    "fieldtype": "Data",
-   "label": "State"
+   "label": "State",
+   "mandatory_depends_on": "eval:doc.address_line_1"
   },
   {
    "fieldname": "city",
    "fieldtype": "Data",
-   "label": "City"
+   "label": "City",
+   "mandatory_depends_on": "eval:doc.address_line_1"
   },
   {
    "fieldname": "postal_code",
    "fieldtype": "Data",
-   "label": "Postal Code"
+   "label": "Postal Code",
+   "mandatory_depends_on": "eval:doc.address_line_1"
   },
   {
    "fieldname": "contact_html",
@@ -393,19 +395,7 @@
    "fieldname": "registration_type",
    "fieldtype": "Select",
    "label": "Registration Type",
-   "options": "Attendee\nMember\nExecutive Director\nSponsor\nExhibitor"
-  },
-  {
-   "default": "0",
-   "fieldname": "speaker",
-   "fieldtype": "Check",
-   "label": "Speaker"
-  },
-  {
-   "default": "0",
-   "fieldname": "volunteer",
-   "fieldtype": "Check",
-   "label": "Volunteer"
+   "options": "Participant\nExhibitor\nSponsor"
   },
   {
    "default": "0",
@@ -436,12 +426,50 @@
   {
    "fieldname": "section_break_fvqr",
    "fieldtype": "Section Break"
+  },
+  {
+   "default": "Participant",
+   "fieldname": "event_role",
+   "fieldtype": "Link",
+   "label": "Event Role",
+   "options": "Event Role"
+  },
+  {
+   "fieldname": "stall",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Stall",
+   "options": "Item"
+  },
+  {
+   "fetch_from": "stall.custom_max_staff_allowed",
+   "fieldname": "max_staff_allowed",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Max Staff Allowed"
+  },
+  {
+   "fieldname": "exhibitor_details_section",
+   "fieldtype": "Section Break",
+   "hidden": 1,
+   "label": "Exhibitor Details"
+  },
+  {
+   "fieldname": "column_break_atay",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "other_attendees",
+   "fieldtype": "Table",
+   "hidden": 1,
+   "label": "Other Attendees",
+   "options": "Event Booking Staff"
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-15 12:28:45.284683",
+ "modified": "2026-01-19 00:00:19.634984",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",

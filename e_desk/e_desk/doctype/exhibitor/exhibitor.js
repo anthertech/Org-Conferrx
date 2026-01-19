@@ -6,3 +6,15 @@
 
 // 	},
 // });
+frappe.ui.form.on('Exhibitor', {
+    refresh(frm) {
+        frm.set_query('stall', () => {
+            return {
+                filters: {
+                    item_group: 'Stall',
+                    disabled: 0
+                }
+            };
+        });
+    }
+});

@@ -40,7 +40,7 @@ def after_insert(doc, method=None):
         file_doc.file_url,
         update_modified=False
     )
-    user_type_update()
+    user_type_update(doc)
 
 def user_type_update(doc, method=None):
     if doc.user_type != "System User":

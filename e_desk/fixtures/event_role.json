@@ -1,0 +1,23 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Event Role",
+  "modified": "2026-01-18 11:56:11.850207",
+  "name": "Volunteer",
+  "role": "Volunteer"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Event Role",
+  "modified": "2026-01-18 11:56:22.265160",
+  "name": "Speaker",
+  "role": "Speaker"
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Event Role",
+  "modified": "2026-01-18 13:48:42.574171",
+  "name": "Participant",
+  "role": "Participant"
+ }
+]

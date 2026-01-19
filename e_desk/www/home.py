@@ -15,7 +15,7 @@ def get_context(context):
     context.upcoming_events = frappe.get_all(
         "Conference",
         filters={"is_publish": 1},
-        fields=["name", "title", "theme", "start_date", "end_date", "venuelocation","route"],
+        fields=["name", "title", "event_theme", "start_date", "end_date", "venuelocation","route"],
         order_by="start_date asc"
     )
 

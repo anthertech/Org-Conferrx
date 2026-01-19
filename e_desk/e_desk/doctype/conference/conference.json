@@ -28,10 +28,9 @@
   "resources",
   "attach_files",
   "settings_tab",
-  "online_payment_only",
-  "column_break_auwp",
   "project",
-  "default_warehouse"
+  "default_warehouse",
+  "column_break_auwp"
  ],
  "fields": [
   {
@@ -123,13 +122,6 @@
   },
   {
    "default": "0",
-   "description": "Attendees must complete payment online. Payments at the registration desk are not allowed.",
-   "fieldname": "online_payment_only",
-   "fieldtype": "Check",
-   "label": "Allow Online Payment Only"
-  },
-  {
-   "default": "0",
    "fieldname": "is_publish",
    "fieldtype": "Check",
    "label": "Is Publish"
@@ -170,7 +162,7 @@
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-01-16 11:45:02.051603",
+ "modified": "2026-01-17 10:28:10.370745",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
