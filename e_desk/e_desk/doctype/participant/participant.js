@@ -228,13 +228,13 @@ function add_view_links(frm) {
 
     // ---------------- Hotel ----------------
     frappe.db.get_value(
-        'Hotel',
+        'Lodging',
         { participant: frm.doc.name },
         'name'
     ).then(r => {
         if (r?.message?.name) {
-            frm.add_custom_button(__('Hotel'), () => {
-                frappe.set_route('Form', 'Hotel', r.message.name);
+            frm.add_custom_button(__('Lodging'), () => {
+                frappe.set_route('Form', 'Lodging', r.message.name);
             }, __('View'));
         }
     });

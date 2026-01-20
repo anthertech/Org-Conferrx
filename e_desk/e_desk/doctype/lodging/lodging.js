@@ -1,7 +1,7 @@
 // Copyright (c) 2025, Anther Technologies Pvt Ltd and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Hotel', {
+frappe.ui.form.on('Lodging', {
 	refresh: function(frm) {
 		if (frm.doc.latitude && frm.doc.longitude) {
 			const map = frm.get_field('location').map;
@@ -12,7 +12,7 @@ frappe.ui.form.on('Hotel', {
 		frm.set_query('address', function(doc) {
 			return {
 				filters: {
-					'link_doctype': 'Hotel',
+					'link_doctype': 'Lodging',
 					'link_name': doc.name
 				}
 			}

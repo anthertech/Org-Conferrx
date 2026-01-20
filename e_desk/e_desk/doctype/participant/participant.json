@@ -1,5 +1,4 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "autoname": "COC-.YYYY.-.####",
@@ -25,6 +24,8 @@
   "registration_type",
   "customer",
   "user",
+  "id_proof",
+  "id_proof_no",
   "column_break_gsdr",
   "is_staff",
   "date_of_birth",
@@ -74,6 +75,7 @@
   "invitee_phone",
   "travel_tab",
   "section_break_fvqr",
+  "mode_of_travel",
   "flight_no",
   "departure_time",
   "column_break_hbtt",
@@ -260,6 +262,7 @@
    "label": "Brand Logo"
   },
   {
+   "depends_on": "eval:doc.mode_of_travel == \"Air\"",
    "fieldname": "flight_no",
    "fieldtype": "Data",
    "label": "Flight No"
@@ -267,12 +270,12 @@
   {
    "fieldname": "departure_time",
    "fieldtype": "Datetime",
-   "label": "Departure"
+   "label": "Leave On"
   },
   {
    "fieldname": "arrival_time",
    "fieldtype": "Datetime",
-   "label": "Arrival"
+   "label": "Arrival At"
   },
   {
    "fieldname": "organization_tab",
@@ -464,12 +467,28 @@
    "hidden": 1,
    "label": "Other Attendees",
    "options": "Event Booking Staff"
+  },
+  {
+   "fieldname": "mode_of_travel",
+   "fieldtype": "Select",
+   "label": "Mode of Travel",
+   "options": "Air\nTrain\nBus"
+  },
+  {
+   "fieldname": "id_proof",
+   "fieldtype": "Attach",
+   "label": "ID Proof"
+  },
+  {
+   "fieldname": "id_proof_no",
+   "fieldtype": "Data",
+   "label": "ID Proof No."
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-19 00:00:19.634984",
+ "modified": "2026-01-20 11:52:09.684341",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",

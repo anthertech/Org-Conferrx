@@ -3,59 +3,126 @@ import frappe
 from frappe.utils import flt
 
 @frappe.whitelist()
-def add_to_cart(item_code, user):
+def add_to_cart(item_code, user=None, event=None, warehouse=None, serial_no=None):
     """
     Add an item to the cart (Sales Invoice Draft) for this participant.
+    Backward compatible with old calls.
     """
-    # Get customer linked to participant
+
+    # ------------------------------------------------
+    # 1. Resolve user safely
+    # ------------------------------------------------
+    if not user:
+        user = frappe.session.user
+
+    # ------------------------------------------------
+    # 2. Get participant + customer
+    # ------------------------------------------------
     participant = frappe.db.get_value(
         "Participant",
         {"user": user},
-        ["name", "customer"],  # we need customer too
+        ["name", "customer"],
         as_dict=True
     )
+
+    print("\n\n\n\nparticipant\n",participant)
+
     if not participant:
         frappe.throw("No participant record found for this user.")
+
     if not participant.customer:
         frappe.throw("No customer linked to this participant.")
 
     customer = participant.customer
 
-    # Check if a draft Sales Invoice exists for this customer
+    # ------------------------------------------------
+    # 3. Item validation
+    # ------------------------------------------------
+    item = frappe.get_doc("Item", item_code)
+
+    # Serial validation (only if item is serialized)
+    if item.has_serial_no:
+        if not serial_no:
+            frappe.throw("Slot selection is required for this item.")
+
+        if not warehouse:
+            frappe.throw("Warehouse is required for slot-based items.")
+
+        valid_serial = frappe.db.exists(
+            "Serial No",
+            {
+                "name": serial_no,
+                "item_code": item_code,
+                "warehouse": warehouse,
+                "status": "Available"
+            }
+        )
+
+        if not valid_serial:
+            frappe.throw("Selected slot is no longer available.")
+
+    # ------------------------------------------------
+    # 4. Find existing draft invoice (EVENT AWARE)
+    invoice_filters = {
+        "customer": customer,
+        "docstatus": 0
+    }
+
+    # 🔑 Isolate cart per warehouse (EVENT)
+    if warehouse:
+        invoice_filters["set_warehouse"] = warehouse
+
+    print("\n\nInvoice Filters:", invoice_filters)
+
     si_name = frappe.db.get_value(
         "Sales Invoice",
-        {"customer": customer, "docstatus": 0},  # Draft
+        invoice_filters,
         "name"
     )
-
-    # Get item details
-    item_doc = frappe.get_doc("Item", item_code)
-
+    print("\n\n\si_name",si_name)
+    print("\n\n\n\n")
+    # ------------------------------------------------
+    # 5. Create or load draft invoice
+    # ------------------------------------------------
     if si_name:
-        # Draft invoice exists → append item
         si = frappe.get_doc("Sales Invoice", si_name)
     else:
-        # Create new draft Sales Invoice
-        si = frappe.get_doc({
+        si_data = {
             "doctype": "Sales Invoice",
             "customer": customer,
             "status": "Draft",
             "items": []
-        })
+        }
 
-    # Append the item
+        if event:
+            si_data["event"] = event
+
+        if warehouse:
+            si_data["source_warehouse"] = warehouse
+
+        si = frappe.get_doc(si_data)
+
+    # ------------------------------------------------
+    # 6. Append item (warehouse + serial safe)
+    # ------------------------------------------------
     si.append("items", {
-        "item_code": item_doc.item_code,
-        "item_name": item_doc.item_name,
-        # "rate": item_doc.standard_rate,
-        "qty": 1
+        "item_code": item.item_code,
+        "item_name": item.item_name,
+        "qty": 1,
+        "warehouse": warehouse,
+        "serial_no": serial_no
     })
 
+    # ------------------------------------------------
+    # 7. Save
+    # ------------------------------------------------
     si.save(ignore_permissions=True)
     frappe.db.commit()
 
-    return {"message": "Item added to cart", "invoice": si.name}
-
+    return {
+        "message": "Item added to cart",
+        "invoice": si.name
+    }
 
 
 

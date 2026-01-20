@@ -27,7 +27,7 @@
  "list_columns": [],
  "login_required": 0,
  "max_attachment_size": 0,
- "modified": "2026-01-19 00:45:46.493075",
+ "modified": "2026-01-20 09:42:24.987583",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "participant-registration-form",
@@ -41,7 +41,7 @@
  "show_sidebar": 0,
  "success_message": "Please check the registered email for setup login credentials.",
  "success_title": "Registered Successfully! ",
- "success_url": "/shop-by-category",
+ "success_url": "/item_list",
  "title": "Participant Registration",
  "web_form_fields": [
   {
