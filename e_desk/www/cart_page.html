@@ -1,0 +1,272 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<style>
+    .cart-wrapper {
+        max-width: 900px;
+        margin: auto;
+        padding: 10px;
+    }
+    
+    .cart-title {
+        margin-bottom: 16px;
+    }
+    
+    .cart-card {
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .cart-table th {
+        font-weight: 600;
+        background: #f9fafb;
+    }
+    
+    .qty-control {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+    
+    .qty-btn {
+        width: 28px;
+        height: 28px;
+        border: 1px solid #d1d5db;
+        background: #fff;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    
+    .qty-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+    
+    .free-badge {
+        font-size: 11px;
+        color: #16a34a;
+        font-weight: 600;
+    }
+    
+    .remove-btn {
+        color: #dc2626;
+        font-size: 13px;
+        cursor: pointer;
+    }
+    
+    .cart-totals {
+        padding: 12px 16px;
+        border-top: 1px solid #e5e7eb;
+    }
+    
+    .totals-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+    }
+    
+    .totals-row.grand {
+        font-weight: 700;
+        font-size: 16px;
+    }
+    
+    .cart-footer {
+        padding: 12px 16px;
+        border-top: 1px solid #e5e7eb;
+    }
+    .intermediate-empty-cart{
+        visibility: hidden !important;
+    }
+    
+    /* Mobile */
+    @media (max-width: 768px) {
+        .cart-table th:nth-child(3),
+        .cart-table td:nth-child(3) {
+            display: none;
+        }
+    
+        .cart-wrapper {
+            padding: 5px;
+        }
+    }
+    </style>
+<div class="cart-wrapper">
+    <h3 class="cart-title">My Cart</h3>
+
+    <div class="card cart-card">
+        <div class="card-body p-0">
+
+            <div class="table-responsive">
+                <table class="table cart-table mb-0" id="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th class="text-center">Qty</th>
+                            <th class="text-right">Rate</th>
+                            <th class="text-right">Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+            <!-- Totals -->
+            <div id="cart-totals" class="cart-totals" style="display:none">
+                <div class="totals-row">
+                    <span>Net Total</span>
+                    <span id="net-total"></span>
+                </div>
+                <div class="totals-row">
+                    <span>Tax</span>
+                    <span id="tax-total"></span>
+                </div>
+                <div class="totals-row">
+                    <span>Rounded</span>
+                    <span id="rounded-total"></span>
+                </div>
+                <div class="totals-row grand">
+                    <span>Grand Total</span>
+                    <span id="grand-total"></span>
+                </div>
+            </div>
+
+            <div class="cart-footer text-right">
+                <button class="btn btn-primary" id="checkout-btn" style="display:none" onclick="checkout_cart()">
+                    Checkout
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+function csrf() {
+    return frappe.csrf_token;
+}
+
+async function load_cart() {
+    const res = await fetch(
+        "/api/method/e_desk.e_desk.api.cart.get_cart_for_user"
+    );
+    const r = await res.json();
+
+    const tbody = document.querySelector("#cart-table tbody");
+    tbody.innerHTML = "";
+
+    if (!r.message || !r.message.items || r.message.items.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" class="text-center text-muted">
+                    Your cart is empty
+                </td>
+            </tr>`;
+        document.getElementById("cart-totals").style.display = "none";
+        document.getElementById("checkout-btn").style.display = "none";
+        return;
+    }
+
+    r.message.items.forEach(item => {
+        const is_free = item.is_free;
+
+        tbody.insertAdjacentHTML("beforeend", `
+            <tr data-row="${item.rowname}">
+                <td>
+                    ${item.item_name}
+                    ${is_free ? `<div class="free-badge">FREE ITEM</div>` : ``}
+                </td>
+
+                <td class="text-center">
+                    ${is_free ? item.qty : `
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="update_qty('${item.rowname}', -1)">−</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="update_qty('${item.rowname}', 1)">+</button>
+                        </div>
+                    `}
+                </td>
+
+                <td class="text-right">₹ ${item.rate}</td>
+                <td class="text-right">₹ ${item.amount}</td>
+
+                <td class="text-right">
+                    ${is_free ? `` : `
+                        <span class="remove-btn" onclick="remove_item('${item.rowname}')">
+                            Remove
+                        </span>
+                    `}
+                </td>
+            </tr>
+        `);
+    });
+
+    document.getElementById("net-total").innerText = "₹ " + r.message.net_total;
+    document.getElementById("tax-total").innerText = "₹ " + r.message.total_taxes;
+    document.getElementById("rounded-total").innerText = "₹ " + r.message.rounded_total;
+    document.getElementById("grand-total").innerText = "₹ " + r.message.grand_total;
+
+    document.getElementById("cart-totals").style.display = "block";
+    document.getElementById("checkout-btn").style.display = "inline-block";
+}
+
+async function update_qty(rowname, delta) {
+    await fetch("/api/method/e_desk.e_desk.api.cart.update_cart_qty", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Frappe-CSRF-Token": csrf()
+        },
+        body: JSON.stringify({ rowname, delta })
+    });
+    load_cart();
+}
+
+async function remove_item(rowname) {
+    await fetch("/api/method/e_desk.e_desk.api.cart.remove_cart_item", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-Frappe-CSRF-Token": csrf()
+        },
+        body: JSON.stringify({ rowname })
+    });
+    load_cart();
+}
+
+load_cart();
+
+async function checkout_cart() {
+    const btn = document.getElementById("checkout-btn");
+    btn.disabled = true;
+    btn.innerText = "Processing...";
+
+    const res = await fetch(
+        "/api/method/e_desk.e_desk.api.cart.checkout_cart",
+        {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-Frappe-CSRF-Token": frappe.csrf_token
+            }
+        }
+    );
+
+    const r = await res.json();
+
+    if (r.exc) {
+        frappe.msgprint("Unable to checkout. Please try again.");
+        btn.disabled = false;
+        btn.innerText = "Checkout";
+        return;
+    }
+
+    // Redirect to Desk page
+    window.location.href = "/app/conferxx";
+}
+    
+</script>
+
+{% endblock %}

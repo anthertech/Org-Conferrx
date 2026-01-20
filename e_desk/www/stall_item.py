@@ -56,7 +56,7 @@ def get_context(context):
     # ------------------------------------------------
     items = frappe.get_all(
         "Item",
-        filters={"custom_publish": 1,"item_group":["!=", "Stall"]},
+        filters={"custom_publish": 1,"item_group":["!=", "Registration"]},
         fields=[
             "name",
             "item_name",

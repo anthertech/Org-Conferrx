@@ -3,6 +3,7 @@
 
 frappe.ui.form.on('Participant', {
 	refresh(frm) {
+        apply_meal_rules(frm);
 		if (frm.is_new()) return;
 	
 		if (
@@ -44,11 +45,6 @@ frappe.ui.form.on('Participant', {
         ).then(r => {
             const qr = r.message?.custom_qr;
             if (!qr) return;
-    
-            // Store QR data
-            // frm.set_value('qr', qr);
-    
-            // Show preview
             frm.fields_dict.qr_preview.$wrapper.html(`
 				<div style="text-align:left">
 					<img src="${qr}" style="width:120px !important; margin-top:10px; border:solid 1px black; border-radius:5px;">
@@ -184,7 +180,9 @@ function toggleVolunteer(frm) {
 
 
 function add_view_links(frm) {
-    if (!frm.doc.event || frm.is_new()) return;
+    if (frm.is_new() || !frm.doc.event) return;
+
+    // ---------------- Sponsor ----------------
     frappe.db.get_value(
         'Sponsor',
         {
@@ -193,12 +191,14 @@ function add_view_links(frm) {
         },
         'name'
     ).then(r => {
-        if (r && r.message) {
+        if (r?.message?.name) {
             frm.add_custom_button(__('Sponsor'), () => {
                 frappe.set_route('Form', 'Sponsor', r.message.name);
             }, __('View'));
         }
     });
+
+    // ---------------- Exhibitor ----------------
     frappe.db.get_single_value('Conference Settings', 'event_has_exhibitors')
         .then(event_has_exhibitors => {
             if (!event_has_exhibitors) return;
@@ -211,29 +211,31 @@ function add_view_links(frm) {
                 },
                 'name'
             ).then(r => {
-                if (r && r.message) {
+                if (r?.message?.name) {
                     frm.add_custom_button(__('Exhibitor'), () => {
                         frappe.set_route('Form', 'Exhibitor', r.message.name);
                     }, __('View'));
                 }
             });
         });
+
+    // ---------------- User ----------------
     if (frm.doc.user) {
         frm.add_custom_button(__('User'), () => {
             frappe.set_route('Form', 'User', frm.doc.user);
         }, __('View'));
     }
-    if (!frm.is_new()) {
-        frappe.db.get_value(
-            'Hotel',
-            { participant: frm.doc.name },
-            'name'
-        ).then(r => {
-            if (r?.message?.name) {
-                frm.add_custom_button(__('Hotel'), () => {
-                    frappe.set_route('Form', 'Hotel', r.message.name);
-                }, __('View'));
-            }
-        });
-    } 
+
+    // ---------------- Hotel ----------------
+    frappe.db.get_value(
+        'Hotel',
+        { participant: frm.doc.name },
+        'name'
+    ).then(r => {
+        if (r?.message?.name) {
+            frm.add_custom_button(__('Hotel'), () => {
+                frappe.set_route('Form', 'Hotel', r.message.name);
+            }, __('View'));
+        }
+    });
 }

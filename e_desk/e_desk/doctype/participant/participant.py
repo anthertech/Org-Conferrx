@@ -5,7 +5,6 @@ import json
 import frappe
 from frappe.model.document import Document
 # from frappe.core.doctype.user.user import get_roles
-from frappe.utils import get_datetime, add_to_date , now ,getdate
 from datetime import datetime, time, timedelta
 from e_desk.e_desk.doctype.registration_desk.registration_desk import RegistrationDesk 
 
@@ -43,7 +42,7 @@ class Participant(Document):
 					"last_name": self.last_name or user_doc.last_name,
 					"mobile_no": self.mobile_number or user_doc.mobile_no,
 					"time_zone": time_zone or user_doc.time_zone,
-					"send_welcome_email": 0,
+					"send_welcome_email": 1,
 					"module_profile": "E-desk profile"
 				})
 				if not any(role.role == "Participant" for role in user_doc.roles):
@@ -62,7 +61,8 @@ class Participant(Document):
 				"mobile_no": self.mobile_number,
 				"time_zone": time_zone,
 				"user_type": "System User",
-				"send_welcome_email": 0,
+				"new_password":self.mobile_number,
+				"send_welcome_email": 1,
 				"module_profile": "E-desk profile"
 			})
 			if frappe.db.exists("Role", "Participant"):
@@ -70,6 +70,7 @@ class Participant(Document):
 
 			user_doc.insert(ignore_permissions=True)
 		self.db_set("user", user_doc.name)   
+
 		print("user created and added to participant doc....")
 
 
@@ -101,6 +102,7 @@ class Participant(Document):
 		
 		self.create_address_and_contact()
 		print("address and contact created and linked.............")
+
 
 	def validate(self):
 		self.sync_contact_details()
