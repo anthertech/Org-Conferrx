@@ -140,5 +140,19 @@ def get_context(context):
     )
 
     context.item_groups = [{"name": g} for g in item_groups]
+    # ------------------------------------------------
+    # Company Currency
+    # ------------------------------------------------
+    default_company = frappe.defaults.get_user_default("Company") \
+        or frappe.db.get_single_value("Global Defaults", "default_company")
+
+    currency = frappe.get_value(
+        "Company",
+        default_company,
+        "default_currency"
+    )
+
+    context.currency = currency
+
 
     return context

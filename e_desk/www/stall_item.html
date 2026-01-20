@@ -81,16 +81,15 @@
 
 /* Price smaller */
 .price {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
-    color: #2563eb;
-    margin-bottom: 4px;
+    color: green;
+    margin-top: 4px;
 }
-
 /* Add button smaller */
 .add-cart-btn {
     width: 100%;
-    margin-top: 30px!important;
+    margin-top: 10px!important;
     background: #000000;
     color: #fff;
     border: none;
@@ -164,6 +163,15 @@
         grid-template-columns: 1fr; /* 1 item per row */
     }
 }
+/* Slot placeholder to equalize card heights */
+.slot-field {
+    min-height: 34px; /* matches label + select height */
+}
+
+.slot-placeholder {
+    visibility: hidden; /* keeps space, hides content */
+}
+
 </style>
 
 <!-- CART ICON -->
@@ -225,21 +233,20 @@
             <div class="shop-card" data-item-group="{{ item.item_group }}">
             
                 <div class="item-title">{{ item.item_name }}</div>
-                <div class="price">₹ {{ item.standard_rate or 0 }}</div>
+                <div class="price"><span style="color: #575353;">{{ currency }}</span> {{ item.standard_rate or 0 }}</div>
             
-                {% if item.serial_nos %}
-                
-                <div class="slot-field" style="margin-top:10px;">
-                    <label>Slot</label>
-                    <select id="slot-{{ item.name }}">
-                        <option value="">--</option>
-                        {% for s in item.serial_nos %}
-                        <option style="font-size:14px !important;" value="{{ s }}">{{ s }}</option>
-                        {% endfor %}
-                    </select>
+                <div class="slot-field {% if not item.serial_nos %}slot-placeholder{% endif %}" style="margin-top:10px;">
+                    {% if item.serial_nos %}
+                        <label>Slot</label>
+                        <select id="slot-{{ item.name }}">
+                            <option value="">--</option>
+                            {% for s in item.serial_nos %}
+                            <option style="font-size:14px !important;" value="{{ s }}">{{ s }}</option>
+                            {% endfor %}
+                        </select>
+                    {% endif %}
                 </div>
-                {% endif %}
-            
+                
                 <button class="add-cart-btn"
                         onclick="add_to_cart('{{ item.name }}')">
                     Add
