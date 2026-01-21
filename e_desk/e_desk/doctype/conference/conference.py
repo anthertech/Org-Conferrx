@@ -11,7 +11,8 @@ class Conference(WebsiteGenerator):
 
 	def before_save(self):
         # Create a folder for this conference if it doesn't already exist
-		if self.registration_close_date>=self.end_date:
+		
+		if self.registration_close_date and self.end_date and  self.registration_close_date>=self.end_date:
 			frappe.throw("The registration closing date cannot be greater than the event end date.")
 		self.create_confer_folder()
 

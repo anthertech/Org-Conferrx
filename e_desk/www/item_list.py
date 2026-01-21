@@ -115,7 +115,7 @@ def get_context(context):
             filters={
                 "item_code": ["in", serialized_items],
                 "warehouse": active_warehouse,
-                "status": "Available"
+                "status": "Active"
             },
             fields=["name", "item_code"]
         )
@@ -126,6 +126,7 @@ def get_context(context):
     # ------------------------------------------------
     # 7. Attach price + serials
     # ------------------------------------------------
+    print(serial_map)
     for item in items:
         item.standard_rate = price_map.get(item.name, 0)
         item.serial_nos = serial_map.get(item.name, [])
@@ -140,19 +141,18 @@ def get_context(context):
     )
 
     context.item_groups = [{"name": g} for g in item_groups]
+
+    # Conference currency (ONLY from Conference doctype)
     # ------------------------------------------------
-    # Company Currency
-    # ------------------------------------------------
-    default_company = frappe.defaults.get_user_default("Company") \
-        or frappe.db.get_single_value("Global Defaults", "default_company")
+    conference_currency = None
 
-    currency = frappe.get_value(
-        "Company",
-        default_company,
-        "default_currency"
-    )
+    if active_event:
+        conference_currency = frappe.get_value(
+            "Conference",
+            active_event,
+            "currency"
+        )
 
-    context.currency = currency
-
+    context.currency = conference_currency
 
     return context

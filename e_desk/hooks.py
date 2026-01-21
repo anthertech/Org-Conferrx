@@ -32,7 +32,10 @@ app_dependencies = ["webshop"]
 # page_js = {"page" : "public/js/file.js"}
 
 # include js in doctype views
-doctype_js = {"User" : "public/js/user.js"}
+doctype_js = {
+    "User" : "public/js/user.js",
+    "Project" : "public/js/project.js"
+    }
 # doctype_list_js = {"Participant" : "e_desk/doctype/participant/participant.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
 # doctype_calendar_js = {"doctype" : "public/js/doctype_calendar.js"}
@@ -154,6 +157,9 @@ doc_events = {
 	},
     "User":{
         "after_insert":"e_desk.e_desk.doc_events.user.after_insert"
+    },
+    "Project":{
+        "after_insert":"e_desk.e_desk.doc_events.project.create_project_warehouse"
     }
 }
 

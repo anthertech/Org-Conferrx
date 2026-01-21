@@ -488,7 +488,7 @@
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-20 11:52:09.684341",
+ "modified": "2026-01-20 15:03:04.655079",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",
@@ -546,7 +546,7 @@
   }
  ],
  "row_format": "Dynamic",
- "search_fields": "first_name,e_mail,mobile_number",
+ "search_fields": "event_role,  e_mail",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],

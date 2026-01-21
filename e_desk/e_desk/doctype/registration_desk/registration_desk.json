@@ -19,6 +19,7 @@
   "naming_series",
   "confer",
   "kit_provided_",
+  "paid",
   "section_break_sec1",
   "part_profile",
   "profile_preview",
@@ -41,7 +42,7 @@
   {
    "fieldname": "registration_fee_collected_section",
    "fieldtype": "Section Break",
-   "label": "Registration Fee Collected?"
+   "label": "Registration Fee Collected"
   },
   {
    "fieldname": "amended_from",
@@ -51,11 +52,6 @@
    "options": "Registration Desk",
    "print_hide": 1,
    "read_only": 1
-  },
-  {
-   "fieldname": "profile_preview",
-   "fieldtype": "HTML",
-   "label": "Preview"
   },
   {
    "fieldname": "naming_series",
@@ -68,6 +64,7 @@
    "fetch_from": "participant_id.profile_photo",
    "fieldname": "part_profile",
    "fieldtype": "Attach Image",
+   "hidden": 1,
    "label": "Profile",
    "read_only": 1
   },
@@ -83,7 +80,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fetch_from": "participant_id.qr",
    "fieldname": "qr_profile",
    "fieldtype": "Attach Image",
    "label": "QR Profile",
@@ -147,12 +143,24 @@
   {
    "fieldname": "column_break_mefd",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fetch_from": "participant_id.is_paid",
+   "fieldname": "paid",
+   "fieldtype": "Check",
+   "label": "Paid"
+  },
+  {
+   "fieldname": "profile_preview",
+   "fieldtype": "HTML",
+   "label": "Profile Preview"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-14 16:50:10.026353",
+ "modified": "2026-01-20 15:50:05.773085",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Registration Desk",

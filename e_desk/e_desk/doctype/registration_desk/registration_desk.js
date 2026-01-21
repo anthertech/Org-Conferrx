@@ -53,22 +53,42 @@ frappe.ui.form.on('Registration Desk', {
 		if (frm.doc.part_profile) {
 			let imgHTML = `
 				<div>
-					<img src="${frm.doc.part_profile}" alt="Profile Image" height="100" width="100">
+					<img src="${frm.doc.part_profile}" alt="Profile Image" style="width:116px !important; 
+									border-radius:5px;">
 				</div>`;
 			frm.get_field("profile_preview").$wrapper.html(imgHTML);
 		}
-
-		// Display the QR code in the qr_preview field	
-		if (frm.doc.qr_profile) {
-			console.log("qrrr,,,reached here...............")
-			console.log(frm.doc.qr_profile,"this is form qr")
-			let qrHTML = `
-				<div>
-					<img src="${frm.doc.qr_profile}" alt="QR Code" height="100" width="100">
-				</div>`;
-			frm.get_field("qr_preview").$wrapper.html(qrHTML);
-		}
-
+        if (!frm.doc.participant_id) return;
+	
+		// 2️⃣ Fetch the linked User from Participant
+		frappe.db.get_value(
+			'Participant', 
+			frm.doc.participant_id,  // Participant ID
+			'user'         // Field in Participant that links to User
+		).then(participant_res => {
+			const user_id = participant_res.message?.user;
+			if (!user_id) return;
+	
+			// 3️⃣ Fetch the QR from the User doc
+			frappe.db.get_value(
+				'User',
+				user_id,
+				'custom_qr'
+			).then(user_res => {
+				const qr = user_res.message?.custom_qr;
+				if (!qr) return;
+	
+				// 4️⃣ Render the QR
+				frm.fields_dict.qr_preview.$wrapper.html(`
+					<div style="text-align:left">
+						<img src="${qr}" 
+							 style="width:120px !important; 
+									border:solid 1px black; 
+									border-radius:5px;">
+					</div>
+				`);
+			});
+		});
 		
 	},
 		

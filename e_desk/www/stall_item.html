@@ -93,14 +93,29 @@
     background: #000000;
     color: #fff;
     border: none;
-    padding: 4px 6px;
+    padding: 6px 6px;
     border-radius: 4px;
     font-size: 12px;
     cursor: pointer;
     margin-top: auto;
 }
 .add-cart-btn:hover {
-    background: #3b455e;
+    background: #7a7a7a;
+}
+.view_detail-btn{
+    width: 100%;
+    margin-top: 10px!important;
+    background: #757575;
+    color: #fff;
+    border: none;
+    padding: 6px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-top: auto;
+}
+.view_detail-btn:hover {
+    background: #636363;
 }
 
 /* ------------------------ */
@@ -246,10 +261,12 @@
                         </select>
                     {% endif %}
                 </div>
-                
+                <button class="view_detail-btn" onclick="view_item('{{ item.name }}')">
+                    View Details
+                </button>
                 <button class="add-cart-btn"
                         onclick="add_to_cart('{{ item.name }}')">
-                    Add
+                    Add to Cart
                 </button>
             </div>
             {% endfor %}
@@ -325,6 +342,12 @@ function add_to_cart(item_code) {
             }
         }
     });
+}
+function view_item(item_code) {
+    const params = new URLSearchParams(window.location.search);
+    params.set("item", item_code);
+
+    window.location.href = `/item_details?${params.toString()}`;
 }
 </script>
 

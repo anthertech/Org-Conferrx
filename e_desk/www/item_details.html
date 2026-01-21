@@ -1,0 +1,282 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+
+<style>
+    /* PAGE WRAPPER */
+    .product-page {
+        max-width: 1100px;
+        margin: auto;
+        margin-top: 100px;
+        border: 1px solid rgb(233, 233, 233);
+    }
+    
+    /* MAIN SECTION */
+    .product-section {
+        padding-top: 12px;
+        padding-bottom: 40px;
+    }
+    
+    /* LEFT SIDE */
+    .product-title {
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 6px;
+    }
+    
+    .product-price {
+        font-size: 20px;
+        font-weight: 500;
+        margin-bottom: 18px;
+    }
+    
+    .product-desc {
+        font-size: 15px;
+        line-height: 1.65;
+        color: #555;
+        max-width: 92%;
+        margin-bottom: 28px;
+    }
+    
+    /* SLOT SELECT */
+    .form-group {
+        margin-bottom: 26px !important;
+    }
+    
+    .form-group label {
+        font-size: 14px;
+        margin-bottom: 6px;
+    }
+    
+    /* BUTTONS */
+    .btn-cart {
+        padding: 9px 26px;
+        font-size: 14px;
+    }
+    
+    .btn-back {
+        padding: 5px 20px !important;
+        background-color: #e2e2e2;
+        font-size: 14px;
+    }
+    
+    /* RIGHT SIDE CARD */
+    .meta-card {
+        background: #fafafa;
+        border: 1px solid #eaeaea;
+        border-radius: 10px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    
+    /* ORDER DETAILS TITLE */
+    .meta-card .text-uppercase {
+        letter-spacing: 0.6px;
+        margin-bottom: 20px !important;
+    }
+    
+    /* ORDER DETAILS CONTENT */
+    .meta-card strong {
+        font-size: 13px;
+    }
+    
+    .meta-card span {
+        font-size: 14px;
+    }
+    
+    /* COLUMN BALANCE */
+    @media (min-width: 768px) {
+        .col-md-7 {
+            padding-right: 40px;
+        }
+    }
+    
+    /* MOBILE */
+    @media (max-width: 767px) {
+        .product-page {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+    
+        .meta-card {
+            margin-top: 28px !important;
+        }
+    }
+    /* PAGE HEADING */
+.page-heading {
+    padding: 16px 5px;
+    border-bottom: 1px solid #e9e9e9;
+    background: #fcfcfc;
+}
+
+.page-heading h4 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 600;
+    color: #222;
+}
+.cart-button {
+    position: relative; /* or relative if inside a container */
+    right: 20px;         /* distance from the right edge */
+    top: 20px;           /* distance from top */
+    background: none;
+    border: none;
+    border-radius: 6px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 9999; /* make sure it’s on top */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cart-button svg {
+    pointer-events: none; /* allow click to pass to button */
+}
+
+
+    </style>
+    
+<!-- CART ICON -->
+<button class="cart-button" onclick="open_cart()">
+    <svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#000000"><path d="M456.67-608.67v-122H334v-66.66h122.67v-122h66.66v122h122v66.66h-122v122h-66.66ZM286.53-80q-30.86 0-52.7-21.97Q212-123.95 212-154.81q0-30.86 21.98-52.69 21.97-21.83 52.83-21.83t52.69 21.97q21.83 21.98 21.83 52.84 0 30.85-21.97 52.69Q317.38-80 286.53-80Zm402.66 0q-30.86 0-52.69-21.97-21.83-21.98-21.83-52.84 0-30.86 21.97-52.69 21.98-21.83 52.84-21.83 30.85 0 52.69 21.97Q764-185.38 764-154.52q0 30.85-21.97 52.69Q720.05-80 689.19-80ZM54.67-813.33V-880h121l170 362.67H630.8l158.87-280h75L698-489.33q-11 19.33-28.87 30.66-17.88 11.34-39.13 11.34H328.67l-52 96H764v66.66H282.67q-40.11 0-61.06-33-20.94-33-2.28-67L280-496 133.33-813.33H54.67Z"/></svg>
+    <span class="cart-event-label">
+       &nbsp;Event :&nbsp;<b style="color:green;">{{ active_event }}</b>
+    </span>
+    </button>
+
+<div class="container product-page">
+    <div class="page-heading">
+        <h4>Item Details</h4>
+    </div>
+    
+{% if item %}
+<div class="row product-section">
+
+    <!-- LEFT -->
+    <div class="col-md-7">
+
+        <!-- TITLE -->
+        <div class="product-title mb-2">
+            {{ item.item_name }}
+        </div>
+
+        <!-- PRICE -->
+        <div class="product-price text-success mb-4">
+            {{ currency }} {{ item.standard_rate or 0 }}
+        </div>
+
+        <!-- DESCRIPTION -->
+        {% if item.description %}
+        <div class="product-desc mb-5">
+            {{ item.description | safe }}
+        </div>
+        {% endif %}
+
+        <!-- SLOT -->
+        {% if item.serial_nos %}
+        <div class="form-group mb-5" style="max-width:260px;">
+            <label class="font-weight-bold mb-2">Slot</label>
+            <select id="slot-{{ item.name }}" class="form-control">
+                <option value="">Select slot</option>
+                {% for s in item.serial_nos %}
+                <option value="{{ s }}">{{ s }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        {% endif %}
+
+        <!-- ACTION BUTTONS -->
+        <div class="d-flex align-items-center mt-4">
+            <button class="btn btn-primary btn-cart mr-3"
+                    onclick="add_to_cart('{{ item.name }}')">
+                Add to Cart
+            </button>
+
+            <a href="javascript:history.back()"
+               class="btn btn-outline-secondary btn-back">
+                Back
+            </a>
+        </div>
+
+    </div>
+
+    <!-- RIGHT -->
+    <div class="col-md-5">
+
+        <div class="meta-card p-4 mt-md-0 mt-5">
+
+            <div class="mb-4 text-uppercase text-muted" style="font-size:12px;">
+                Order Details
+            </div>
+
+            <div class="mb-3">
+                <strong>Event</strong><br>
+                <span class="text-muted">{{ active_event or "-" }}</span>
+            </div>
+
+            <div class="mb-3">
+                <strong>Warehouse</strong><br>
+                <span class="text-muted">{{ active_warehouse or "-" }}</span>
+            </div>
+
+            <div>
+                <strong>Available Quantity</strong><br>
+                <span class="text-muted">{{ item.actual_qty }}</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% else %}
+<div class="alert alert-warning">
+    Item not available
+</div>
+{% endif %}
+
+</div>
+
+<script>
+const ACTIVE_WAREHOUSE = "{{ active_warehouse }}";
+const ACTIVE_EVENT = "{{ active_event }}";
+
+function add_to_cart(item_code) {
+
+    if (!ACTIVE_EVENT || !ACTIVE_WAREHOUSE) {
+        frappe.msgprint("Please select an event");
+        return;
+    }
+
+    let serial_no = null;
+    const slot = document.getElementById(`slot-${item_code}`);
+    if (slot) {
+        serial_no = slot.value;
+        if (!serial_no) {
+            frappe.msgprint("Please select a slot");
+            return;
+        }
+        console.log(serial_no)
+    }
+
+    frappe.call({
+        method: "e_desk.e_desk.api.cart.add_to_cart",
+        args: {
+            item_code,
+            event: ACTIVE_EVENT,
+            warehouse: ACTIVE_WAREHOUSE,
+            serial_no
+        },
+        callback(r) {
+            if (r.message) {
+                frappe.msgprint("Item added to cart");
+            }
+        }
+    });
+}
+/* Cart Click */
+function open_cart() {
+    window.location.href = "/cart_page";  // exact route with leading slash here
+}
+</script>
+
+{% endblock %}

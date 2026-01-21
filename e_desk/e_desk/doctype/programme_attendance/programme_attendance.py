@@ -7,8 +7,7 @@ from frappe.utils import nowdate,now_datetime
 
 
 class ProgrammeAttendance(Document):
-	pass
-
+    pass
 
 @frappe.whitelist()
 def process_scan(scan_qr, event, programme, docname):
@@ -25,7 +24,7 @@ def process_scan(scan_qr, event, programme, docname):
             "user": scan_qr,
             "event": event
         },
-        ["name", "full_name", "status"],
+        ["name", "full_name", "status","meal_included"],
         as_dict=True
     )
 
@@ -36,6 +35,30 @@ def process_scan(scan_qr, event, programme, docname):
         frappe.throw(
             f"Participant is not registered. Current status: {participant.status}"
         )
+
+    conference = frappe.db.get_value(
+        "Conference Settings",
+        event,
+        ["has_meal", "meal_access"],
+        as_dict=True
+    )
+
+    if conference and conference.has_meal:
+        if conference.meal_access != "Free for All Participants":
+
+            is_meal_programme = frappe.db.get_value(
+                "Conference Agenda",
+                {
+                    "parent": event,
+                    "program_agenda": programme,
+                    "meal": 1
+                },
+                "name"
+            )
+
+            if is_meal_programme and not participant.meal_included:
+                frappe.throw(
+                    "Meal access denied. This participant does not have meal included.")
 
     already_scanned = frappe.db.exists(
         "Scanned List",
