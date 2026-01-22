@@ -61,6 +61,7 @@ def add_to_cart(item_code, user=None, event=None, warehouse=None, serial_no=None
         }
         si = frappe.get_doc(si_data)
 
+
     # 6. Serial number validation (after invoice exists)
     if item.has_serial_no:
         if not serial_no:
@@ -259,3 +260,6 @@ def checkout_cart():
     return {
         "invoice": si.name
     }
+
+
+

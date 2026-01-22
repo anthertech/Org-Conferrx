@@ -79,10 +79,18 @@ class Conference(WebsiteGenerator):
 		context.agenda_list = get_agenda_data(self)
 		context.speakers = get_speakers_for_event(self.name)
 		context.registration_types = get_registration_types()
+		context.has_exhibitor = has_exhibitor()
 		return context
 
 
-
+def has_exhibitor():
+    has_exhibitor = frappe.db.get_single_value(
+        "Conference Settings",
+        "event_has_exhibitors"
+    )
+    return has_exhibitor
+    
+	
 
 def get_agenda_data(self):
 	agenda = self.agenda or []

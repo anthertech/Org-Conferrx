@@ -3,14 +3,15 @@
 
 frappe.ui.form.on('Registration Desk', {
 
-	scan_qr: function(frm) {
-        if (frm.doc.scan_qr) {
-            frm.events.submit(frm);
-        }
-    },
+	
 	scan_qr(frm) {
-        if (!frm.doc.scan_qr || !frm.doc.confer) return;
+		if (!frm.doc.scan_qr) return;
 
+        if (!frm.doc.confer) {
+			frm.set_value("scan_qr", "");
+            frappe.throw("Please Select an Event First");
+            return; // ensure nothing else runs
+        }
         frappe.call({
             method: "e_desk.e_desk.doctype.registration_desk.registration_desk.registration_details",
             args: {
@@ -44,6 +45,7 @@ frappe.ui.form.on('Registration Desk', {
                 }
             }
         });
+		frm.submit();
     },
 
 

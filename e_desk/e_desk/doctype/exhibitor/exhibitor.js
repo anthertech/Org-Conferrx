@@ -16,5 +16,6 @@ frappe.ui.form.on('Exhibitor', {
                 }
             };
         });
-    }
+    },
 });
+

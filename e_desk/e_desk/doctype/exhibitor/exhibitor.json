@@ -1,5 +1,4 @@
 {
- "_liked_by": "[\"Administrator\"]",
  "actions": [],
  "allow_rename": 1,
  "autoname": "format:EXHIBITOR-{####}",
@@ -107,7 +106,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2026-01-18 23:03:27.555096",
+ "modified": "2026-01-21 16:29:31.288528",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Exhibitor",
@@ -125,6 +124,18 @@
    "role": "System Manager",
    "share": 1,
    "submit": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Participant",
+   "select": 1,
+   "share": 1,
    "write": 1
   }
  ],

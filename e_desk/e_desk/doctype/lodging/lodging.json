@@ -12,6 +12,7 @@
   "address",
   "column_break_ykkw",
   "participant",
+  "user",
   "section_break_zq4vh",
   "location_url",
   "hotel_details",
@@ -47,7 +48,7 @@
    "fieldtype": "Link",
    "label": "Amended From",
    "no_copy": 1,
-   "options": "Hotel",
+   "options": "Lodging",
    "print_hide": 1,
    "read_only": 1
   },
@@ -70,11 +71,19 @@
    "fieldtype": "Link",
    "label": "Participant",
    "options": "Participant"
+  },
+  {
+   "fetch_from": "participant.user",
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "User",
+   "options": "User"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-19 09:28:17.974895",
+ "modified": "2026-01-21 15:50:09.839871",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Lodging",

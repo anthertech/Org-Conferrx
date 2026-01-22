@@ -50,7 +50,8 @@ class Exhibitor(Document):
 				"mobile_number": staff.mobile,
 				"event": self.event,
 				"registration_type": "Exhibitor",
-				"is_staff": 1
+				"is_staff": 1,
+				"meal_included":staff.meal_access
 			})
 			participant.insert(ignore_permissions=True)
 
@@ -64,23 +65,28 @@ class Exhibitor(Document):
 					"last_name": participant.last_name,
 					"mobile_no": staff.mobile,
 					"user_type": "System User",
-					"new_password": staff.mobile or "Temp@123",
+					"new_password": staff.mobile,
 					"send_welcome_email": 1,
 					"module_profile": "E-desk profile"
 				})
 				if frappe.db.exists("Role", "Participant"):
 					user_doc.append("roles", {"role": "Participant"})
-				user_doc.insert(ignore_permissions=True)
+				user_doc.save(ignore_permissions=True)
+				frappe.db.commit()
 				participant.db_set("user", user_doc.name)
 			else:
 				participant.db_set("user", user)
-
-			# Create Contact for Participant
-			participant.ensure_contact()
+			
+			participant.create_user_permissions()
 
 			# Create Customer only if checkbox enabled
 			if create_customer_enabled:
 				participant.create_customer()
 
+			# Create Contact for Participant
+			participant.ensure_contact()
 		frappe.db.commit()
+
+
+# e_desk/api/webform.py
 

@@ -159,11 +159,14 @@
              
            
         </button>
+
+        {% if has_exhibitor %}
         <button class="btn btn-success mt-2"
         data-bs-toggle="modal"
         data-bs-target="#eventRegistrationModal">
         <a href="/exhibitor-registration/new?event={{ name }}" style="color:white;text-decoration:none;">Become an exhibitor</a>    
-</button>
+        </button>
+        {% endif %}
        
             {% endif %}
         </div>

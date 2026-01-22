@@ -61,7 +61,7 @@ class Participant(Document):
 				"mobile_no": self.mobile_number,
 				"time_zone": time_zone,
 				"user_type": "System User",
-				"new_password":self.mobile_number,
+				# "new_password":self.mobile_number,
 				"send_welcome_email": 1,
 				"module_profile": "E-desk profile"
 			})
@@ -221,8 +221,9 @@ class Participant(Document):
 			},
 			"parent",
 		)
-
+		
 		if not contact_name:
+			print("\nn\nnoooooooooooooooooooo CONNNNNNNNN\n\n\n")
 			links = [{
 				"link_doctype": "Participant",
 				"link_name": self.name

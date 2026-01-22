@@ -77,6 +77,7 @@ frappe.ui.form.on('User', {
                  </div>`
             );
         }
+		load_connections()
 	},
 
 	custom_scan_qr(frm) {
@@ -105,7 +106,7 @@ frappe.ui.form.on('User', {
 function load_connections(frm) {
 	frappe.call({
 		method: "e_desk.e_desk.doctype.participant.participant.connection_details",
-		args: { email: frm.doc.email },
+		args: { email: frm.doc.name },
 		callback(r) {
 			const field = frm.get_field("custom_address_html");
 			field.$wrapper.empty();

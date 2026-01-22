@@ -30,6 +30,7 @@
   "is_staff",
   "date_of_birth",
   "gender",
+  "participant_group",
   "exhibitor_details_section",
   "stall",
   "max_staff_allowed",
@@ -483,12 +484,18 @@
    "fieldname": "id_proof_no",
    "fieldtype": "Data",
    "label": "ID Proof No."
+  },
+  {
+   "fieldname": "participant_group",
+   "fieldtype": "Table",
+   "label": "Participant Group",
+   "options": "Participant Group Item"
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-20 15:03:04.655079",
+ "modified": "2026-01-22 16:24:35.432214",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",

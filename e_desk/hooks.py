@@ -34,7 +34,7 @@ app_dependencies = ["webshop"]
 # include js in doctype views
 doctype_js = {
     "User" : "public/js/user.js",
-    "Project" : "public/js/project.js"
+    "Project" : "public/js/project.js",
     }
 # doctype_list_js = {"Participant" : "e_desk/doctype/participant/participant.js"}
 # doctype_tree_js = {"doctype" : "public/js/doctype_tree.js"}
