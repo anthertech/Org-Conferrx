@@ -1,0 +1,25 @@
+{
+ "app": "e_desk",
+ "creation": "2026-03-18 15:51:07.270325",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon_type": "App",
+ "idx": 0,
+ "label": "Conference",
+ "link": "/desk/conference",
+ "link_type": "External",
+ "modified": "2026-03-18 16:07:47.355164",
+ "modified_by": "Administrator",
+ "name": "Conference",
+ "owner": "Administrator",
+ "parent_icon": "",
+ "restrict_removal": 0,
+ "roles": [
+  {
+   "role": "Administrator"
+  }
+ ],
+ "sidebar": "",
+ "standard": 1
+}

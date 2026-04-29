@@ -10,6 +10,19 @@ app_license = "MIT"
 
 app_dependencies = ["webshop"]
 
+
+
+# Each item in the list will be shown as an app in the apps page
+add_to_apps_screen = [
+	{
+		"name": "e_desk",
+		# "logo": "/assets/e_desk/logo.png",
+		"title": app_title,
+		"route": "/desk/conference",
+		"has_permission": "e_desk.check_app_permission"
+	}
+]
+
 # Includes in <head>
 # ------------------
 

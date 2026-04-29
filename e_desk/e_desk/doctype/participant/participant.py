@@ -114,10 +114,14 @@ class Participant(Document):
 
 
 	def is_customer_creation_enabled(self):
-		return frappe.db.get_value(
-			"Conference Settings",
-			"create_customer_on_participant_creation"
-		)
+	# 	return frappe.db.get_value(
+	# 		"Conference Settings",
+	# 		"create_customer_on_participant_creation"
+	# 	)
+		return frappe.db.get_single_value(
+					"Conference Settings",
+					"create_customer_on_participant_creation"
+				)
 
 
 	def set_full_name(self):

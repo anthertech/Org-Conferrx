@@ -1,7 +1,7 @@
 {
  "app": "e_desk",
  "charts": [],
- "content": "[{\"id\":\"moJWlIER1F\",\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 16px;\\\">Conferrx</span>\",\"col\":12}},{\"id\":\"ChdI8wG-D9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Participant\",\"col\":3}},{\"id\":\"_A-14y-UjS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User\",\"col\":3}},{\"id\":\"QtfMuh6twg\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Lodging\",\"col\":3}},{\"id\":\"0hZz0S2ouU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Registration Desk\",\"col\":3}},{\"id\":\"YJl7IdIDNZ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conference & Exhibition\",\"col\":3}},{\"id\":\"A4ueePk2s6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conference Settings\",\"col\":3}},{\"id\":\"1CBPaH91hv\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"x0VuD3YtnT\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Exhibitor\",\"col\":3}},{\"id\":\"fugOa4t1zo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sponsor\",\"col\":3}},{\"id\":\"O3g7qWrPfL\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"h9SDhCbUtA\",\"type\":\"card\",\"data\":{\"card_name\":\"Dashboard\",\"col\":4}},{\"id\":\"Rd7ZK9AuOx\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}},{\"id\":\"voCRpejopm\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}}]",
+ "content": "[{\"id\":\"moJWlIER1F\",\"type\":\"header\",\"data\":{\"text\":\"<span style=\\\"font-size: 16px;\\\">Conference</span>\",\"col\":12}},{\"id\":\"ChdI8wG-D9\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Participant\",\"col\":3}},{\"id\":\"_A-14y-UjS\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"User\",\"col\":3}},{\"id\":\"QtfMuh6twg\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Lodging\",\"col\":3}},{\"id\":\"0hZz0S2ouU\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Registration Desk\",\"col\":3}},{\"id\":\"YJl7IdIDNZ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conference & Exhibition\",\"col\":3}},{\"id\":\"A4ueePk2s6\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Conference Settings\",\"col\":3}},{\"id\":\"1CBPaH91hv\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"x0VuD3YtnT\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Exhibitor\",\"col\":3}},{\"id\":\"fugOa4t1zo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Sponsor\",\"col\":3}},{\"id\":\"O3g7qWrPfL\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"h9SDhCbUtA\",\"type\":\"card\",\"data\":{\"card_name\":\"Dashboard\",\"col\":4}},{\"id\":\"Rd7ZK9AuOx\",\"type\":\"card\",\"data\":{\"card_name\":\"Reports\",\"col\":4}},{\"id\":\"voCRpejopm\",\"type\":\"card\",\"data\":{\"card_name\":\"Masters\",\"col\":4}}]",
  "creation": "2023-08-04 18:48:47.583950",
  "custom_blocks": [],
  "docstatus": 0,
@@ -11,7 +11,7 @@
  "icon": "project",
  "idx": 0,
  "is_hidden": 0,
- "label": "Conferxx",
+ "label": "Conferrex",
  "links": [
   {
    "hidden": 0,
@@ -71,10 +71,10 @@
    "type": "Link"
   }
  ],
- "modified": "2026-01-22 10:15:33.975567",
+ "modified": "2026-03-25 15:20:54.740675",
  "modified_by": "Administrator",
  "module": "E Desk",
- "name": "Conferxx",
+ "name": "Conferrex",
  "number_cards": [],
  "owner": "Administrator",
  "parent_page": "",
@@ -89,6 +89,9 @@
   },
   {
    "role": "E-Desk Admin"
+  },
+  {
+   "role": "Administrator"
   }
  ],
  "sequence_id": 2.0,
@@ -152,6 +155,6 @@
    "type": "DocType"
   }
  ],
- "title": "Conferxx",
+ "title": "Conferrex",
  "type": "Workspace"
 }
