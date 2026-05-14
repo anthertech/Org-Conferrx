@@ -1,0 +1,22 @@
+[project]
+name = "e_desk"
+authors = [
+    { name = "Anther Technologies Pvt Ltd", email = "anther.tech" }
+]
+description = "E Desk"
+requires-python = ">=3.10"
+readme = "README.md"
+dynamic = ["version"]
+dependencies = [
+    # "frappe~=15.0.0" # Installed and managed by bench.
+    "pypng==0.20220715.0",
+    "pyqrcode==1.2.1",
+]
+
+[build-system]
+requires = ["flit_core >=3.4,<4"]
+build-backend = "flit_core.buildapi"
+
+# These dependencies are only installed when developer mode is enabled
+[tool.bench.dev-dependencies]
+# package_name = "~=1.1.0"
