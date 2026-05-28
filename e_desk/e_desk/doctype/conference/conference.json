@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_guest_to_view": 1,
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "format:CONF-{title}-{###}",
  "creation": "2024-08-07 15:01:26.839526",
@@ -163,11 +164,11 @@
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-01-20 13:19:23.853912",
- "modified_by": "Administrator",
+ "modified": "2026-05-19 12:54:10.981452",
+ "modified_by": "hopeson@anther.tech",
  "module": "E Desk",
  "name": "Conference",
- "naming_rule": "Expression",
+ "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [
   {
