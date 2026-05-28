@@ -1,0 +1,2 @@
+#
+e_desk.patches.fix_stale_gst_hsn_depends_on
