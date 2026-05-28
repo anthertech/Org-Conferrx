@@ -111,7 +111,7 @@ def get_speakers_for_event(event_name):
         "Participant",
         filters={
             "event": event_name,
-            "speaker": 1
+            "event_role": "Speaker"
         },
         fields=[
             "name",
