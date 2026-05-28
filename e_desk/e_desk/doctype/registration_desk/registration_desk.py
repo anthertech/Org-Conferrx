@@ -97,6 +97,8 @@ def registration_details(user, confer):
 
     if participant.status == "Open":
         frappe.throw("Participant is not approved yet")
+    if participant.status == "Declined":
+        frappe.throw("Participant Registration is Declined")
 
     # 2️⃣ Prevent duplicate desk registration (MAIN CHECK)
     if frappe.db.exists(
