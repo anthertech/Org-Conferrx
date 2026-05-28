@@ -252,10 +252,10 @@
    "label": "Company / Organization"
   },
   {
-   "description": "(If you do not have GST, please submit PAN)",
+   "description": "Enter the registration or tax identifier if available.",
    "fieldname": "gst__pan_no",
    "fieldtype": "Data",
-   "label": "GST / PAN No."
+   "label": "Tax ID / Registration No."
   },
   {
    "fieldname": "brand_logo",
