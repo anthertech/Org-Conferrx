@@ -28,8 +28,9 @@ class Participant(Document):
 			self.event,
 			"time_zone"
 		)
-		if not time_zone:
-			frappe.throw(f"Please set Time Zone for Conference: {self.event}")
+		# if not time_zone:
+		# 	frappe.throw(f"Please set Time Zone for Conference: {self.event}")
+
 		# Find or create User
 		user = frappe.db.get_value("User", {"email": self.e_mail}, "name")
 		if user:
@@ -42,7 +43,7 @@ class Participant(Document):
 					"last_name": self.last_name or user_doc.last_name,
 					"mobile_no": self.mobile_number or user_doc.mobile_no,
 					"time_zone": time_zone or user_doc.time_zone,
-					"send_welcome_email": 1,
+					# "send_welcome_email": 1,
 					"module_profile": "E-desk profile"
 				})
 				if not any(role.role == "Participant" for role in user_doc.roles):
