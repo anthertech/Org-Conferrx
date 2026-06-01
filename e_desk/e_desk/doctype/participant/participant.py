@@ -12,22 +12,6 @@ from e_desk.e_desk.utils.password_utils import build_initial_password
 
 class Participant(Document):
 
-	def get_event_time_zone(self):
-		if not self.event:
-			frappe.throw("Event is required to determine time zone")
-
-		return frappe.db.get_value(
-			"Conference",
-			self.event,
-			"time_zone"
-		)
-
-	def update_user_time_zone(self, user_doc, time_zone):
-		if time_zone and user_doc.time_zone != time_zone:
-			user_doc.time_zone = time_zone
-			return True
-		return False
-
 	def after_insert(self):
 		if self.registration_type == "Exhibitor":
 			exhibitor = frappe.get_doc({
@@ -38,36 +22,30 @@ class Participant(Document):
 				"other_attendees": self.other_attendees
 			})
 			exhibitor.insert()
-		time_zone = self.get_event_time_zone()
-		# if not time_zone:
-		# 	frappe.throw(f"Please set Time Zone for Conference: {self.event}")
 
 		# Find or create User
 		user = frappe.db.get_value("User", {"email": self.e_mail}, "name")
+		time_zone = (frappe.db.get_value("Conference", self.event, "time_zone")if self.event else None)
+		print(time_zone,"ttttttttttttttttttttt")
 		if user:
 			user_doc = frappe.get_doc("User", user)
-			changed = self.update_user_time_zone(user_doc, time_zone)
-			if user_doc.user_type != "System User":
+			# if user_doc.user_type != "System User":
 				# Update the user to be a System User and fill missing details
-				password = build_initial_password(self.e_mail, self.mobile_number)
-				user_doc.update({
-					"user_type": "System User",
-					"first_name": self.first_name or user_doc.first_name,
-					"last_name": self.last_name or user_doc.last_name,
-					"mobile_no": self.mobile_number or user_doc.mobile_no,
-					"new_password": password,
-					# "send_welcome_email": 1,
-					"module_profile": "E-desk profile"
-				})
-				changed = True
-				if not any(role.role == "Participant" for role in user_doc.roles):
-					user_doc.append("roles", {"role": "Participant"})
-					changed = True
-
-			if changed:
-				user_doc.save(ignore_permissions=True)
-				frappe.db.commit()
-
+			password = build_initial_password(self.e_mail, self.mobile_number)
+			user_doc.update({
+				"user_type": "System User",
+				"first_name": self.first_name or user_doc.first_name,
+				"last_name": self.last_name or user_doc.last_name,
+				"mobile_no": self.mobile_number or user_doc.mobile_no,
+				"new_password": password,
+				"time_zone": time_zone or user_doc.time_zone,
+				# "send_welcome_email": 1,
+				"module_profile": "E-desk profile"
+			})
+			if not any(role.role == "Participant" for role in user_doc.roles):
+				user_doc.append("roles", {"role": "Participant"})
+			user_doc.save(ignore_permissions=True)
+			# frappe.db.commit()
 			print("\n\n\n\nuser doc", user_doc)
 		else:
 			print("\n\n\n NO USERRRRRRRRRRRRRR")
