@@ -3,6 +3,9 @@ from frappe import _
 from e_desk.e_desk.doctype.registration_desk.registration_desk import RegistrationDesk 
 import json
 from werkzeug.wrappers import Response
+import re
+
+from e_desk.e_desk.utils.password_utils import build_initial_password
 
 @frappe.whitelist(allow_guest=True)
 def default_confer():
@@ -49,6 +52,13 @@ def ParticipantCreate(data):
     business_value = data.get('bussines', {}).get('value', '') 
     prefix = data.get('prifix', {}).get('value', '') 
     confer_id = data.get('confer', '')
+
+    # Basic validation for email and mobile
+    if not email or len((email or "").strip()) < 3:
+        return {"message": "Valid email (at least 3 chars) is required.", "status": 400}
+    digits = re.sub(r"\D", "", mobile or "")
+    if len(digits) < 3:
+        return {"message": "Valid mobile number with at least 3 digits is required.", "status": 400}
 
     # Check if the participant already exists
     participant_id = frappe.get_value("User", {"email": email}, "participant_id")

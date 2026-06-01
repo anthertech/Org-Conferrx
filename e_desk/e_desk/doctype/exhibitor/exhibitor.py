@@ -4,6 +4,7 @@
 import frappe
 from frappe.model.document import Document
 from e_desk.e_desk.doctype.participant.participant import Participant
+from e_desk.e_desk.utils.password_utils import build_initial_password
 
 
 class Exhibitor(Document):
@@ -58,6 +59,7 @@ class Exhibitor(Document):
 			# Create User if not exists
 			user = frappe.db.get_value("User", {"email": staff.email}, "name")
 			if not user:
+				password = build_initial_password(staff.email, staff.mobile)
 				user_doc = frappe.get_doc({
 					"doctype": "User",
 					"email": staff.email,
@@ -65,7 +67,7 @@ class Exhibitor(Document):
 					"last_name": participant.last_name,
 					"mobile_no": staff.mobile,
 					"user_type": "System User",
-					"new_password": staff.mobile,
+					"new_password": password,
 					"send_welcome_email": 1,
 					"module_profile": "E-desk profile"
 				})

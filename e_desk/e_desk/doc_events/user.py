@@ -40,14 +40,35 @@ def after_insert(doc, method=None):
         file_doc.file_url,
         update_modified=False
     )
+    # Adjust user_type and roles in a safe, minimal way
     user_type_update(doc)
 
 def user_type_update(doc, method=None):
+    # Do not modify password or reset-related fields here.
+    if not doc or not getattr(doc, 'name', None):
+        return
+
+    if frappe.flags.get('skip_user_type_update'):
+        return
+
+    # Ensure user_type is System User using targeted DB update
     if doc.user_type != "System User":
-        doc.user_type = "System User"
-        roles_to_add = ["Customer", "Sales User"]  
-        for r in roles_to_add:
-            if not any(role.role == r for role in doc.roles):
-                doc.append("roles", {"role": r})
-        doc.save(ignore_permissions=True)
+        frappe.db.set_value("User", doc.name, "user_type", "System User", update_modified=False)
+
+    # Ensure certain roles exist; save only if roles appended
+    roles_to_add = ["Customer", "Sales User"]
+    try:
+        user = frappe.get_doc("User", doc.name)
+    except Exception:
+        return
+
+    added = False
+    for r in roles_to_add:
+        if not any(role.role == r for role in user.roles):
+            user.append("roles", {"role": r})
+            added = True
+
+    if added:
+        # Save minimal changes (roles). Avoid touching other fields.
+        user.save(ignore_permissions=True)
         frappe.db.commit()

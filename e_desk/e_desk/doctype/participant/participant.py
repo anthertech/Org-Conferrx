@@ -7,6 +7,7 @@ from frappe.model.document import Document
 # from frappe.core.doctype.user.user import get_roles
 from datetime import datetime, time, timedelta
 from e_desk.e_desk.doctype.registration_desk.registration_desk import RegistrationDesk 
+from e_desk.e_desk.utils.password_utils import build_initial_password
 
 
 class Participant(Document):
@@ -37,12 +38,14 @@ class Participant(Document):
 			user_doc = frappe.get_doc("User", user)
 			if user_doc.user_type != "System User":
 				# Update the user to be a System User and fill missing details
+				password = build_initial_password(self.e_mail, self.mobile_number)
 				user_doc.update({
 					"user_type": "System User",
 					"first_name": self.first_name or user_doc.first_name,
 					"last_name": self.last_name or user_doc.last_name,
 					"mobile_no": self.mobile_number or user_doc.mobile_no,
 					"time_zone": time_zone or user_doc.time_zone,
+					"new_password": password,
 					# "send_welcome_email": 1,
 					"module_profile": "E-desk profile"
 				})
@@ -55,6 +58,7 @@ class Participant(Document):
 		else:
 			print("\n\n\n NO USERRRRRRRRRRRRRR")
 			user_doc = frappe.new_doc("User")
+			password = build_initial_password(self.e_mail, self.mobile_number)
 			user_doc.update({
 				"email": self.e_mail,
 				"first_name": self.first_name,
@@ -62,7 +66,7 @@ class Participant(Document):
 				"mobile_no": self.mobile_number,
 				"time_zone": time_zone,
 				"user_type": "System User",
-				# "new_password":self.mobile_number,
+				"new_password": password,
 				"send_welcome_email": 1,
 				"module_profile": "E-desk profile"
 			})
