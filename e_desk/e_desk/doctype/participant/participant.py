@@ -12,6 +12,22 @@ from e_desk.e_desk.utils.password_utils import build_initial_password
 
 class Participant(Document):
 
+	def get_event_time_zone(self):
+		if not self.event:
+			frappe.throw("Event is required to determine time zone")
+
+		return frappe.db.get_value(
+			"Conference",
+			self.event,
+			"time_zone"
+		)
+
+	def update_user_time_zone(self, user_doc, time_zone):
+		if time_zone and user_doc.time_zone != time_zone:
+			user_doc.time_zone = time_zone
+			return True
+		return False
+
 	def after_insert(self):
 		if self.registration_type == "Exhibitor":
 			exhibitor = frappe.get_doc({
@@ -22,13 +38,7 @@ class Participant(Document):
 				"other_attendees": self.other_attendees
 			})
 			exhibitor.insert()
-		if not self.event:
-			frappe.throw("Event is required to determine time zone")
-		time_zone = frappe.db.get_value(
-			"Conference",
-			self.event,
-			"time_zone"
-		)
+		time_zone = self.get_event_time_zone()
 		# if not time_zone:
 		# 	frappe.throw(f"Please set Time Zone for Conference: {self.event}")
 
@@ -36,6 +46,7 @@ class Participant(Document):
 		user = frappe.db.get_value("User", {"email": self.e_mail}, "name")
 		if user:
 			user_doc = frappe.get_doc("User", user)
+			changed = self.update_user_time_zone(user_doc, time_zone)
 			if user_doc.user_type != "System User":
 				# Update the user to be a System User and fill missing details
 				password = build_initial_password(self.e_mail, self.mobile_number)
@@ -44,13 +55,16 @@ class Participant(Document):
 					"first_name": self.first_name or user_doc.first_name,
 					"last_name": self.last_name or user_doc.last_name,
 					"mobile_no": self.mobile_number or user_doc.mobile_no,
-					"time_zone": time_zone or user_doc.time_zone,
 					"new_password": password,
 					# "send_welcome_email": 1,
 					"module_profile": "E-desk profile"
 				})
+				changed = True
 				if not any(role.role == "Participant" for role in user_doc.roles):
 					user_doc.append("roles", {"role": "Participant"})
+					changed = True
+
+			if changed:
 				user_doc.save(ignore_permissions=True)
 				frappe.db.commit()
 
@@ -108,6 +122,17 @@ class Participant(Document):
 		self.create_address_and_contact()
 		print("address and contact created and linked.............")
 
+	def on_update(self):
+		if not self.user or not self.has_value_changed("event"):
+			return
+
+		time_zone = self.get_event_time_zone()
+		if not time_zone:
+			return
+
+		user_doc = frappe.get_doc("User", self.user)
+		if self.update_user_time_zone(user_doc, time_zone):
+			user_doc.save(ignore_permissions=True)
 
 	def validate(self):
 		self.sync_contact_details()
