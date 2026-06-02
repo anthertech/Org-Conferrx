@@ -3,15 +3,15 @@
 
 import frappe
 from frappe.model.document import Document
-from frappe.utils import nowdate,now_datetime
+from frappe.utils import now_datetime
 
 
 class ProgrammeAttendance(Document):
     pass
 
-@frappe.whitelist()
-def process_scan(scan_qr, event, programme, docname):
 
+@frappe.whitelist()
+def process_scan(scan_qr, event, programme, docname=None):
     if not event:
         frappe.throw("Please select an Event before scanning.")
 
@@ -24,7 +24,7 @@ def process_scan(scan_qr, event, programme, docname):
             "user": scan_qr,
             "event": event
         },
-        ["name", "full_name", "status","meal_included"],
+        ["name", "full_name", "status", "meal_included"],
         as_dict=True
     )
 
@@ -36,15 +36,21 @@ def process_scan(scan_qr, event, programme, docname):
             f"Participant is not registered. Current status: {participant.status}"
         )
 
-    conference = frappe.db.get_value(
-        "Conference Settings",
-        event,
-        ["has_meal", "meal_access"],
-        as_dict=True
-    )
+    participant_name = participant.full_name or participant.name
 
-    if conference and conference.has_meal:
-        if conference.meal_access != "Free for All Participants":
+    conference = {
+        "has_meal": frappe.db.get_single_value(
+            "Conference Settings",
+            "has_meal"
+        ),
+        "meal_access": frappe.db.get_single_value(
+            "Conference Settings",
+            "meal_access"
+        )
+    }
+
+    if conference.get("has_meal"):
+        if conference.get("meal_access") != "Free for All Participants":
 
             is_meal_programme = frappe.db.get_value(
                 "Conference Agenda",
@@ -58,12 +64,12 @@ def process_scan(scan_qr, event, programme, docname):
 
             if is_meal_programme and not participant.meal_included:
                 frappe.throw(
-                    "Meal access denied. This participant does not have meal included.")
+                    "Meal access denied. This participant does not have meal included."
+                )
 
     already_scanned = frappe.db.exists(
         "Scanned List",
         {
-            "parent": docname,
             "participant": participant.name,
             "event": event,
             "programme": programme
@@ -73,31 +79,48 @@ def process_scan(scan_qr, event, programme, docname):
     if already_scanned:
         frappe.throw("This participant is already scanned for this programme.")
 
-    parent_doc = frappe.get_doc("Programme Attendance", docname)
-
-    parent_doc.append("scanned_list", {
+    scanned_doc = frappe.get_doc({
+        "doctype": "Scanned List",
         "participant": participant.name,
-        "participant_name": participant.full_name,
+        "participant_name": participant_name,
         "event": event,
         "programme": programme,
-        "date_time": now_datetime()
+        "date_time": now_datetime(),
+        "scanned_by": frappe.session.user
     })
 
-    parent_doc.save(ignore_permissions=True)
-    return "Scan successful"
+    scanned_doc.insert(ignore_permissions=True)
+
+    return {
+        "participant_name": participant_name,
+        "message": f"{participant_name} scanned successfully"
+    }
+
 
 @frappe.whitelist()
 def get_programmes(confer):
-    today = nowdate()
-    start_dt = f"{today} 00:00:00"
-    end_dt = f"{today} 23:59:59"
+    if not confer:
+        return []
 
-    programmes = frappe.db.sql("""
+    programmes = frappe.db.sql(
+        """
         SELECT agenda.program_agenda
         FROM `tabConference Agenda` AS agenda
         WHERE agenda.parent = %s
-        AND agenda.start_date BETWEEN %s AND %s
-        AND agenda.custom_scannable = 1
-    """, (confer, start_dt, end_dt), as_list=1)
-    
-    return [prog[0] for prog in programmes]
+          AND agenda.custom_scannable = 1
+          AND IFNULL(agenda.program_agenda, '') != ''
+          AND agenda.start_date <= NOW()
+          AND agenda.end_date >= NOW()
+        ORDER BY agenda.start_date ASC
+        """,
+        (confer,),
+        as_dict=True
+    )
+
+    if not programmes:
+        frappe.log_error(
+            message=f"No active scannable agenda found for event: {confer}",
+            title="Programme Attendance"
+        )
+
+    return [row.program_agenda for row in programmes]

@@ -25,10 +25,10 @@
  "name": "Attendance Scan Report",
  "owner": "Administrator",
  "prepared_report": 0,
- "query": "select * from `tabScanned List`;",
  "ref_doctype": "Conf Programme Attendee",
  "report_name": "Attendance Scan Report",
  "report_type": "Query Report",
+ "query": "select name, participant, participant_name, programme, date_time, event from `tabScanned List` order by date_time desc;",
  "roles": [
   {
    "role": "System Manager"

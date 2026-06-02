@@ -1,71 +1,66 @@
 frappe.query_reports["Attendee Report"] = {
-    "filters": [
-    
+    filters: [
         {
-            "fieldname": "confer",
-            "label": __("Confer"),
-            "fieldtype": "Link",
-            "options": "Conference",
-            "reqd": 1,
-       
-        },
-   
-        {
-            "fieldname": "date",
-            "label": __("Date"),
-            "fieldtype": "Date",
-            "default": frappe.datetime.get_today(),  // Optional: Sets the default to today's date
-            "depends_on": "eval:doc.confer",  // You can apply conditions similar to the programme field
-            "on_change": function () {
-                // Trigger when conference is selected
-                var confer = frappe.query_report.get_filter_value('confer');
-                var date_value=frappe.query_report.get_filter_value('date');
-                if (confer) {
-                    console.log(confer, "Selected confer...");
-
-                    // Clear programme selection
-                    frappe.query_report.set_filter_value('programme', "");
-
-                    // Fetch programme options based on selected confer
-                    frappe.call({
-                        method: "e_desk.e_desk.report.attendee_report.attendee_report.confer_agenda_list",
-                        args: {
-                            confer: confer,
-                            date_value:date_value
-                        },
-                        callback: function (r) {
-                            var options = [];
-                            if (r.message) {
-                                console.log(r.message, "Programmes fetched...");
-
-                                // Map the response directly
-                                options = r.message; // Simplified array of options
-
-                                // Access the filters using frappe.query_report.filters
-                                let programme_filter = frappe.query_report.filters.find(f => f.fieldname === 'programme');
-                                console.log(programme_filter, "programme_filter");
-
-                                // Check if the programme filter exists
-                                if (programme_filter) {
-                                    programme_filter.df.options = options;
-                                    programme_filter.refresh();
-                                    console.log("Programme options updated:", options);
-                                } else {
-                                    console.error("Programme filter is not defined. Check the fieldname or initialization.");
-                                }
-                            } else {
-                                console.error("No message received from the server.");
-                            }
-                        }
-                    });
-                }
+            fieldname: "confer",
+            label: __("Confer"),
+            fieldtype: "Link",
+            options: "Conference",
+            reqd: 1,
+            on_change: function () {
+                load_programmes();
             }
         },
         {
-            "fieldname": "programme",
-            "label": __("Programme"),
-            "fieldtype": "Select",
-            "depends_on": "eval:doc.confer"
+            fieldname: "date",
+            label: __("Date"),
+            fieldtype: "Date",
+            default: frappe.datetime.get_today(),
+            reqd: 1,
+            on_change: function () {
+                load_programmes();
+            }
         },
+        {
+            fieldname: "programme",
+            label: __("Programme"),
+            fieldtype: "Select",
+            reqd: 1
+        }
     ]
 };
+
+
+function load_programmes() {
+    let confer = frappe.query_report.get_filter_value("confer");
+    let date_value = frappe.query_report.get_filter_value("date");
+
+    frappe.query_report.set_filter_value("programme", "");
+
+    let programme_filter = frappe.query_report.get_filter("programme");
+    programme_filter.df.options = "\n";
+    programme_filter.refresh();
+
+    if (!confer || !date_value) {
+        return;
+    }
+
+    frappe.call({
+        method: "e_desk.e_desk.report.attendee_report.attendee_report.confer_agenda_list",
+        args: {
+            confer: confer,
+            date_value: date_value
+        },
+        callback: function (r) {
+            let options = [""];
+
+            if (r.message && r.message.length) {
+                r.message.forEach(function (programme) {
+                    options.push(programme);
+                });
+            }
+
+            programme_filter.df.options = options.join("\n");
+            programme_filter.refresh();
+        }
+    });
+}

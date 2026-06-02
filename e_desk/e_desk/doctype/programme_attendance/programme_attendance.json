@@ -14,8 +14,7 @@
   "column_break_yhtq",
   "scan_qr",
   "submit",
-  "section_break_epxh",
-  "scanned_list"
+  "section_break_epxh"
  ],
  "fields": [
   {
@@ -60,12 +59,6 @@
   {
    "fieldname": "section_break_epxh",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "scanned_list",
-   "fieldtype": "Table",
-   "label": "Scanned List",
-   "options": "Scanned List"
   }
  ],
  "index_web_pages_for_search": 1,
