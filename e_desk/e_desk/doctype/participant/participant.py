@@ -283,18 +283,40 @@ class Participant(Document):
 		self.db_set("participant_contact", contact_name)
 
 
+	# def create_customer(self):
+	# 	print("creating customer..............")
+	# 	if not self.set_full_name:
+	# 		self.set_full_name()
+
+	# 	customer = frappe.get_doc({
+    #     "doctype": "Customer",
+    #     "customer_name": self.full_name,
+    #     "customer_type": "Individual",
+	# 	}).insert(ignore_permissions=True)
+	# 	self.db_set("customer", customer.name)
+
+
 	def create_customer(self):
-		print("creating customer..............")
-		if not self.set_full_name:
-			self.set_full_name()
+			first = (self.first_name or "").strip()
+			last = (self.last_name or "").strip()
+			
+			customer_name = f"{first} {last}".strip() if last else first
 
-		customer = frappe.get_doc({
-        "doctype": "Customer",
-        "customer_name": self.full_name,
-        "customer_type": "Individual",
-		}).insert(ignore_permissions=True)
-		self.db_set("customer", customer.name)
+			in_import = frappe.flags.in_import
+			frappe.flags.in_import = False
 
+			try:
+				customer = frappe.get_doc({
+					"doctype": "Customer",
+					"customer_name": customer_name,
+					"customer_type": "Individual",
+				}).insert(ignore_permissions=True)
+			finally:
+				frappe.flags.in_import = in_import
+
+			self.db_set("customer", customer.name, update_modified=False)
+
+			
 	def get_existing_customer_from_previous_participant(self):
 		print("checking with prev participant account")
 		previous_customer = frappe.db.get_value(
