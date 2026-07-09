@@ -133,7 +133,8 @@ class Participant(Document):
 
 
 	def set_full_name(self):
-		self.full_name = f"{self.first_name} {self.last_name}"
+		parts = [p for p in (self.first_name, self.last_name) if p]
+		self.full_name = " ".join(parts)
 
 	def create_user_permissions(self):
 		if not self.e_mail:
