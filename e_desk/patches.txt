@@ -2,3 +2,4 @@
 e_desk.patches.fix_stale_gst_hsn_depends_on
 e_desk.patches.fix_participant_full_name
 e_desk.patches.regenerate_missing_qr
+e_desk.patches.remove_sales_user_role

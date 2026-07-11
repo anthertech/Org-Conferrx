@@ -56,7 +56,7 @@ def user_type_update(doc, method=None):
         frappe.db.set_value("User", doc.name, "user_type", "System User", update_modified=False)
 
     # Ensure certain roles exist; save only if roles appended
-    roles_to_add = ["Customer", "Sales User"]
+    roles_to_add = ["Customer"]
     try:
         user = frappe.get_doc("User", doc.name)
     except Exception:
