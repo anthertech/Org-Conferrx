@@ -50,6 +50,12 @@ function open_event_dialog(frm) {
                 fieldname: 'registration_close_date',
                 label: 'Registration Close Date',
                 reqd: 1
+            },
+            {
+                fieldtype: 'Autocomplete',
+                fieldname: 'time_zone',
+                label: 'Time Zone',
+                reqd: 1
             }
         ],
         primary_action_label: __('Create Event'),
@@ -78,4 +84,21 @@ function open_event_dialog(frm) {
     });
 
     d.show();
+
+    // Populate Time Zone dropdown with all timezones
+    let set_tz_data = function () {
+        d.fields_dict.time_zone.set_data(frappe.all_timezones);
+    };
+
+    if (!frappe.all_timezones) {
+        frappe.call({
+            method: "frappe.core.doctype.user.user.get_timezones",
+            callback: function (r) {
+                frappe.all_timezones = r.message.timezones;
+                set_tz_data();
+            },
+        });
+    } else {
+        set_tz_data();
+    }
 }
