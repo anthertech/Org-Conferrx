@@ -138,3 +138,57 @@ def get_navbar_items():
         "top_bar_items": ws.top_bar_items,
         "logo": ws.event_image or ws.website_logo
     }
+
+
+@frappe.whitelist()
+def remove_sales_user_role(dry_run=1):
+    if "System Manager" not in frappe.get_roles():
+        frappe.throw("Only System Manager can run this", frappe.PermissionError)
+
+    count = frappe.db.sql("""
+        SELECT COUNT(*) AS cnt
+        FROM `tabHas Role`
+        WHERE role = 'Sales User'
+        AND parent IN (
+            SELECT parent FROM (
+                SELECT h.parent
+                FROM `tabHas Role` h
+                INNER JOIN `tabUser` u ON u.name = h.parent
+                WHERE h.role = 'Sales User'
+                AND u.enabled = 1
+                AND h.parent NOT IN (
+                    SELECT parent FROM `tabHas Role` WHERE role = 'Projects Manager'
+                )
+            ) AS t
+        )
+    """, as_dict=True)[0].cnt
+
+    if int(dry_run):
+        return {"status": "preview", "affected_rows": count}
+
+    frappe.db.sql("""
+        DELETE FROM `tabHas Role`
+        WHERE role = 'Sales User'
+        AND parent IN (
+            SELECT parent FROM (
+                SELECT h.parent
+                FROM `tabHas Role` h
+                INNER JOIN `tabUser` u ON u.name = h.parent
+                WHERE h.role = 'Sales User'
+                AND u.enabled = 1
+                AND h.parent NOT IN (
+                    SELECT parent FROM `tabHas Role` WHERE role = 'Projects Manager'
+                )
+            ) AS t
+        )
+    """)
+    frappe.db.commit()
+
+    frappe.log_error(
+        title="Sales User Role Removal",
+        message=f"Removed Sales User role from {count} enabled users without Projects Manager role"
+    )
+
+    return {"status": "success", "deleted_rows": count}
+
+
