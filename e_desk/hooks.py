@@ -171,9 +171,9 @@ doc_events = {
     "User":{
         "after_insert":"e_desk.e_desk.doc_events.user.after_insert"
     },
-    "Project":{
-        "after_insert":"e_desk.e_desk.doc_events.project.create_project_warehouse"
-    }
+    # "Project":{
+    #     "after_insert":"e_desk.e_desk.doc_events.project.create_project_warehouse"
+    # }
 }
 
 # Scheduled Tasks
