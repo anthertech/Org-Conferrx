@@ -38,12 +38,28 @@ function open_event_dialog(frm) {
                 reqd: 1
             },
             {
+                fieldtype: 'Check',
+                fieldname: 'is_wh_required',
+                label: 'Is Warehouse Required',
+                onchange() {
+                    const required = d.get_value("is_wh_required");
+
+                    d.set_df_property("default_wh", "hidden", !required);
+
+                    d.set_df_property("default_wh", "reqd", required);
+
+                    if (!required) {
+                        d.set_value("default_wh", "");
+                    }
+                }
+            },
+            {
                 fieldtype: 'Link',
-                fieldname: 'warehouse',
-                label: 'Warehouse',
+                fieldname: 'default_wh',
                 options: 'Warehouse',
-                default: frm.doc.custom_warehouse,
-                reqd: 1
+                label: 'Default Warehouse',
+                hidden: 1,
+                reqd: 0
             },
             {
                 fieldtype: 'Datetime',
