@@ -41,6 +41,7 @@ function open_event_dialog(frm) {
                 fieldtype: 'Link',
                 fieldname: 'warehouse',
                 label: 'Warehouse',
+                options: 'Warehouse',                
                 default: frm.doc.custom_warehouse,
                 reqd: 1
             },
