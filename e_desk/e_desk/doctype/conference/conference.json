@@ -30,6 +30,7 @@
   "attach_files",
   "settings_tab",
   "project",
+  "is_wh_required",
   "default_warehouse",
   "column_break_auwp"
  ],
@@ -153,19 +154,26 @@
    "options": "Project"
   },
   {
-   "fetch_from": "project.custom_warehouse",
+   "depends_on": "eval:doc.is_wh_required",
    "fieldname": "default_warehouse",
    "fieldtype": "Link",
    "label": "Default Warehouse",
+   "mandatory_depends_on": "eval:doc.is_wh_required",
    "options": "Warehouse"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_wh_required",
+   "fieldtype": "Check",
+   "label": "Is Warehouse Required"
   }
  ],
  "has_web_view": 1,
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-05-19 12:54:12.644843",
- "modified_by": "rahul@anther.tech",
+ "modified": "2026-07-17 11:14:20.763737",
+ "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
  "naming_rule": "Expression (old style)",

@@ -23,7 +23,9 @@ def create_event_from_project(project, data):
         "start_date": data.get("start_date"),
         "end_date": data.get("end_date"),
         "registration_close_date": data.get("registration_close_date"),
-        "time_zone": data.get("time_zone")
+        "time_zone": data.get("time_zone"),
+        "is_wh_required": data.is_wh_required,
+        "default_warehouse": data.default_wh or ""
         })
 
     event.insert(ignore_permissions=True)
