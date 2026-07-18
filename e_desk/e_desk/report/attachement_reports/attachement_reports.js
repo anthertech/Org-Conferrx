@@ -6,11 +6,16 @@ frappe.query_reports["Attachement Reports"] = {
     filters: [
         {
             fieldname: "confer_id",
-            label: __("Confer ID"),
+            label: __("Conference"),
             fieldtype: "Link",
             options: "Conference",
             reqd: 1,
-            default: ""
+            default: "",
+            get_query: function() {
+                return {
+                    query: "e_desk.e_desk.report.attachement_reports.attachement_reports.get_user_conferences"
+                };
+            }
         }
     ],
 

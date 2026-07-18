@@ -61,34 +61,43 @@ def get_data(filters):
             parenttype = 'Conference'
             AND parent = %s
     """
-    # v = frappe.db.sql(query, (confer_id,), as_dict=True)
-    # frappe.throw(str(v))
 
     return frappe.db.sql(query, (confer_id,), as_dict=True)
 
 
-
-
-
 @frappe.whitelist()
 def get_current_confer():
-    print("86................................................................")
-    confer_id = frappe.get_value("Conference Settings", None, "event")
-    frappe.throw(str(confer_id))
-    return confer_id
+    user = frappe.session.user
+    conference = frappe.db.get_value(
+        "Participant",
+        {"user": user},
+        "event",
+        order_by="creation desc"
+    )
+    
+    return conference
 
+@frappe.whitelist()
+def get_user_conferences(doctype, txt, searchfield, start, page_len, filters):
+    user_email = frappe.session.user
+    conference = frappe.qb.DocType("Conference")
+    participant = frappe.qb.DocType("Participant")
 
+    if user_email == "Administrator" or "System Manager" in frappe.get_roles(user_email):
+        conferences = (
+            frappe.qb.from_(conference)
+            .select(conference.name, conference.title)
+            .orderby(conference.name)
+        )
+    else:
+        conferences = (
+            frappe.qb.from_(conference)
+            .left_join(participant)
+            .on(participant.event == conference.name)
+            .select(conference.name, conference.title)
+            .where(participant.user == user_email)
+            .orderby(conference.name)
+            .distinct()
+        )
 
-
-    # print(confer_id,"this is conferr id")
-    # current_time = frappe.utils.now()  # Get the current date and time
-    # current_confer = frappe.db.sql("""
-    #     SELECT name FROM `tabConfer`
-    #     WHERE STR_TO_DATE(start_date, '%d-%m-%Y %H:%i:%s') <= %s
-    #     AND STR_TO_DATE(end_date, '%d-%m-%Y %H:%i:%s') >= %s
-    #     LIMIT 1
-    # """, (current_time, current_time), as_dict=True)
-
-    # if current_confer:
-    #     return current_confer[0]['name']  # Return the name of the ongoing conference
-    # return None  # Return None if no ongoing conference
+    return conferences.run(as_dict=False)
