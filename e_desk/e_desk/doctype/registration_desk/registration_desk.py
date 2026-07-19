@@ -85,7 +85,7 @@ def registration_details(user, confer):
     participant = frappe.db.get_value(
         "Participant",
         {
-            "user": user,
+            "participant_id": user,
             "event": confer
         },
         ["name", "full_name", "profile_photo", "status"],

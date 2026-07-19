@@ -1,8 +1,11 @@
 # Copyright (c) 2025, Anther Technologies Pvt Ltd and contributors
 # For license information, please see license.txt
 
+import io
+import os
 import json
 import frappe
+from pyqrcode import create as qr_create
 from frappe.model.document import Document
 # from frappe.core.doctype.user.user import get_roles
 from datetime import datetime, time, timedelta
@@ -13,6 +16,8 @@ from e_desk.e_desk.utils.password_utils import build_initial_password
 class Participant(Document):
 
 	def after_insert(self):
+		self.create_qr()
+
 		if self.registration_type == "Exhibitor":
 			exhibitor = frappe.get_doc({
 				"doctype": "Exhibitor",
@@ -120,6 +125,8 @@ class Participant(Document):
 		if not self.event_role:
 			self.event_role = "Participant"
 
+		if not self.participant_id:
+			self.participant_id = self.generate_participant_id()
 
 	def is_customer_creation_enabled(self):
 	# 	return frappe.db.get_value(
@@ -367,6 +374,47 @@ class Participant(Document):
 			self.e_mail = email
 		if phone:
 			self.mobile_number = phone
+
+	def generate_participant_id(self):
+		while True:
+			participant_id = frappe.generate_hash(length=10).upper()
+
+			if not frappe.db.exists(
+				"Participant",
+				{"participant_id": participant_id}
+			):
+				return participant_id
+
+	def create_qr(self):
+		if self.custom_qr:
+			return
+
+		qr_image = io.BytesIO()
+
+		qr = qr_create(self.participant_id, error='L')
+		qr.png(qr_image, scale=5, quiet_zone=1)
+
+		filename = f"Participant-{self.e_mail}.png"
+
+		file_doc = frappe.get_doc({
+			"doctype": "File",
+			"file_name": filename,
+			"is_private": 0,
+			"content": qr_image.getvalue(),
+			"attached_to_doctype": self.doctype,
+			"attached_to_name": self.name,
+			"attached_to_field": "custom_qr",
+		})
+
+		file_doc.save(ignore_permissions=True)
+
+		frappe.db.set_value(
+			self.doctype,
+			self.name,
+			"custom_qr",
+			file_doc.file_url,
+			update_modified=False,
+		)
 
 	
 

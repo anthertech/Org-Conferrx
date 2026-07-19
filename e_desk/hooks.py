@@ -176,7 +176,7 @@ doc_events = {
 		"validate": "e_desk.e_desk.utils.py.address.address_link",
 	},
     "User":{
-        "after_insert":"e_desk.e_desk.doc_events.user.after_insert"
+        "after_insert":"e_desk.e_desk.doc_events.user.user_type_update"
     },
     # "Project":{
     #     "after_insert":"e_desk.e_desk.doc_events.project.create_project_warehouse"

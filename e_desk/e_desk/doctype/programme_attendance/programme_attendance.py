@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe import _
 from frappe.model.document import Document
 from frappe.utils import now_datetime
 
@@ -21,7 +22,7 @@ def process_scan(scan_qr, event, programme, docname=None):
     participant = frappe.db.get_value(
         "Participant",
         {
-            "user": scan_qr,
+            "participant_id": scan_qr,
             "event": event
         },
         ["name", "full_name", "status", "meal_included"],
@@ -90,6 +91,19 @@ def process_scan(scan_qr, event, programme, docname=None):
     })
 
     scanned_doc.insert(ignore_permissions=True)
+
+    frappe.msgprint(
+        _("Scanned successfully!<br><br>"
+        "<b>Participant:</b> {0}<br>"
+        "<b>Event:</b> {1}<br>"
+        "<b>Programme:</b> {2}").format(
+            participant_name,
+            event,
+            programme
+        ),
+        title=_("Success"),
+        indicator="green"
+    )
 
     return {
         "participant_name": participant_name,

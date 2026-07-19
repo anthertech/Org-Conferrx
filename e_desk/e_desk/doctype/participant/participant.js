@@ -3,6 +3,14 @@
 
 frappe.ui.form.on('Participant', {
 	refresh(frm) {
+        if (frm.doc.custom_qr) {
+            frm.fields_dict.qr_preview.$wrapper.html(
+                `<div style="text-align:left">
+                    <img src="${frm.doc.custom_qr}" style="width:130px !important;">
+                 </div>`
+            );
+        }
+
         apply_meal_rules(frm);
 		if (frm.is_new()) return;
 	
@@ -34,24 +42,6 @@ frappe.ui.form.on('Participant', {
 	address(frm) {
 		load_address_html(frm);
 	},
-    
-    sync_qr_from_user(frm) {
-        if (!frm.doc.user) return;
-    
-        frappe.db.get_value(
-            'User',
-            frm.doc.user,
-            'custom_qr'
-        ).then(r => {
-            const qr = r.message?.custom_qr;
-            if (!qr) return;
-            frm.fields_dict.qr_preview.$wrapper.html(`
-				<div style="text-align:left">
-					<img src="${qr}" style="width:120px !important; margin-top:10px; border:solid 1px black; border-radius:5px;">
-				</div>
-			`);
-        });
-    }
     
 });
 
