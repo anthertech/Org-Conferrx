@@ -2,13 +2,13 @@ frappe.ui.form.on('User', {
 	refresh(frm) {
 		load_connections(frm);
 
-		if (frm.doc.custom_qr) {
-            frm.fields_dict.custom_qr_preview.$wrapper.html(
-                `<div style="text-align:left">
-                    <img src="${frm.doc.custom_qr}" style="width:130px !important;">
-                 </div>`
-            );
-        }
+		// if (frm.doc.custom_qr) {
+        //     frm.fields_dict.custom_qr_preview.$wrapper.html(
+        //         `<div style="text-align:left">
+        //             <img src="${frm.doc.custom_qr}" style="width:130px !important;">
+        //          </div>`
+        //     );
+        // }
 
 		if (frm.is_new() || !frm.doc.email) return;
 
