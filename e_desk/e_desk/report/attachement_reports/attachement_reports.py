@@ -83,10 +83,15 @@ def get_user_conferences(doctype, txt, searchfield, start, page_len, filters):
     conference = frappe.qb.DocType("Conference")
     participant = frappe.qb.DocType("Participant")
 
+    txt_condition = (
+        conference.name.like(f"%{txt}%") | conference.title.like(f"%{txt}%")
+    )
+
     if user_email == "Administrator" or "System Manager" in frappe.get_roles(user_email):
         conferences = (
             frappe.qb.from_(conference)
             .select(conference.name, conference.title)
+            .where(txt_condition)
             .orderby(conference.name)
         )
     else:
@@ -95,7 +100,10 @@ def get_user_conferences(doctype, txt, searchfield, start, page_len, filters):
             .left_join(participant)
             .on(participant.event == conference.name)
             .select(conference.name, conference.title)
-            .where(participant.user == user_email)
+            .where(
+                (participant.user == user_email) 
+                & txt_condition
+            )
             .orderby(conference.name)
             .distinct()
         )
