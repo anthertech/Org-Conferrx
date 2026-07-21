@@ -33,11 +33,10 @@ frappe.ui.form.on("Programme Attendance", {
             callback: function (r) {
                 if (r.message) {
                     frm.set_value("scan_qr", "");
-
-                    frappe.show_alert({
-                        message: __("Scan successful"),
-                        indicator: "green"
-                    }, 2);
+                    // frappe.show_alert({
+                    //     message: __("Scan successful"),
+                    //     indicator: "green"
+                    // }, 2);
                 }
             }
         });

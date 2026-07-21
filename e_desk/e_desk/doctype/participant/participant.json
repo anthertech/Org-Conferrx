@@ -21,6 +21,7 @@
   "column_break_sylpb",
   "status",
   "profile_photo",
+  "participant_id",
   "qr_preview",
   "more_information_section",
   "registration_type",
@@ -82,7 +83,8 @@
   "flight_no",
   "departure_time",
   "column_break_hbtt",
-  "arrival_time"
+  "arrival_time",
+  "custom_qr"
  ],
  "fields": [
   {
@@ -491,13 +493,28 @@
    "fieldtype": "Table",
    "label": "Participant Group",
    "options": "Participant Group Item"
+  },
+  {
+   "fieldname": "participant_id",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Participant ID",
+   "read_only": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "custom_qr",
+   "fieldtype": "Attach",
+   "hidden": 1,
+   "label": "QR image",
+   "read_only": 1
   }
  ],
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-06-20 16:49:27.688972",
- "modified_by": "hopeson@anther.tech",
+ "modified": "2026-07-19 22:37:26.203001",
+ "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",
  "naming_rule": "Expression",
