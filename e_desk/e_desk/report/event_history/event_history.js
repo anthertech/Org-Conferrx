@@ -8,7 +8,6 @@ frappe.query_reports["Event History"] = {
             fieldname: "to_date",
             label: __("To Date"),
             fieldtype: "Date",
-            reqd: 1,
             default: frappe.datetime.get_today(),
         },
         {
