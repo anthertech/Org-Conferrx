@@ -3,10 +3,10 @@
 
 frappe.ui.form.on('Participant', {
 	refresh(frm) {
-        if (frm.doc.custom_qr) {
+        if (frm.doc.custom_qr_image) {
             frm.fields_dict.qr_preview.$wrapper.html(
                 `<div style="text-align:left">
-                    <img src="${frm.doc.custom_qr}" style="width:130px !important;">
+                    <img src="${frm.doc.custom_qr_image}" style="width:130px !important;">
                  </div>`
             );
         }

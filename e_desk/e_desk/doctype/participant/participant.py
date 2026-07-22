@@ -386,7 +386,7 @@ class Participant(Document):
 				return participant_id
 
 	def create_qr(self):
-		if self.custom_qr:
+		if self.custom_qr_image:
 			return
 
 		qr_image = io.BytesIO()
@@ -403,7 +403,7 @@ class Participant(Document):
 			"content": qr_image.getvalue(),
 			"attached_to_doctype": self.doctype,
 			"attached_to_name": self.name,
-			"attached_to_field": "custom_qr",
+			"attached_to_field": "custom_qr_image",
 		})
 
 		file_doc.save(ignore_permissions=True)
@@ -411,7 +411,7 @@ class Participant(Document):
 		frappe.db.set_value(
 			self.doctype,
 			self.name,
-			"custom_qr",
+			"custom_qr_image",
 			file_doc.file_url,
 			update_modified=False,
 		)

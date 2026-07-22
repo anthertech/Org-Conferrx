@@ -60,37 +60,37 @@ frappe.ui.form.on('Registration Desk', {
 				</div>`;
 			frm.get_field("profile_preview").$wrapper.html(imgHTML);
 		}
-        if (!frm.doc.participant_id) return;
+        // if (!frm.doc.participant_id) return;
 	
 		// 2️⃣ Fetch the linked User from Participant
-		frappe.db.get_value(
-			'Participant', 
-			frm.doc.participant_id,  // Participant ID
-			'user'         // Field in Participant that links to User
-		).then(participant_res => {
-			const user_id = participant_res.message?.user;
-			if (!user_id) return;
+		// frappe.db.get_value(
+		// 	'Participant', 
+		// 	frm.doc.participant_id,  // Participant ID
+		// 	'user'         // Field in Participant that links to User
+		// ).then(participant_res => {
+		// 	const user_id = participant_res.message?.user;
+		// 	if (!user_id) return;
 	
-			// 3️⃣ Fetch the QR from the User doc
-			frappe.db.get_value(
-				'User',
-				user_id,
-				'custom_qr'
-			).then(user_res => {
-				const qr = user_res.message?.custom_qr;
-				if (!qr) return;
+		// 	// 3️⃣ Fetch the QR from the User doc
+		// 	frappe.db.get_value(
+		// 		'User',
+		// 		user_id,
+		// 		'custom_qr'
+		// 	).then(user_res => {
+		// 		const qr = user_res.message?.custom_qr;
+		// 		if (!qr) return;
 	
-				// 4️⃣ Render the QR
-				frm.fields_dict.qr_preview.$wrapper.html(`
-					<div style="text-align:left">
-						<img src="${qr}" 
-							 style="width:120px !important; 
-									border:solid 1px black; 
-									border-radius:5px;">
-					</div>
-				`);
-			});
-		});
+		// 		// 4️⃣ Render the QR
+		// 		frm.fields_dict.qr_preview.$wrapper.html(`
+		// 			<div style="text-align:left">
+		// 				<img src="${qr}" 
+		// 					 style="width:120px !important; 
+		// 							border:solid 1px black; 
+		// 							border-radius:5px;">
+		// 			</div>
+		// 		`);
+		// 	});
+		// });
 		
 	},
 		
