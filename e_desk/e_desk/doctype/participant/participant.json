@@ -22,6 +22,7 @@
   "status",
   "profile_photo",
   "participant_id",
+  "custom_qr_image",
   "qr_preview",
   "more_information_section",
   "registration_type",
@@ -83,8 +84,7 @@
   "flight_no",
   "departure_time",
   "column_break_hbtt",
-  "arrival_time",
-  "custom_qr"
+  "arrival_time"
  ],
  "fields": [
   {
@@ -503,7 +503,7 @@
    "unique": 1
   },
   {
-   "fieldname": "custom_qr",
+   "fieldname": "custom_qr_image",
    "fieldtype": "Attach",
    "hidden": 1,
    "label": "QR image",
@@ -513,7 +513,7 @@
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-19 22:37:26.203001",
+ "modified": "2026-07-21 15:35:30.685278",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",
