@@ -1,7 +1,8 @@
 import frappe
 import io
 import os
-from pyqrcode import create as qr_create
+# from pyqrcode import create as qr_create
+
 
 
 def user_type_update(doc, method=None):

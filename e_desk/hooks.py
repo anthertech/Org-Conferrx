@@ -46,7 +46,7 @@ add_to_apps_screen = [
 
 # include js in doctype views
 doctype_js = {
-    "User" : "public/js/user.js",
+    # "User" : "public/js/user.js",
     "Project" : "public/js/project.js",
     }
 # doctype_list_js = {"Participant" : "e_desk/doctype/participant/participant.js"}
@@ -175,9 +175,9 @@ doc_events = {
 	"Address": {
 		"validate": "e_desk.e_desk.utils.py.address.address_link",
 	},
-    "User":{
-        "after_insert":"e_desk.e_desk.doc_events.user.user_type_update"
-    },
+    # "User":{
+    #     "after_insert":"e_desk.e_desk.doc_events.user.after_insert"
+    # },
     # "Project":{
     #     "after_insert":"e_desk.e_desk.doc_events.project.create_project_warehouse"
     # }

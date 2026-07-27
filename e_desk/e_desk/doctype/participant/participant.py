@@ -11,6 +11,8 @@ from frappe.model.document import Document
 from datetime import datetime, time, timedelta
 from e_desk.e_desk.doctype.registration_desk.registration_desk import RegistrationDesk 
 from e_desk.e_desk.utils.password_utils import build_initial_password
+from frappe.utils import cint
+
 
 
 class Participant(Document):
@@ -585,3 +587,90 @@ def get_meal_settings_for_webform():
 	if not customer:
 		return result	
 	return result
+
+
+
+
+
+
+BREAK_FIELDTYPES = ("Section Break", "Column Break", "Page Break")
+SECTION_ENDS = ("Section Break", "Page Break")
+
+@frappe.whitelist(allow_guest=True)
+def get_registration_configuration(conference):
+		if not conference or not frappe.db.exists("Conference", conference):
+			return {}
+
+		# 1. Fetch all fields for the Web Form
+		webform_fields = frappe.get_all(
+			"Web Form Field",
+			filters={"parent": "event-participant-registration"},
+			fields=["fieldname", "fieldtype"],
+			order_by="idx asc",
+		)
+
+		# 2. Find which Conference meta fields are Checkboxes
+		conference_meta = frappe.get_meta("Conference")
+		conference_checkbox_fields = {
+			df.fieldname for df in conference_meta.fields if df.fieldtype == "Check"
+		}
+		# print(conference_checkbox_fields,"conference_checkbox_fields")
+		# 3. Filter leaf fields that match your criteria
+		leaf_fieldnames = [
+			df.fieldname
+			for df in webform_fields
+			if df.fieldname
+			and df.fieldtype not in BREAK_FIELDTYPES
+			and df.fieldname in conference_checkbox_fields
+		]
+		# print(leaf_fieldnames ,"leaf_fieldnames ")
+		
+		# 4. FIXED: Fetch safely using a clean list format
+		conference_values = {}
+		if leaf_fieldnames:
+			db_values = frappe.db.get_value(
+				"Conference",
+				conference,
+				leaf_fieldnames,  # Pass list directly
+				as_dict=True
+			)
+			if db_values:
+				conference_values = db_values
+
+
+		# 5. Populate initial configuration dictionary
+		config = {}
+		total = len(webform_fields)
+	
+		# Add only enabled fields
+		for fieldname in leaf_fieldnames:
+			if cint(conference_values.get(fieldname, 0)) == 1:
+				config[fieldname] = 1
+
+		# Add only visible sections/pages
+		for i, field in enumerate(webform_fields):
+			if field.fieldtype not in BREAK_FIELDTYPES or not field.fieldname:
+				continue
+
+			keep_visible = False
+
+			for j in range(i + 1, total):
+				nxt = webform_fields[j]
+
+				if nxt.fieldtype == "Column Break":
+					continue
+
+				if nxt.fieldtype in SECTION_ENDS:
+					break
+
+				if nxt.fieldname in config:
+					keep_visible = True
+					break
+
+			if keep_visible:
+				config[field.fieldname] = 1
+		print(config,"ttttttt")
+		return config
+
+
+

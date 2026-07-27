@@ -183,6 +183,7 @@
   {
    "fieldname": "customer",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Customer",
    "options": "Customer"
   },
@@ -284,11 +285,13 @@
   {
    "fieldname": "organization_tab",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "Organization"
   },
   {
    "fieldname": "references_tab",
    "fieldtype": "Tab Break",
+   "hidden": 1,
    "label": "References"
   },
   {
@@ -409,7 +412,7 @@
    "description": "Participant is staff of the Sponsor / Exhibitor",
    "fieldname": "is_staff",
    "fieldtype": "Check",
-   "label": "Is Staff"
+   "label": "Is Extra Staff"
   },
   {
    "fieldname": "section_break_nbwk",
