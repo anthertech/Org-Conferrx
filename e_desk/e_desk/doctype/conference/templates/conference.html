@@ -147,9 +147,11 @@
             {% if is_registration_closed %}
                 <span class="badge bg-danger p-2 mt-4">Registration Closed</span>
             {% else %}
-                <p><strong>Registration closes on:</strong> {{ doc.registration_close_date }}</p>
+            {% if doc.registration_close_date %}
+                <p><strong>Registration closes on:</strong> {{ doc.registration_close_date or ""}}</p>
+            {% endif %}
 
-                <button class="btn btn-success mt-2"
+                <!-- <button class="btn btn-success mt-2"
                 data-bs-toggle="modal"
                 data-bs-target="#eventRegistrationModal">
                 <a href="/event-participant-registration/new?event={{ name }}"
@@ -158,7 +160,7 @@
              </a>
              
            
-        </button>
+        </button> -->
 
         {% if has_exhibitor %}
         <button class="btn btn-success mt-2"
