@@ -40,7 +40,6 @@ class Participant(Document):
 				# Update the user to be a System User and fill missing details
 			password = build_initial_password(self.e_mail, self.mobile_number)
 			user_doc.update({
-				"user_type": "System User",
 				"first_name": self.first_name or user_doc.first_name,
 				"last_name": self.last_name or user_doc.last_name,
 				"mobile_no": self.mobile_number or user_doc.mobile_no,
@@ -64,7 +63,6 @@ class Participant(Document):
 				"last_name": self.last_name,
 				"mobile_no": self.mobile_number,
 				"time_zone": time_zone,
-				"user_type": "System User",
 				"new_password": password,
 				"send_welcome_email": 1,
 				"module_profile": "E-desk profile"
@@ -104,6 +102,9 @@ class Participant(Document):
 				self.create_customer()
 				print("cust created~~~~~~~~~~~~~~~")
 		
+		self.link_customer_portal_user()
+		print("customer portal user linked.............")
+
 		self.create_address_and_contact()
 		print("address and contact created and linked.............")
 
@@ -144,6 +145,21 @@ class Participant(Document):
 	def set_full_name(self):
 		parts = [p for p in (self.first_name, self.last_name) if p]
 		self.full_name = " ".join(parts)
+
+	def link_customer_portal_user(self):
+		if not self.customer or not self.user:
+			return
+
+		user_doc = frappe.get_doc("User", self.user)
+
+		if "Customer" not in [r.role for r in user_doc.roles]:
+			user_doc.append("roles", {"role": "Customer"})
+			user_doc.save(ignore_permissions=True)
+
+		customer = frappe.get_doc("Customer", self.customer)
+		if not any(p.user == self.user for p in customer.portal_users):
+			customer.append("portal_users", {"user": self.user})
+			customer.save(ignore_permissions=True)
 
 	def create_user_permissions(self):
 		if not self.e_mail:
@@ -542,7 +558,6 @@ def toggle_event_volunteer(participant):
     else:
         if "Volunteer" not in [r.role for r in user.roles]:
             user.append("roles", {"role": "Volunteer"})
-        user.user_type = "System User"
     user.save(ignore_permissions=True)
 
 
