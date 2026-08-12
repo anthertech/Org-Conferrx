@@ -134,9 +134,9 @@
             <h5>Event Details</h5>
 
             {% if doc.start_date == doc.end_date %}
-                <p><strong>Date:</strong> {{ doc.start_date }}</p>
+                <p><strong>Date:</strong> {{ frappe.utils.format_date(doc.start_date , "dd/mm/yyyy") }}</p>
             {% else %}
-                <p><strong>Date:</strong> {{ doc.start_date }} to {{ doc.end_date }}</p>
+                <p><strong>Date:</strong>  {{ frappe.utils.format_date(doc.start_date , "dd/mm/yyyy") }} to  {{ frappe.utils.format_date(doc.end_date , "dd/mm/yyyy") }}</p>
             {% endif %}
 
             <p><strong>Venue:</strong> {{ doc.venuelocation }}</p>
@@ -148,7 +148,7 @@
                 <span class="badge bg-danger p-2 mt-4">Registration Closed</span>
             {% else %}
             {% if doc.registration_close_date %}
-                <p><strong>Registration closes on:</strong> {{ doc.registration_close_date or ""}}</p>
+                <p><strong>Registration closes on:</strong> {{ frappe.utils.format_date(doc.registration_close_date, "dd/mm/yyyy") }}</p>
             {% endif %}
 
                 <!-- <button class="btn btn-success mt-2"
