@@ -11,9 +11,6 @@
   },
   {
    "card": "Event Speakers Count"
-  },
-  {
-   "card": "Event Sponsors Count"
   }
  ],
  "charts": [
@@ -33,7 +30,7 @@
  "idx": 0,
  "is_default": 0,
  "is_standard": 1,
- "modified": "2026-01-14 23:34:19.995181",
+ "modified": "2026-08-12 12:37:13.188926",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference Dashboard",
