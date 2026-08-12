@@ -134,9 +134,9 @@
             <h5>Event Details</h5>
 
             {% if doc.start_date == doc.end_date %}
-                <p><strong>Date:</strong> {{ doc.start_date }}</p>
+                <p><strong>Date:</strong> {{ frappe.utils.format_date(doc.start_date , "dd/mm/yyyy") }}</p>
             {% else %}
-                <p><strong>Date:</strong> {{ doc.start_date }} to {{ doc.end_date }}</p>
+                <p><strong>Date:</strong>  {{ frappe.utils.format_date(doc.start_date , "dd/mm/yyyy") }} to  {{ frappe.utils.format_date(doc.end_date , "dd/mm/yyyy") }}</p>
             {% endif %}
 
             <p><strong>Venue:</strong> {{ doc.venuelocation }}</p>
@@ -147,9 +147,11 @@
             {% if is_registration_closed %}
                 <span class="badge bg-danger p-2 mt-4">Registration Closed</span>
             {% else %}
-                <p><strong>Registration closes on:</strong> {{ doc.registration_close_date }}</p>
+            {% if doc.registration_close_date %}
+                <p><strong>Registration closes on:</strong> {{ frappe.utils.format_date(doc.registration_close_date, "dd/mm/yyyy") }}</p>
+            {% endif %}
 
-                <button class="btn btn-success mt-2"
+                <!-- <button class="btn btn-success mt-2"
                 data-bs-toggle="modal"
                 data-bs-target="#eventRegistrationModal">
                 <a href="/event-participant-registration/new?event={{ name }}"
@@ -158,7 +160,7 @@
              </a>
              
            
-        </button>
+        </button> -->
 
         {% if has_exhibitor %}
         <button class="btn btn-success mt-2"

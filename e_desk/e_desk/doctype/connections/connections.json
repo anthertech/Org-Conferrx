@@ -56,6 +56,7 @@
    "label": "Business Category"
   },
   {
+   "fetch_from": "email.user_image",
    "fieldname": "profile_photo",
    "fieldtype": "Attach Image",
    "label": "Profile photo"
@@ -63,7 +64,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-21 16:12:59.383964",
+ "modified": "2026-08-12 10:19:51.008636",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Connections",
