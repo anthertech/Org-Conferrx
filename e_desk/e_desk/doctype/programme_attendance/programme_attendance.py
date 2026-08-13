@@ -41,11 +41,11 @@ def process_scan(scan_qr, event, programme, docname=None):
 
     conference = {
         "has_meal": frappe.db.get_single_value(
-            "Conference Settings",
+            "Conference",
             "has_meal"
         ),
         "meal_access": frappe.db.get_single_value(
-            "Conference Settings",
+            "Conference",
             "meal_access"
         )
     }

@@ -82,8 +82,11 @@ function load_address_html(frm) {
 	});
 }
 function apply_meal_rules(frm) {
-    frappe.db.get_single_value('Conference Settings', 'has_meal')
-        .then(has_meal => {
+    if (!frm.doc.event) return;
+
+    frappe.db.get_value('Conference', frm.doc.event, 'has_meal')
+        .then(r => {
+            const has_meal = r.message && r.message.has_meal;
 
             if (!has_meal) {
                 frm.set_df_property('meal_included', 'hidden', 1);
@@ -91,8 +94,9 @@ function apply_meal_rules(frm) {
                 frm.set_value('meal_included', 0);
                 return;
             }
-            frappe.db.get_single_value('Conference Settings', 'meal_access')
-                .then(meal_access => {
+            frappe.db.get_value('Conference', frm.doc.event, 'meal_access')
+                .then(r2 => {
+                    const meal_access = r2.message && r2.message.meal_access;
 
                     frm.set_df_property('meal_included', 'hidden', 0);
                     frm.set_df_property('meal_preference', 'hidden', 0);
@@ -108,8 +112,11 @@ function apply_meal_rules(frm) {
 }
 
 function apply_customer_rule(frm) {
-    frappe.db.get_single_value('Conference Settings', 'create_customer_on_participant_creation')
-        .then(has_create_customer => {
+    if (!frm.doc.event) return;
+
+    frappe.db.get_value('Conference', frm.doc.event, 'create_customer_on_participant_creation')
+        .then(r => {
+            const has_create_customer = r.message && r.message.create_customer_on_participant_creation;
 
             if (!has_create_customer) {
                 frm.set_df_property('customer', 'hidden', 1);
@@ -189,8 +196,9 @@ function add_view_links(frm) {
     });
 
     // ---------------- Exhibitor ----------------
-    frappe.db.get_single_value('Conference Settings', 'event_has_exhibitors')
-        .then(event_has_exhibitors => {
+    frappe.db.get_value('Conference', frm.doc.event, 'event_has_exhibitors')
+        .then(r => {
+            const event_has_exhibitors = r.message && r.message.event_has_exhibitors;
             if (!event_has_exhibitors) return;
 
             frappe.db.get_value(

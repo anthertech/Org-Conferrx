@@ -19,11 +19,10 @@
   "last_name",
   "full_name",
   "column_break_sylpb",
-  "participant_id",
-  "qr_preview",
-  "custom_qr_image",
   "status",
   "profile_photo",
+  "participant_id",
+  "qr_preview",
   "more_information_section",
   "registration_type",
   "customer",
@@ -84,7 +83,8 @@
   "flight_no",
   "departure_time",
   "column_break_hbtt",
-  "arrival_time"
+  "arrival_time",
+  "custom_qr"
  ],
  "fields": [
   {
@@ -183,7 +183,6 @@
   {
    "fieldname": "customer",
    "fieldtype": "Link",
-   "hidden": 1,
    "label": "Customer",
    "options": "Customer"
   },
@@ -285,13 +284,11 @@
   {
    "fieldname": "organization_tab",
    "fieldtype": "Tab Break",
-   "hidden": 1,
    "label": "Organization"
   },
   {
    "fieldname": "references_tab",
    "fieldtype": "Tab Break",
-   "hidden": 1,
    "label": "References"
   },
   {
@@ -412,7 +409,7 @@
    "description": "Participant is staff of the Sponsor / Exhibitor",
    "fieldname": "is_staff",
    "fieldtype": "Check",
-   "label": "Is Extra Staff"
+   "label": "Is Staff"
   },
   {
    "fieldname": "section_break_nbwk",
@@ -506,7 +503,7 @@
    "unique": 1
   },
   {
-   "fieldname": "custom_qr_image",
+   "fieldname": "custom_qr",
    "fieldtype": "Attach",
    "hidden": 1,
    "label": "QR image",
@@ -516,7 +513,7 @@
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-23 12:10:33.462032",
+ "modified": "2026-07-19 22:37:26.203001",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",
