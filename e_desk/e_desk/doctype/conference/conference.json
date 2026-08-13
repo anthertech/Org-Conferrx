@@ -159,17 +159,18 @@
   "custom_first_preference",
   "custom_second_preference_",
   "column_break_ytgj",
-  "settings_tab",
-  "project",
-  "is_wh_required",
-  "default_warehouse",
-  "event_has_exhibitors",
+"settings_tab",
+   "project",
+   "is_wh_required",
+   "default_warehouse",
+   "registration_item_group",
+   "event_has_exhibitors",
   "create_customer_on_participant_creation",
   "column_break_auwp",
   "has_meal",
   "meal_access",
   "meal_item"
- ],
+  ],
  "fields": [
   {
    "fieldname": "title",
@@ -297,14 +298,21 @@
    "mandatory_depends_on": "eval:doc.is_wh_required",
    "options": "Warehouse"
   },
-  {
-   "default": "0",
-   "fieldname": "is_wh_required",
-   "fieldtype": "Check",
-   "label": "Is Warehouse Required"
-  },
-  {
-   "fieldname": "registration_form_tab",
+{
+    "default": "0",
+    "fieldname": "is_wh_required",
+    "fieldtype": "Check",
+    "label": "Is Warehouse Required"
+   },
+   {
+    "fieldname": "registration_item_group",
+    "fieldtype": "Link",
+    "label": "Registration Item Group",
+    "options": "Item Group"
+   },
+
+   {
+    "fieldname": "registration_form_tab",
    "fieldtype": "Tab Break",
    "label": "Registration Form"
   },

@@ -1,9 +1,18 @@
 // Copyright (c) 2025, Anther Technologies Pvt Ltd and contributors
 // For license information, please see license.txt
 
+let current_item_group = "";
+
 frappe.ui.form.on('Registration Desk', {
 
-	
+	onload(frm) {
+		update_item_group(frm);
+	},
+
+	confer(frm) {
+		update_item_group(frm);
+	},
+
 	scan_qr(frm) {
 		if (!frm.doc.scan_qr) return;
 
@@ -29,6 +38,7 @@ frappe.ui.form.on('Registration Desk', {
                 frm.set_value("participant_name", r.message.full_name);
                 frm.set_value("part_profile", r.message.profile_photo);
                 frm.set_value("qr_profile", r.message.qr);
+                frm.set_value("customer", r.message.customer || "");
 
                 // Render profile photo
                 if (r.message.profile_photo) {
@@ -45,12 +55,9 @@ frappe.ui.form.on('Registration Desk', {
                 }
             }
         });
-		frm.submit();
     },
 
-
-
-	refresh:function(frm){
+	refresh(frm) {
 
 		if (frm.doc.part_profile) {
 			let imgHTML = `
@@ -60,107 +67,73 @@ frappe.ui.form.on('Registration Desk', {
 				</div>`;
 			frm.get_field("profile_preview").$wrapper.html(imgHTML);
 		}
-        // if (!frm.doc.participant_id) return;
-	
-		// 2️⃣ Fetch the linked User from Participant
-		// frappe.db.get_value(
-		// 	'Participant', 
-		// 	frm.doc.participant_id,  // Participant ID
-		// 	'user'         // Field in Participant that links to User
-		// ).then(participant_res => {
-		// 	const user_id = participant_res.message?.user;
-		// 	if (!user_id) return;
-	
-		// 	// 3️⃣ Fetch the QR from the User doc
-		// 	frappe.db.get_value(
-		// 		'User',
-		// 		user_id,
-		// 		'custom_qr'
-		// 	).then(user_res => {
-		// 		const qr = user_res.message?.custom_qr;
-		// 		if (!qr) return;
-	
-		// 		// 4️⃣ Render the QR
-		// 		frm.fields_dict.qr_preview.$wrapper.html(`
-		// 			<div style="text-align:left">
-		// 				<img src="${qr}" 
-		// 					 style="width:120px !important; 
-		// 							border:solid 1px black; 
-		// 							border-radius:5px;">
-		// 			</div>
-		// 		`);
-		// 	});
-		// });
-		
+
+		frm.set_query('item', 'items', () => {
+			let filters = { 'disabled': 0 };
+			if (current_item_group) {
+				filters['item_group'] = current_item_group;
+			}
+			return { filters: filters };
+		});
+
+		if (frm.doc.docstatus === 1) {
+			frm.add_custom_button(__('Sales Invoice'), () => {
+				frappe.model.open_mapped_doc({
+					method: "e_desk.e_desk.doctype.registration_desk.registration_desk.make_sales_invoice",
+					frm: frm
+				});
+			}, __('Create'));
+		}
 	},
-		
 
 });
 
+frappe.ui.form.on('Registration Desk Item', {
+	item(frm, cdt, cdn) {
+		const row = locals[cdt][cdn];
+		if (!row.item) return;
 
+		frappe.call({
+			method: "e_desk.e_desk.doctype.registration_desk.registration_desk.get_item_price",
+			args: { item_code: row.item },
+			callback(r) {
+				if (r.message) {
+					frappe.model.set_value(cdt, cdn, 'rate', r.message);
+					refresh_row_amount(frm, cdt, cdn);
+				}
+			}
+		});
+	},
+	qty(frm, cdt, cdn) {
+		refresh_row_amount(frm, cdt, cdn);
+	},
+	rate(frm, cdt, cdn) {
+		refresh_row_amount(frm, cdt, cdn);
+	}
+});
 
+function update_item_group(frm) {
+	current_item_group = "";
+	if (!frm.doc.confer) return;
 
+	frappe.db.get_value('Conference', frm.doc.confer, 'registration_item_group')
+		.then(r => {
+			current_item_group = (r && r.message && r.message.registration_item_group) || "";
+		});
+}
 
+function refresh_row_amount(frm, cdt, cdn) {
+	const row = locals[cdt][cdn];
+	const amount = flt(row.rate) * flt(row.qty);
+	frappe.model.set_value(cdt, cdn, 'amount', amount);
+	calculate_totals(frm);
+}
 
+function calculate_totals(frm) {
+	let total_amount = 0;
+	(frm.doc.items || []).forEach(row => {
+		total_amount += flt(row.rate) * flt(row.qty);
+	});
 
-// 	refresh:function(frm){
-		
-
-// 		let imgHTML = ''
-
-// 		imgList.forEach(img => {
-// 			if (img.img) {
-// 				imgHTML += `
-// 				<div>
-// 					<img src='${img.img}' alt='IMG' height="100" width="100">
-// 					<br>
-// 					<br>
-// 				</div>
-// 				`
-// 			}
-// 		});
-
-// 		frm.get_field("profile_preview").$wrapper.html(imgHTML);
-
-
-
-// 		let qrHTML = ''
-
-// 		qrList.forEach(img => {
-// 			if (img.img) {
-// 				qrHTML += `
-// 				<div>
-// 					<img src='${img.img}' alt='IMG' height="100" width="100">
-// 					<br>
-// 					<br>
-// 				</div>
-// 				`
-// 			}
-// 		});
-
-// 		frm.get_field("qr_preview").$wrapper.html(qrHTML);
-		
-
-// 	},
-
-
-
-
-	
-// 	participant_profile:function(frm){
-// 		if(frm.doc.part_profile){
-// 			let $profileimg = `
-// 				<img
-// 				class="sign"
-// 				src=${frm.doc.part_profile} 
-// 				/>
-// 				`
-// 				frm.get_field("profile_preview").$wrapper.html($profileimg);
-// 		}
-// 	},
-// });
-
-
-
-
-
+	frm.set_value('total_amount', total_amount);
+}

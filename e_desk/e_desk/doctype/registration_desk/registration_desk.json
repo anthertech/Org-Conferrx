@@ -12,24 +12,25 @@
   "registration_process_section",
   "scan_qr",
   "submit",
+  "customer",
   "abr",
   "participant_id",
   "participant_name",
+  "part_profile",
+  "profile_preview",
   "column_break_mefd",
   "naming_series",
   "confer",
   "kit_provided_",
-  "paid",
   "sales_invoice",
-  "paid_amount",
-  "section_break_sec1",
-  "part_profile",
-  "profile_preview",
-  "column_break_j8oqr",
   "qr_profile",
   "qr_preview",
-  "registration_fee_collected_section",
+  "section_break_bbsx",
+  "items",
+  "section_break_z3ib",
   "mode_of_payment",
+  "column_break_ubvv",
+  "total_amount",
   "amended_from"
  ],
  "fields": [
@@ -42,27 +43,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "registration_fee_collected_section",
-   "fieldtype": "Section Break",
-   "label": "Registration Fee Collected"
-  },
-  {
-   "fieldname": "amended_from",
-   "fieldtype": "Link",
-   "label": "Amended From",
-   "no_copy": 1,
-   "options": "Registration Desk",
-   "print_hide": 1,
-   "read_only": 1
-  },
-  {
-   "fieldname": "naming_series",
-   "fieldtype": "Select",
-   "hidden": 1,
-   "label": "Registration Series",
-   "options": ".{abr}.-.YY.-.####"
-  },
-  {
    "fetch_from": "participant_id.profile_photo",
    "fieldname": "part_profile",
    "fieldtype": "Attach Image",
@@ -71,14 +51,28 @@
    "read_only": 1
   },
   {
-   "fieldname": "mode_of_payment",
-   "fieldtype": "Table",
-   "label": "Mode of payment",
-   "options": "Mode of payment Detail"
+   "fieldname": "customer",
+   "fieldtype": "Link",
+   "label": "Customer",
+   "options": "Customer"
   },
   {
-   "fieldname": "section_break_sec1",
-   "fieldtype": "Section Break"
+   "fieldname": "mode_of_payment",
+   "fieldtype": "Link",
+   "label": "Mode of Payment",
+   "options": "Mode of Payment"
+  },
+  {
+   "fieldname": "profile_preview",
+   "fieldtype": "HTML",
+   "label": "Profile Preview"
+  },
+  {
+   "depends_on": "eval:doc.sales_invoice",
+   "fieldname": "sales_invoice",
+   "fieldtype": "Link",
+   "label": "Sales Invoice",
+   "options": "Sales Invoice"
   },
   {
    "fieldname": "qr_profile",
@@ -92,8 +86,16 @@
    "label": "QR Preview"
   },
   {
-   "fieldname": "column_break_j8oqr",
-   "fieldtype": "Column Break"
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Registration Desk Item"
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "read_only": 1
   },
   {
    "fieldname": "registration_process_section",
@@ -146,36 +148,44 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "0",
-   "fetch_from": "participant_id.is_paid",
-   "fieldname": "paid",
-   "fieldtype": "Check",
-   "label": "Is Paid"
-  },
-  {
-   "fieldname": "profile_preview",
-   "fieldtype": "HTML",
-   "label": "Profile Preview"
-  },
-  {
-   "depends_on": "eval:doc.sales_invoice",
-   "fieldname": "sales_invoice",
+   "fieldname": "amended_from",
    "fieldtype": "Link",
-   "label": "Sales Invoice",
-   "options": "Sales Invoice"
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Registration Desk",
+   "print_hide": 1,
+   "read_only": 1
   },
   {
-   "depends_on": "eval:doc.sales_invoice",
-   "fetch_from": "sales_invoice.grand_total",
-   "fieldname": "paid_amount",
-   "fieldtype": "Float",
-   "label": "Paid Amount"
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Registration Series",
+   "options": ".{abr}.-.YY.-.####"
+  },
+  {
+   "fieldname": "section_break_bbsx",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_ubvv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_z3ib",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
- "links": [],
- "modified": "2026-01-22 16:52:45.658432",
+ "links": [
+  {
+   "group": "Invoices",
+   "link_doctype": "Sales Invoice",
+   "link_fieldname": "custom_registration_desk"
+  }
+ ],
+ "modified": "2026-08-13 16:18:44.140980",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Registration Desk",
