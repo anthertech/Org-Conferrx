@@ -154,7 +154,7 @@ def registration_details(user, confer):
         frappe.throw("Participant already registered at the desk for this event")
 
     # 3️⃣ Get QR from User doctype
-    qr = frappe.db.get_value("Participant", participant.name, "custom_qr_image")
+    qr = frappe.db.get_value("Participant", participant.name, "custom_qr")
 
     return {
         "participant_id": participant.name,
