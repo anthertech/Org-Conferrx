@@ -7,13 +7,13 @@
     /* =========================
        MODERN FRAPPE WEB FORM
     ========================= */
-    
+
     .frappe-form {
       font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       font-size: 14px;
       color: #1f2937;
     }
-    
+
     /* Labels */
     .frappe-form .form-label {
       font-size: 12px;
@@ -21,7 +21,7 @@
       color: #6b7280;
       margin-bottom: 4px;
     }
-    
+
     /* Inputs */
     .frappe-form .form-control,
     .frappe-form .form-select {
@@ -31,24 +31,24 @@
       font-size: 14px;
       background-color: #fff;
     }
-    
+
     /* Focus state */
     .frappe-form .form-control:focus,
     .frappe-form .form-select:focus {
       border-color: #2563eb;
       box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
     }
-    
+
     /* Radio buttons */
     .frappe-form .form-check-input {
       cursor: pointer;
     }
-    
+
     .frappe-form .form-check-label {
       cursor: pointer;
       font-size: 14px;
     }
-    
+
     /* Section headers (like Section Break) */
     .section-title {
       font-size: 13px;
@@ -60,44 +60,44 @@
       padding-bottom: 6px;
       border-bottom: 1px solid #e5e7eb;
     }
-    
+
     /* Required field */
     .required::after {
       content: " *";
       color: #ef4444;
     }
-    
+
     /* Modal polish */
     .modal-content {
       border-radius: 10px;
       border: none;
     }
-    
+
     .modal-header {
       border-bottom: 1px solid #e5e7eb;
     }
-    
+
     .modal-footer {
       border-top: 1px solid #e5e7eb;
     }
-    
+
     /* Buttons (Frappe-like) */
     .btn-primary {
       background-color: #2563eb;
       border-color: #2563eb;
     }
-    
+
     .btn-primary:hover {
       background-color: #1e40af;
       border-color: #1e40af;
     }
-    
+
     .btn-secondary {
       background-color: #f3f4f6;
       border-color: #d1d5db;
       color: #374151;
     }
-    
+
     /* File input cleanup */
     input[type="file"] {
       padding: 6px;
@@ -108,8 +108,69 @@
     .frappe-form .mb-3 {
       margin-bottom: 16px !important;
     }
-    </style>
-    
+
+    /* =========================
+       PARTICIPANT TAB (matches reference design)
+    ========================= */
+
+    .participant-panel {
+      background: #f4f3ef;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .participant-subtabs {
+      display: flex;
+      flex-wrap: wrap;
+      border-bottom: 2px solid #2563eb;
+      background: #fff;
+    }
+
+    .participant-subtabs .nav-link {
+      border: none;
+      border-radius: 0;
+      color: #2563eb;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 14px 22px;
+      background: #fff;
+    }
+
+    .participant-subtabs .nav-link:hover {
+      background: #eef2ff;
+    }
+
+    .participant-subtabs .nav-link.active {
+      background: #2563eb;
+      color: #fff;
+    }
+
+    .participant-body {
+      padding: 32px 40px 40px;
+      position: relative;
+    }
+
+    .participant-edit-btn {
+      background: #eef2ff;
+      color: #2563eb;
+      border-color: #2563eb;
+    }
+
+    .info-item {
+      margin-bottom: 26px;
+    }
+
+    .info-item .info-label {
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .info-item .info-value {
+      color: #374151;
+    }
+</style>
+
 
 <div class="container my-5 px-5">
 
@@ -151,25 +212,14 @@
                 <p><strong>Registration closes on:</strong> {{ frappe.utils.format_date(doc.registration_close_date, "dd/mm/yyyy") }}</p>
             {% endif %}
 
-                <!-- <button class="btn btn-success mt-2"
-                data-bs-toggle="modal"
-                data-bs-target="#eventRegistrationModal">
-                <a href="/event-participant-registration/new?event={{ name }}"
-                style="color:white;text-decoration:none;">
-                Participant Registration
-             </a>
-             
-           
-        </button> -->
-
         {% if has_exhibitor %}
         <button class="btn btn-success mt-2"
         data-bs-toggle="modal"
         data-bs-target="#eventRegistrationModal">
-        <a href="/exhibitor-registration/new?event={{ name }}" style="color:white;text-decoration:none;">Become an exhibitor</a>    
+        <a href="/exhibitor-registration/new?event={{ name }}" style="color:white;text-decoration:none;">Become an exhibitor</a>
         </button>
         {% endif %}
-       
+
             {% endif %}
         </div>
     </div>
@@ -191,18 +241,25 @@
                 Venue
             </button>
         </li>
-
+        {% if doc.is_sponsored %}
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="sponsors-tab" data-bs-toggle="tab"
                     data-bs-target="#sponsorsSection" type="button" role="tab">
                 Sponsors
             </button>
         </li>
+        {% endif %}
 
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="speakers-tab" data-bs-toggle="tab"
                     data-bs-target="#speakersSection" type="button" role="tab">
                 Speakers
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="participant-tab" data-bs-toggle="tab"
+                    data-bs-target="#participantSection" type="button" role="tab">
+                My Profile
             </button>
         </li>
     </ul>
@@ -220,11 +277,11 @@
                 {% for item in agenda_list %}
                 <li style="margin-bottom:15px;">
                     <strong>{{ item.program_agenda }}</strong><br>
-        
+
                     {% if item.start_date %}
                         {{ item.start_date }} – {{ item.end_date }}<br>
                     {% endif %}
-        
+
                     {% if item.description %}
                         <small>{{ item.description }}</small>
                     {% endif %}
@@ -234,10 +291,10 @@
             {% else %}
             <p>No agenda added.</p>
             {% endif %}
-        
+
         </div>
-        
-        
+
+
         <!-- ==========================
              VENUE
         =========================== -->
@@ -259,7 +316,7 @@
         =========================== -->
         <div class="tab-pane fade" id="speakersSection" role="tabpanel">
             <h5 class="mb-3">Speakers</h5>
-        
+
             {% if speakers %}
             <div class="row">
                 {% for s in speakers %}
@@ -274,7 +331,7 @@
                          No Image
                     </div>
                     {% endif %}
-        
+
                     <!-- Speaker Name -->
                     <p class="mt-2"><strong>{{ s.full_name }}</strong></p>
                 </div>
@@ -284,13 +341,215 @@
                 <p>No speakers added.</p>
             {% endif %}
         </div>
-        
+
     </div>
+
+<!-- ==========================
+     PARTICIPANT
+=========================== -->
+<div class="tab-pane fade" id="participantSection" role="tabpanel">
+
+    {% if participant %}
+
+        <div class="participant-panel">
+
+            <!-- Participant Sub Tabs -->
+            {% if participant.tabs %}
+
+                <ul class="nav participant-subtabs" id="participantSubTabs" role="tablist">
+
+                    {% for tab in participant.tabs %}
+
+                        <li class="nav-item" role="presentation">
+
+                            <button
+                                class="nav-link {% if loop.first %}active{% endif %}"
+                                id="p-tab-{{ loop.index }}"
+                                data-bs-toggle="pill"
+                                data-bs-target="#p-pane-{{ loop.index }}"
+                                type="button"
+                                role="tab"
+                                aria-controls="p-pane-{{ loop.index }}"
+                                aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
+                            >
+                                {{ tab.label }}
+                            </button>
+
+                        </li>
+
+                    {% endfor %}
+
+                </ul>
+
+
+                <!-- Participant Sub Tab Content -->
+                <div class="tab-content" id="participantSubTabContent">
+
+                    {% for tab in participant.tabs %}
+
+                        <div
+                            class="tab-pane fade participant-body {% if loop.first %}show active{% endif %}"
+                            id="p-pane-{{ loop.index }}"
+                            role="tabpanel"
+                            aria-labelledby="p-tab-{{ loop.index }}"
+                        >
+
+                            {% for section in tab.sections %}
+
+                                {% if section.label %}
+                                    <div class="section-title">
+                                        {{ section.label }}
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+
+                                    {% for field in section.fields %}
+
+                                        {% if field.fieldname != "custom_location_url_church" %}
+                                        <div class="col-md-6 info-item">
+                                            <div class="info-label">{{ field.label }}:</div>
+                                            <div class="info-value">
+                                                {% if field.fieldtype == "Attach Image" %}
+                                                    <img src="{{ field.value }}" alt="{{ field.label }}"
+                                                        style="width:110px;height:110px;object-fit:cover;border-radius:6px;">
+                                                {% else %}
+                                                    {{ field.value }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                        {% if field.fieldname == "custom_hotel_address_link" and field.value %}
+                                            <div class="col-md-6 info-item">
+                                                <button type="button"
+                                                        class="btn btn-primary btn-sm get-direction-btn"
+                                                        data-address="{{ field.value }}">
+                                                    ➤ Get Directions
+                                                </button>
+                                            </div>
+                                        {% endif %}
+                                        {% if field.fieldname == "custom_location_url_church" and field.value %}
+                                            <div class="col-md-6 info-item">
+                                                <a href="{{ field.value }}"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="btn btn-primary btn-sm">
+                                                    ⛪ Church Location
+                                                </a>
+                                            </div>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <p class="text-muted p-4">No participant details available.</p>
+
+            {% endif %}
+
+        </div>
+
+    {% else %}
+
+        <p class="text-muted">
+            No participant details found.
+        </p>
+
+    {% endif %}
 
 </div>
 
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+
+
+<script>
+document.addEventListener('click', function (e) {
+    const btn = e.target.closest('.get-direction-btn');
+    if (!btn) return;
+
+    const addressName = btn.getAttribute('data-address');
+    if (!addressName) {
+        frappe.msgprint(__('Please link a hotel address first.')); 
+        return;
+    }
+
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = 'Loading...';
+
+    frappe.call({
+        method: "e_desk.e_desk.doctype.conference.conference.get_address_for_direction",
+        args: { address_name: addressName },
+        callback: function (r) {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+
+            if (r.message && Object.keys(r.message).length) {
+                const a = r.message;
+                
+                const raw_parts = [
+                    a.address_line1,
+                    a.address_line2,
+                    a.city,
+                    a.state,
+                    a.pincode,
+                    a.country
+                ];
+                
+                const clean_parts = [];
+                for (let i = 0; i < raw_parts.length; i++) {
+                    const val = raw_parts[i];
+                    if (val) {
+                        const normalized = val.toString().trim().toLowerCase();
+                        if (normalized !== '' && normalized !== 'n/a' && normalized !== 'na') {
+                            clean_parts.push(val.trim());
+                        }
+                    }
+                }
+
+                if (clean_parts.length === 0 && a.country) {
+                    clean_parts.push(a.country);
+                }
+
+                const address_query = clean_parts.join(', ');
+                
+                if (!address_query) {
+                    frappe.msgprint(__('The linked address record contains no usable information.'));
+                    return;
+                }
+
+                const maps_url = 'https://www.google.com/maps/place/' + encodeURIComponent(address_query);
+                console.log('Opening Google Maps for address:', address_query);
+                
+                const map_window = window.open();
+                map_window.opener = null;
+                map_window.location = maps_url;
+                
+            } else {
+                frappe.msgprint(__('Could not fetch address details.'));
+            }
+        },
+        error: function (err) {
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+            console.error('Error fetching address:', err);
+            frappe.msgprint(__('Failed to fetch the linked address. Please try again.'));
+        }
+    });
+});
+</script>
 
 {% endblock %}

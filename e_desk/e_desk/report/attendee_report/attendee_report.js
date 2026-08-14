@@ -2,7 +2,7 @@ frappe.query_reports["Attendee Report"] = {
     filters: [
         {
             fieldname: "confer",
-            label: __("Confer"),
+            label: __("Conference"),
             fieldtype: "Link",
             options: "Conference",
             reqd: 1,
