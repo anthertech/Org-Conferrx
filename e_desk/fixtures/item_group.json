@@ -1,1 +1,25 @@
-[]
+[
+ {
+  "description": null,
+  "docstatus": 0,
+  "doctype": "Item Group",
+  "filter_attributes": [],
+  "filter_fields": [],
+  "image": null,
+  "include_descendants": 0,
+  "is_group": 0,
+  "item_group_defaults": [],
+  "item_group_name": "Stall",
+  "modified": "2026-08-13 10:50:35.107211",
+  "name": "Stall",
+  "old_parent": "All Item Groups",
+  "parent_item_group": "All Item Groups",
+  "route": "stall",
+  "show_in_website": 0,
+  "slideshow": null,
+  "taxes": [],
+  "website_specifications": [],
+  "website_title": null,
+  "weightage": 0
+ }
+]

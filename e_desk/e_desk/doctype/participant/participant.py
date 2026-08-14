@@ -131,15 +131,26 @@ class Participant(Document):
 		if not self.participant_id:
 			self.participant_id = self.generate_participant_id()
 
+	# def is_customer_creation_enabled(self):
+	# # 	return frappe.db.get_value(
+	# # 		"Conference",
+	# # 		"create_customer_on_participant_creation"
+	# # 	)
+	# 	return frappe.db.get_single_value(
+	# 				"Conference",
+	# 				"create_customer_on_participant_creation"
+	# 			)
+
+
 	def is_customer_creation_enabled(self):
-	# 	return frappe.db.get_value(
-	# 		"Conference Settings",
-	# 		"create_customer_on_participant_creation"
-	# 	)
-		return frappe.db.get_single_value(
-					"Conference Settings",
-					"create_customer_on_participant_creation"
-				)
+		if not self.event:
+			return 0
+
+		return frappe.db.get_value(
+        "Conference",
+        self.event,
+        "create_customer_on_participant_creation"
+    )
 
 
 	def set_full_name(self):
@@ -404,7 +415,7 @@ class Participant(Document):
 				return participant_id
 
 	def create_qr(self):
-		if self.custom_qr_image:
+		if self.custom_qr:
 			return
 
 		qr_image = io.BytesIO()
@@ -421,7 +432,7 @@ class Participant(Document):
 			"content": qr_image.getvalue(),
 			"attached_to_doctype": self.doctype,
 			"attached_to_name": self.name,
-			"attached_to_field": "custom_qr_image",
+			"attached_to_field": "custom_qr",
 		})
 
 		file_doc.save(ignore_permissions=True)
@@ -429,7 +440,7 @@ class Participant(Document):
 		frappe.db.set_value(
 			self.doctype,
 			self.name,
-			"custom_qr_image",
+			"custom_qr",
 			file_doc.file_url,
 			update_modified=False,
 		)
@@ -577,32 +588,30 @@ def toggle_event_speaker(participant):
     participant_doc.save(ignore_permissions=True)
 
 
+
 @frappe.whitelist(allow_guest=True)
 def get_meal_settings():
-	settings = frappe.get_single("Conference Settings")
+	settings = frappe.get_doc("Conference")
 	return {
 		"has_meal": settings.has_meal,
 		"meal_access": settings.meal_access
 	}
+
 @frappe.whitelist(allow_guest=True)
-def get_meal_settings_for_webform():
-	settings = frappe.get_single("Conference Settings")
-	result = {
-		"has_meal": settings.has_meal,
-		"meal_access": settings.meal_access,
-		"meal_item": settings.meal_item	}
+def get_meal_settings_for_webform(event):
 
-	if not settings.has_meal or not settings.meal_item:
-		return result
-	customer = frappe.db.get_value(
-		"Portal User",
-		{"user": frappe.session.user},
-		"parent"
-	)
-	if not customer:
-		return result	
-	return result
+    if not event:
+        return {
+            "has_meal": 0,
+            "meal_access": None,
+        }
 
+    settings = frappe.get_doc("Conference", event)
+
+    return {
+        "has_meal": settings.has_meal,
+        "meal_access": settings.meal_access,
+    }
 
 
 
@@ -684,7 +693,6 @@ def get_registration_configuration(conference):
 
 			if keep_visible:
 				config[field.fieldname] = 1
-		print(config,"ttttttt")
 		return config
 
 

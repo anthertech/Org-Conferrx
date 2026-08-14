@@ -2,6 +2,7 @@
 # For license information, please see license.txt
 
 import frappe
+from frappe.model.document import Document
 from frappe.website.website_generator import WebsiteGenerator
 # from frappe.utils import get_timezones
 from datetime import date,datetime
@@ -85,8 +86,8 @@ class Conference(WebsiteGenerator):
 
 
 def has_exhibitor():
-    has_exhibitor = frappe.db.get_single_value(
-        "Conference Settings",
+    has_exhibitor = frappe.db.get_value(
+        "Conference",
         "event_has_exhibitors"
     )
     return has_exhibitor
@@ -236,6 +237,7 @@ def get_confer_agenda_events(start, end):
 
     return agenda_events
 
+
 def get_participant_for_event(event):
     if frappe.session.user == "Guest":
         return None
@@ -345,3 +347,15 @@ def get_address_for_direction(address_name):
 		"pincode": address_doc.pincode,
 		"country": address_doc.country,
 	}
+
+class Conference(Document):
+
+    def before_save(self):
+        WEB_FORM_NAME = "exhibitor-registration"
+
+        frappe.db.set_value(
+            "Web Form",
+            WEB_FORM_NAME,
+            "published",
+            1 if self.event_has_exhibitors else 0
+        )

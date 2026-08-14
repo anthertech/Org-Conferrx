@@ -98,6 +98,13 @@ fixtures = [
             ["dt", "=", "Project"],
             ["name", "=", "Project-custom_warehouse"]
         ]
+    },
+    {
+        "dt": "Custom Field",
+        "filters": [
+            ["dt", "=", "Sales Invoice"],
+            ["name", "=", "Sales Invoice-custom_registration_desk"]
+        ]
     }
 ]
 
