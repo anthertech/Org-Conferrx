@@ -80,6 +80,7 @@ class Conference(WebsiteGenerator):
 		context.speakers = get_speakers_for_event(self.name)
 		context.registration_types = get_registration_types()
 		context.has_exhibitor = has_exhibitor()
+		context.participant = get_participant_for_event(self.name)
 		return context
 
 
@@ -234,3 +235,113 @@ def get_confer_agenda_events(start, end):
             })
 
     return agenda_events
+
+def get_participant_for_event(event):
+    if frappe.session.user == "Guest":
+        return None
+
+    participant_name = frappe.db.get_value(
+        "Participant", {"event": event, "user": frappe.session.user}, "name"
+    )
+    if not participant_name:
+        return None
+
+    doc = frappe.get_doc("Participant", participant_name)
+    meta = frappe.get_meta("Participant")
+
+    SKIP_TYPES = {
+        "Tab Break", "Section Break", "Column Break", "HTML",
+        "Table", "Table MultiSelect"
+    }
+
+    SKIP_FIELDNAMES = {
+        "naming_series", "participant_id", "customer", "user",
+        "stall", "max_staff_allowed", "participant_address",
+        "participant_contact",
+        "custom_abr", "status", "custom_registration_status",
+        "custom_age_category", "event_role", "event", "custom_present_paper_at_catx",
+        "registration_type", "is_staff", "participant_group",
+        "custom_category_files", "custom_scan_of_passports_information_page", "id_proof", "custom_scan_of_passports_information_page",
+    }
+
+    tabs = []
+    current_tab = None
+    current_section = None
+
+    for f in meta.fields:
+        if f.fieldtype == "Tab Break":
+            current_tab = {"label": f.label or "Details", "sections": []}
+            current_section = {"label": None, "fields": []}
+            current_tab["sections"].append(current_section)
+            tabs.append(current_tab)
+            continue
+
+        if f.fieldtype == "Section Break":
+            if current_tab is None:
+                current_tab = {"label": "Details", "sections": []}
+                tabs.append(current_tab)
+            current_section = {"label": f.label, "fields": []}
+            current_tab["sections"].append(current_section)
+            continue
+
+        if f.fieldtype in SKIP_TYPES or f.fieldname in SKIP_FIELDNAMES:
+            continue
+
+        if f.hidden:
+            continue
+
+        value = doc.get(f.fieldname)
+        if value in (None, "", 0) and f.fieldtype != "Check":
+            continue
+        if f.fieldtype == "Check" and not value:
+            continue
+
+        if f.fieldtype in ("Date",):
+            value = frappe.utils.format_date(value, "dd/mm/yyyy")
+        elif f.fieldtype == "Datetime":
+            value = frappe.utils.format_datetime(value, "dd/mm/yyyy hh:mm a")
+        elif f.fieldtype == "Check":
+            value = "Yes"
+
+        if current_tab is None:
+            current_tab = {"label": "Details", "sections": []}
+            current_section = {"label": None, "fields": []}
+            current_tab["sections"].append(current_section)
+            tabs.append(current_tab)
+
+        current_section["fields"].append({
+            "label": f.label,
+            "value": value,
+            "fieldtype": f.fieldtype,
+            "fieldname": f.fieldname,
+        })
+
+    for t in tabs:
+        t["sections"] = [s for s in t["sections"] if s["fields"]]
+    tabs = [t for t in tabs if t["sections"]]
+
+    return {
+        "name": doc.name,
+        "event": doc.event,
+        "full_name": doc.full_name,
+        "profile_photo": doc.profile_photo,
+        "tabs": tabs,
+    }
+
+@frappe.whitelist(allow_guest=True)
+def get_address_for_direction(address_name):
+	if not address_name:
+		return {}
+
+	if not frappe.db.exists("Address", address_name):
+		return {}
+
+	address_doc = frappe.get_doc("Address", address_name)
+	return {
+		"address_line1": address_doc.address_line1,
+		"address_line2": address_doc.address_line2,
+		"city": address_doc.city,
+		"state": address_doc.state,
+		"pincode": address_doc.pincode,
+		"country": address_doc.country,
+	}
