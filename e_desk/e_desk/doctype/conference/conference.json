@@ -16,7 +16,6 @@
   "event_theme",
   "time_zone",
   "currency",
-  "is_sponsored",
   "column_break_mc7g",
   "is_publish",
   "route",
@@ -49,101 +48,66 @@
   "prefix",
   "full_name",
   "column_break_lekt",
+  "abbr",
   "gender",
   "profile_photo",
   "column_break_drnv",
   "date_of_birth",
-  "abbr",
-  "custom_church_affiliation",
+  "custom_youth",
+  "custom_layordained",
   "column_break_jqwd",
-  "custom_present_paper_at_catx",
   "status",
-  "column_break_yqxr",
-  "custom_reg_no",
-  "custom_invoice_no",
+  "custom_capacity_",
   "custom_fax",
-  "section_break_dmjb",
+  "column_break_yqxr",
   "custom_official_position__designation",
-  "column_break_odnr",
-  "custom_organization__institution",
+  "custom_churchorganisation_you_represent",
+  "additional_info_section",
+  "column_break_vilo",
+  "id_proof",
+  "column_break_iyoh",
+  "id_proof_no",
+  "column_break_ftdg",
+  "custom_age_category",
+  "column_break_pzue",
+  "company__organization",
+  "column_break_cmhu",
+  "gst__pan_no",
   "contact_details_section",
   "address_title",
+  "address_line_1",
   "address_line_2",
   "column_break_fxxj",
-  "address_line_1",
-  "state",
-  "column_break_zsph",
   "city",
+  "state",
   "country",
-  "column_break_jyyq",
   "postal_code",
-  "section_break_pnkm",
+  "column_break_zsph",
   "custom_residential_address",
   "custom_street_or_po",
-  "column_break_ktzt",
   "participant_address",
+  "column_break_jyyq",
   "custom_emergency_contact_name",
-  "column_break_fztv",
   "participant_contact",
   "custom_emergency_contact_email",
   "custom_contact_number",
-  "community_details_section",
-  "custom_capacity_",
-  "column_break_tqpo",
-  "custom_layordained",
-  "column_break_cbmf",
-  "custom_youth",
-  "section_break_wjin",
-  "custom_churchorganisation_you_represent",
-  "column_break_forg",
-  "custom_visa_entrance",
   "medical_informations_section",
+  "medical_informations_column",
   "custom_indigenous_person",
-  "column_break_vilo",
-  "custom_dietary_specification",
-  "column_break_iyoh",
+  "column_break_yfaq",
   "custom_person_with_disability",
-  "column_break_fzno",
+  "column_break_bart",
+  "custom_dietary_specification",
+  "column_break_mdrg",
   "custom_allergies",
-  "additional_info_section",
-  "registration_type",
-  "event_role",
-  "user",
-  "kit_provided",
-  "column_break_nxal",
-  "is_paid",
-  "id_proof",
-  "id_proof_no",
-  "custom_age_category",
-  "column_break_zlal",
-  "business_category",
-  "brand_logo",
-  "is_staff",
-  "participant_group",
-  "column_break_bkfy",
-  "role",
-  "invitee_name",
-  "invitee_email",
-  "invitee_phone",
-  "section_break_fjjv",
-  "company__organization",
-  "column_break_oqsh",
-  "gst__pan_no",
-  "passport_details_section",
-  "custom_first_name_as_per_passport",
-  "custom_date_of_expiry",
-  "column_break_ybba",
-  "custom_last_name_as_per_passport",
-  "custom_passport_number",
-  "column_break_aqfu",
-  "custom_date_of_issue",
-  "custom_place_of_issue",
-  "column_break_rmol",
-  "custom_passport_nationality",
-  "section_break_fosu",
-  "custom_country_of_residence",
-  "column_break_hzbc",
-  "custom_scan_of_passports_information_page",
+  "custom_room_allotment",
+  "custom_checkin_date",
+  "custom_section_break_kne0v",
+  "custom_number_of_nights",
+  "column_break_ldln",
+  "custom_checkout_date",
+  "column_break_grhb",
+  "custom_room_type_and_price_tier",
   "custom_section_break_fobit",
   "custom_your_own_contribution_in_usd",
   "custom_total_ticket_cost_in_usd",
@@ -154,26 +118,28 @@
   "custom_title_of_the_research_paper_",
   "column_break_dliw",
   "custom_synopsis_of_the_research_paper",
-  "section_break_rjzp",
-  "column_break_taei",
-  "custom_church_to_visit",
-  "custom_church_details",
-  "custom_church_address",
-  "custom_location_url_church",
-  "deliberative_sessions_1_3_column",
-  "custom_first_preference_",
-  "custom_second_preference",
-  "deliberative_sessions_2_column",
-  "custom_first_preference",
-  "custom_second_preference_",
-  "section_break_fvqr",
+  "passport_details_section",
+  "custom_first_name_as_per_passport",
+  "custom_last_name_as_per_passport",
+  "custom_date_of_expiry",
+  "custom_passport_nationality",
+  "column_break_ybba",
+  "custom_passport_number",
+  "custom_country_of_residence",
+  "custom_date_of_issue",
+  "custom_place_of_issue",
+  "column_break_aqfu",
+  "custom_scan_of_passports_information_page",
+  "custom_visa_entrance",
+  "travel_details_section",
+  "travel_details_column",
   "mode_of_travel",
   "flight_no",
   "departure_time",
-  "column_break_pvdm",
+  "column_break_afuf",
   "arrival_time",
   "custom_arrival_date_and_time",
-  "column_break_ttsn",
+  "column_break_tpgh",
   "custom_departure_from",
   "custom_departure_date_and_time",
   "airline_details_section",
@@ -185,27 +151,26 @@
   "column_break_vugq",
   "custom_airline_departure_date",
   "custom_flight_number_departure",
-  "custom_room_allotment",
-  "custom_checkin_date",
-  "custom_number_of_nights",
-  "custom_section_break_kne0v",
-  "custom_qr",
-  "custom_checkout_date",
-  "column_break_ldln",
-  "custom_room_type_and_price_tier",
-  "custom_hotel",
-  "column_break_vylr",
-  "custom_location_url",
-  "custom_hotel_details",
-  "column_break_glpq",
-  "custom_hotel_address",
-  "custom_hotel_address_link",
-  "settings_tab",
-  "project",
-  "is_wh_required",
-  "default_warehouse",
-  "column_break_auwp"
- ],
+  "section_break_rjzp",
+  "deliberative_sessions_1_3_column",
+  "custom_first_preference_",
+  "custom_second_preference",
+  "deliberative_sessions_2_column",
+  "custom_first_preference",
+  "custom_second_preference_",
+  "column_break_ytgj",
+"settings_tab",
+   "project",
+   "is_wh_required",
+   "default_warehouse",
+   "registration_item_group",
+   "event_has_exhibitors",
+  "create_customer_on_participant_creation",
+  "column_break_auwp",
+  "has_meal",
+  "meal_access",
+  "meal_item"
+  ],
  "fields": [
   {
    "fieldname": "title",
@@ -333,15 +298,21 @@
    "mandatory_depends_on": "eval:doc.is_wh_required",
    "options": "Warehouse"
   },
-  {
-   "default": "0",
-   "fieldname": "is_wh_required",
-   "fieldtype": "Check",
-   "label": "Is Warehouse Required"
-  },
+{
+    "default": "0",
+    "fieldname": "is_wh_required",
+    "fieldtype": "Check",
+    "label": "Is Warehouse Required"
+   },
+   {
+    "fieldname": "registration_item_group",
+    "fieldtype": "Link",
+    "label": "Registration Item Group",
+    "options": "Item Group"
+   },
 
-  {
-   "fieldname": "registration_form_tab",
+   {
+    "fieldname": "registration_form_tab",
    "fieldtype": "Tab Break",
    "label": "Registration Form"
   },
@@ -464,23 +435,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_fzno",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "community_details_section",
-   "fieldtype": "Section Break",
-   "label": "Community Details"
-  },
-  {
-   "fieldname": "column_break_tqpo",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_cbmf",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "passport_details_section",
    "fieldtype": "Section Break",
    "label": "Passport Details"
@@ -494,53 +448,8 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_rmol",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_oxvj",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_hzbc",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "additional_info_section",
-   "fieldtype": "Section Break",
-   "label": "Additional Info"
-  },
-  {
-   "default": "0",
-   "fieldname": "registration_type",
-   "fieldtype": "Check",
-   "label": "Registration Type"
-  },
-  {
-   "default": "0",
-   "fieldname": "kit_provided",
-   "fieldtype": "Check",
-   "label": "Kit Provided"
-  },
-  {
-   "fieldname": "column_break_nxal",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "event_role",
-   "fieldtype": "Check",
-   "label": "Event Role"
-  },
-  {
-   "fieldname": "column_break_oqsh",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "is_paid",
-   "fieldtype": "Check",
-   "label": "Is Paid"
   },
   {
    "default": "0",
@@ -549,24 +458,10 @@
    "label": "ID Proof"
   },
   {
-   "fieldname": "column_break_zlal",
-   "fieldtype": "Column Break"
-  },
-  {
    "default": "0",
    "fieldname": "id_proof_no",
    "fieldtype": "Check",
    "label": "ID Proof No"
-  },
-  {
-   "fieldname": "column_break_bkfy",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "participant_group",
-   "fieldtype": "Check",
-   "label": "Participant Group"
   },
   {
    "default": "0",
@@ -597,12 +492,6 @@
    "fieldtype": "Check",
    "label": "Mobile Phone",
    "read_only": 1
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_present_paper_at_catx",
-   "fieldtype": "Check",
-   "label": "Present Paper at CATX "
   },
   {
    "default": "0",
@@ -707,24 +596,6 @@
    "label": "Company / Organization"
   },
   {
-   "default": "0",
-   "fieldname": "business_category",
-   "fieldtype": "Check",
-   "label": "Business Category"
-  },
-  {
-   "default": "0",
-   "fieldname": "brand_logo",
-   "fieldtype": "Check",
-   "label": "Brand Logo"
-  },
-  {
-   "default": "0",
-   "fieldname": "role",
-   "fieldtype": "Check",
-   "label": "Role"
-  },
-  {
    "fieldname": "section_break_rjzp",
    "fieldtype": "Section Break"
   },
@@ -745,47 +616,6 @@
    "read_only": 1
   },
   {
-   "fieldname": "column_break_taei",
-   "fieldtype": "Column Break",
-   "label": "Church Visit Details"
-  },
-  {
-   "fieldname": "section_break_dmjb",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_odnr",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_pnkm",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_ktzt",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_fztv",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_wjin",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "column_break_forg",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "section_break_fjjv",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "section_break_fosu",
-   "fieldtype": "Section Break"
-  },
-  {
    "default": "0",
    "fieldname": "custom_contact_number",
    "fieldtype": "Check",
@@ -802,30 +632,6 @@
    "fieldname": "custom_visa_entrance",
    "fieldtype": "Check",
    "label": "Do You Need an Invitation Letter to Apply for an Indian Visa? "
-  },
-  {
-   "default": "0",
-   "fieldname": "user",
-   "fieldtype": "Check",
-   "label": "User ID"
-  },
-  {
-   "default": "0",
-   "fieldname": "invitee_name",
-   "fieldtype": "Check",
-   "label": "Name"
-  },
-  {
-   "default": "0",
-   "fieldname": "invitee_email",
-   "fieldtype": "Check",
-   "label": "Email"
-  },
-  {
-   "default": "0",
-   "fieldname": "invitee_phone",
-   "fieldtype": "Check",
-   "label": "Phone"
   },
   {
    "default": "0",
@@ -859,51 +665,9 @@
   },
   {
    "default": "0",
-   "fieldname": "custom_church_to_visit",
-   "fieldtype": "Check",
-   "label": "Church to Visit"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_church_details",
-   "fieldtype": "Check",
-   "label": "Church Details"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_church_address",
-   "fieldtype": "Check",
-   "label": "Church Address"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_location_url_church",
-   "fieldtype": "Check",
-   "label": "Location URL Church"
-  },
-  {
-   "default": "0",
    "fieldname": "custom_preferred_titless",
    "fieldtype": "Check",
    "label": "Preferred Titles(s)"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_church_affiliation",
-   "fieldtype": "Check",
-   "label": "Church Affiliation"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_reg_no",
-   "fieldtype": "Check",
-   "label": "Reg No"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_invoice_no",
-   "fieldtype": "Check",
-   "label": "Invoice No"
   },
   {
    "default": "0",
@@ -916,12 +680,6 @@
    "fieldname": "custom_official_position__designation",
    "fieldtype": "Check",
    "label": "Official Position / Designation"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_organization__institution",
-   "fieldtype": "Check",
-   "label": "Organization / Institution"
   },
   {
    "default": "0",
@@ -982,12 +740,6 @@
    "fieldname": "custom_allergies",
    "fieldtype": "Check",
    "label": "Allergies"
-  },
-  {
-   "default": "0",
-   "fieldname": "is_staff",
-   "fieldtype": "Check",
-   "label": "Is Extra Staff"
   },
   {
    "default": "0",
@@ -1079,11 +831,6 @@
    "label": "Synopsis of the Research Paper"
   },
   {
-   "fieldname": "section_break_fvqr",
-   "fieldtype": "Section Break",
-   "label": "Travel Details"
-  },
-  {
    "default": "0",
    "fieldname": "mode_of_travel",
    "fieldtype": "Check",
@@ -1102,10 +849,6 @@
    "label": " Leave On"
   },
   {
-   "fieldname": "column_break_pvdm",
-   "fieldtype": "Column Break"
-  },
-  {
    "default": "0",
    "fieldname": "arrival_time",
    "fieldtype": "Check",
@@ -1116,10 +859,6 @@
    "fieldname": "custom_arrival_date_and_time",
    "fieldtype": "Check",
    "label": "Arrival Date and Time"
-  },
-  {
-   "fieldname": "column_break_ttsn",
-   "fieldtype": "Column Break"
   },
   {
    "default": "0",
@@ -1196,12 +935,6 @@
    "label": "Number of Nights"
   },
   {
-   "default": "0",
-   "fieldname": "custom_qr",
-   "fieldtype": "Check",
-   "label": "QR"
-  },
-  {
    "fieldname": "custom_section_break_kne0v",
    "fieldtype": "Column Break"
   },
@@ -1222,59 +955,111 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "0",
-   "fieldname": "custom_hotel",
-   "fieldtype": "Check",
-   "label": "Hotel"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_location_url",
-   "fieldtype": "Check",
-   "label": "Location URL"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_hotel_details",
-   "fieldtype": "Check",
-   "label": "Hotel Details"
-  },
-  {
-   "fieldname": "column_break_vylr",
-   "fieldtype": "Column Break"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_hotel_address_link",
-   "fieldtype": "Check",
-   "label": " Hotel Address Link"
-  },
-  {
-   "default": "0",
-   "fieldname": "custom_hotel_address",
-   "fieldtype": "Check",
-   "label": "Hotel Address"
-  },
-  {
    "fieldname": "column_break_vugq",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_glpq",
-   "fieldtype": "Column Break"
+   "default": "0",
+   "description": "Enable if this event includes exhibitors.",
+   "fieldname": "event_has_exhibitors",
+   "fieldtype": "Check",
+   "label": "Event has Exhibitors"
   },
   {
    "default": "0",
-   "fieldname": "is_sponsored",
+   "fieldname": "create_customer_on_participant_creation",
    "fieldtype": "Check",
-   "label": "Is Sponsored"
+   "label": "Create Customer on Participant Creation"
+  },
+  {
+   "default": "0",
+   "description": "Indicates whether meals are included as part of the conference or event registration.",
+   "fieldname": "has_meal",
+   "fieldtype": "Check",
+   "label": "Has Meal"
+  },
+  {
+   "default": "Free for All Participants",
+   "depends_on": "eval:doc.has_meal",
+   "description": "Controlled by Pricing requires a separate meal item to be purchased.",
+   "fieldname": "meal_access",
+   "fieldtype": "Select",
+   "label": "Meal Access ",
+   "options": "Free for All Participants\nControlled by Pricing"
+  },
+  {
+   "depends_on": "eval:doc.meal_access==\"Controlled by Pricing\" && doc.has_meal",
+   "fieldname": "meal_item",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Meal Item",
+   "mandatory_depends_on": "eval:doc.meal_access==\"Controlled by Pricing\" && doc.has_meal",
+   "options": "Item"
+  },
+  {
+   "fieldname": "travel_details_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_afuf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "medical_informations_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_yfaq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_bart",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_mdrg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "additional_info_section",
+   "fieldtype": "Section Break",
+   "label": "Additional Info"
+  },
+  {
+   "fieldname": "column_break_ftdg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_pzue",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_cmhu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "travel_details_section",
+   "fieldtype": "Section Break",
+   "label": "Travel Details"
+  },
+  {
+   "fieldname": "column_break_tpgh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_grhb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ytgj",
+   "fieldtype": "Column Break"
   }
  ],
  "has_web_view": 1,
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-08-12 15:48:24.269751",
+ "modified": "2026-08-13 13:36:02.666706",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
