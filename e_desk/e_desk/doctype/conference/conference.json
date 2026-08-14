@@ -16,6 +16,7 @@
   "event_theme",
   "time_zone",
   "currency",
+  "is_sponsored",
   "column_break_mc7g",
   "is_publish",
   "route",
@@ -159,18 +160,18 @@
   "custom_first_preference",
   "custom_second_preference_",
   "column_break_ytgj",
-"settings_tab",
-   "project",
-   "is_wh_required",
-   "default_warehouse",
-   "registration_item_group",
-   "event_has_exhibitors",
+  "settings_tab",
+  "project",
+  "is_wh_required",
+  "default_warehouse",
+  "registration_item_group",
+  "event_has_exhibitors",
   "create_customer_on_participant_creation",
   "column_break_auwp",
   "has_meal",
   "meal_access",
   "meal_item"
-  ],
+ ],
  "fields": [
   {
    "fieldname": "title",
@@ -298,21 +299,21 @@
    "mandatory_depends_on": "eval:doc.is_wh_required",
    "options": "Warehouse"
   },
-{
-    "default": "0",
-    "fieldname": "is_wh_required",
-    "fieldtype": "Check",
-    "label": "Is Warehouse Required"
-   },
-   {
-    "fieldname": "registration_item_group",
-    "fieldtype": "Link",
-    "label": "Registration Item Group",
-    "options": "Item Group"
-   },
+  {
+   "default": "0",
+   "fieldname": "is_wh_required",
+   "fieldtype": "Check",
+   "label": "Is Warehouse Required"
+  },
+  {
+   "fieldname": "registration_item_group",
+   "fieldtype": "Link",
+   "label": "Registration Item Group",
+   "options": "Item Group"
+  },
 
-   {
-    "fieldname": "registration_form_tab",
+  {
+   "fieldname": "registration_form_tab",
    "fieldtype": "Tab Break",
    "label": "Registration Form"
   },
@@ -1053,13 +1054,19 @@
   {
    "fieldname": "column_break_ytgj",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_sponsored",
+   "fieldtype": "Check",
+   "label": "Is Sponsored "
   }
  ],
  "has_web_view": 1,
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-08-13 13:36:02.666706",
+ "modified": "2026-08-14 14:14:36.914493",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
