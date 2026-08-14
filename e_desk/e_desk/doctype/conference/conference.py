@@ -345,3 +345,15 @@ def get_address_for_direction(address_name):
 		"pincode": address_doc.pincode,
 		"country": address_doc.country,
 	}
+
+class Conference(Document):
+
+    def before_save(self):
+        WEB_FORM_NAME = "exhibitor-registration"
+
+        frappe.db.set_value(
+            "Web Form",
+            WEB_FORM_NAME,
+            "published",
+            1 if self.event_has_exhibitors else 0
+        )

@@ -103,7 +103,7 @@
       padding: 6px;
       font-size: 13px;
     }
-
+    
     /* Spacing consistency */
     .frappe-form .mb-3 {
       margin-bottom: 16px !important;
@@ -514,14 +514,12 @@ document.addEventListener('click', function (e) {
                     const val = raw_parts[i];
                     if (val) {
                         const normalized = val.toString().trim().toLowerCase();
-                        // ✅ Actively filter N/A and na
                         if (normalized !== '' && normalized !== 'n/a' && normalized !== 'na') {
                             clean_parts.push(val.trim());
                         }
                     }
                 }
 
-                // ✅ Fallback
                 if (clean_parts.length === 0 && a.country) {
                     clean_parts.push(a.country);
                 }
@@ -536,7 +534,6 @@ document.addEventListener('click', function (e) {
                 const maps_url = 'https://www.google.com/maps/place/' + encodeURIComponent(address_query);
                 console.log('Opening Google Maps for address:', address_query);
                 
-                // ✅ Secure window opening
                 const map_window = window.open();
                 map_window.opener = null;
                 map_window.location = maps_url;
