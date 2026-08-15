@@ -103,12 +103,14 @@
   "custom_allergies",
   "custom_room_allotment",
   "custom_checkin_date",
-  "custom_section_break_kne0v",
+  "column_break_tkif",
   "custom_number_of_nights",
-  "column_break_ldln",
+  "custom_section_break_kne0v",
   "custom_checkout_date",
-  "column_break_grhb",
+  "column_break_zxkz",
   "custom_room_type_and_price_tier",
+  "accomodation_description_section",
+  "accomodation_description",
   "custom_section_break_fobit",
   "custom_your_own_contribution_in_usd",
   "custom_total_ticket_cost_in_usd",
@@ -137,12 +139,14 @@
   "mode_of_travel",
   "flight_no",
   "departure_time",
-  "column_break_afuf",
+  "column_break_fvre",
   "arrival_time",
   "custom_arrival_date_and_time",
-  "column_break_tpgh",
+  "column_break_konk",
   "custom_departure_from",
   "custom_departure_date_and_time",
+  "travel_description_section",
+  "travel_description",
   "airline_details_section",
   "custom_airline_arrival",
   "custom_airline_arrival_date",
@@ -156,10 +160,13 @@
   "deliberative_sessions_1_3_column",
   "custom_first_preference_",
   "custom_second_preference",
+  "column_break_ytgj",
   "deliberative_sessions_2_column",
   "custom_first_preference",
   "custom_second_preference_",
   "column_break_ytgj",
+  "section_break_unvf",
+  "deliberative_session_description",
   "settings_tab",
   "project",
   "is_wh_required",
@@ -952,10 +959,6 @@
    "label": "Room Type and Price Tier"
   },
   {
-   "fieldname": "column_break_ldln",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_vugq",
    "fieldtype": "Column Break"
   },
@@ -1002,10 +1005,6 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_afuf",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "medical_informations_column",
    "fieldtype": "Column Break"
   },
@@ -1044,14 +1043,6 @@
    "label": "Travel Details"
   },
   {
-   "fieldname": "column_break_tpgh",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_grhb",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_ytgj",
    "fieldtype": "Column Break"
   },
@@ -1060,13 +1051,59 @@
    "fieldname": "is_sponsored",
    "fieldtype": "Check",
    "label": "Is Sponsored "
+},
+{
+   "collapsible": 1,
+   "fieldname": "section_break_unvf",
+   "fieldtype": "Section Break",
+   "label": "Deliberative Session Description"
+},
+  {
+   "fieldname": "column_break_tkif",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_zxkz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "accomodation_description_section",
+   "fieldtype": "Section Break",
+   "label": "Accomodation Description"
+  },
+  {
+   "fieldname": "column_break_fvre",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_konk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "collapsible": 1,
+   "fieldname": "travel_description_section",
+   "fieldtype": "Section Break",
+   "label": "Travel Description"
+  },
+  {
+   "fieldname": "deliberative_session_description",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "accomodation_description",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "travel_description",
+   "fieldtype": "Text Editor"
   }
  ],
  "has_web_view": 1,
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-08-14 14:14:36.914493",
+ "modified": "2026-08-15 15:52:42.346179",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
