@@ -5,6 +5,7 @@ import io
 import os
 import json
 import frappe
+from frappe import _
 from pyqrcode import create as qr_create
 from frappe.model.document import Document
 # from frappe.core.doctype.user.user import get_roles
@@ -125,12 +126,32 @@ class Participant(Document):
 		self.set_full_name()
 
 	def before_insert(self):
+		self.check_duplicate_registration()
 		if not self.event_role:
 			self.event_role = "Participant"
 
 		if not self.participant_id:
 			self.participant_id = self.generate_participant_id()
 
+	def check_duplicate_registration(self):
+		if not self.event or not self.e_mail:
+			return
+
+		existing = frappe.db.exists(
+			"Participant",
+			{
+				"event": self.event,
+				"e_mail": self.e_mail,
+			}
+		)
+
+		if existing:
+			frappe.throw(
+				_("You have already registered for this event with the email {0}.").format(
+					self.e_mail
+				),
+				title=_("Already Registered")
+			)
 	# def is_customer_creation_enabled(self):
 	# # 	return frappe.db.get_value(
 	# # 		"Conference",
@@ -695,5 +716,20 @@ def get_registration_configuration(conference):
 				config[field.fieldname] = 1
 		return config
 
+@frappe.whitelist(allow_guest=True)
+def get_conference_descriptions_for_webform(event):
+    if not event or not frappe.db.exists("Conference", event):
+        return {}
 
+    data = frappe.db.get_value(
+        "Conference",
+        event,
+        [
+            "accomodation_description",
+            "travel_description",
+            "deliberative_session_description",
+        ],
+        as_dict=True,
+    )
+    return data or {}
 
