@@ -641,95 +641,161 @@ def get_meal_settings_for_webform(event):
 BREAK_FIELDTYPES = ("Section Break", "Column Break", "Page Break")
 SECTION_ENDS = ("Section Break", "Page Break")
 
+
+SECTION_FIELD_MAP = {
+    "show_personal_information": [
+        "custom_preferred_titless", "prefix", "full_name", "abbr", "gender",
+        "profile_photo", "date_of_birth", "custom_youth", "custom_layordained",
+        "status", "custom_capacity_", "custom_fax",
+        "custom_official_position__designation", "custom_churchorganisation_you_represent",
+    ],
+    "show_additional_info": [
+        "id_proof", "id_proof_no", "custom_age_category",
+        "company__organization", "gst__pan_no",
+    ],
+    "show_contact_details": [
+        "address_title", "address_line_1", "address_line_2", "city", "state",
+        "country", "postal_code", "custom_residential_address", "custom_street_or_po",
+        "participant_address", "custom_emergency_contact_name", "participant_contact",
+        "custom_emergency_contact_email", "custom_contact_number",
+    ],
+    "show_medical_informations": [
+        "custom_indigenous_person", "custom_person_with_disability",
+        "custom_dietary_specification", "custom_allergies",
+    ],
+    "show_room_allotment": [
+        "custom_checkin_date", "custom_number_of_nights",
+        "custom_checkout_date", "custom_room_type_and_price_tier",
+    ],
+    "show_travel_research": [
+        "custom_your_own_contribution_in_usd", "custom_total_ticket_cost_in_usd",
+        "custom_request_for_subsidy_in_usd", "custom_travel_sector",
+        "custom_title_of_the_research_paper_", "custom_synopsis_of_the_research_paper",
+    ],
+    "show_passport_details": [
+        "custom_first_name_as_per_passport", "custom_last_name_as_per_passport",
+        "custom_date_of_expiry", "custom_passport_nationality", "custom_passport_number",
+        "custom_country_of_residence", "custom_date_of_issue", "custom_place_of_issue",
+        "custom_scan_of_passports_information_page", "custom_visa_entrance",
+    ],
+    "show_travel_details": [
+        "mode_of_travel", "flight_no", "departure_time", "arrival_time",
+        "custom_arrival_date_and_time", "custom_departure_from",
+        "custom_departure_date_and_time",
+    ],
+    "show_airline_details": [
+        "custom_airline_arrival", "custom_airline_arrival_date",
+        "custom_flight_number_arrival", "custom_airline_departures",
+        "custom_airline_departure_date", "custom_flight_number_departure",
+    ],
+    "show_deliberative_sessions": [
+        "custom_first_preference_", "custom_second_preference",
+        "custom_first_preference", "custom_second_preference_",
+    ],
+}
+
+
 @frappe.whitelist(allow_guest=True)
 def get_registration_configuration(conference):
-		if not conference or not frappe.db.exists("Conference", conference):
-			return {}
+    if not conference or not frappe.db.exists("Conference", conference):
+        return {}
 
-		# 1. Fetch all fields for the Web Form
-		webform_fields = frappe.get_all(
-			"Web Form Field",
-			filters={"parent": "event-participant-registration"},
-			fields=["fieldname", "fieldtype"],
-			order_by="idx asc",
-		)
+    webform_fields = frappe.get_all(
+        "Web Form Field",
+        filters={"parent": "event-participant-registration"},
+        fields=["fieldname", "fieldtype"],
+        order_by="idx asc",
+    )
 
-		# 2. Find which Conference meta fields are Checkboxes
-		conference_meta = frappe.get_meta("Conference")
-		conference_checkbox_fields = {
-			df.fieldname for df in conference_meta.fields if df.fieldtype == "Check"
-		}
-		# print(conference_checkbox_fields,"conference_checkbox_fields")
-		# 3. Filter leaf fields that match your criteria
-		leaf_fieldnames = [
-			df.fieldname
-			for df in webform_fields
-			if df.fieldname
-			and df.fieldtype not in BREAK_FIELDTYPES
-			and df.fieldname in conference_checkbox_fields
-		]
-		# print(leaf_fieldnames ,"leaf_fieldnames ")
-		
-		# 4. FIXED: Fetch safely using a clean list format
-		conference_values = {}
-		if leaf_fieldnames:
-			db_values = frappe.db.get_value(
-				"Conference",
-				conference,
-				leaf_fieldnames,  # Pass list directly
-				as_dict=True
-			)
-			if db_values:
-				conference_values = db_values
+    conference_meta = frappe.get_meta("Conference")
+    conference_checkbox_fields = {
+        df.fieldname for df in conference_meta.fields if df.fieldtype == "Check"
+    }
 
+    section_controlled_fields = set()
+    for fields in SECTION_FIELD_MAP.values():
+        section_controlled_fields.update(fields)
 
-		# 5. Populate initial configuration dictionary
-		config = {}
-		total = len(webform_fields)
-	
-		# Add only enabled fields
-		for fieldname in leaf_fieldnames:
-			if cint(conference_values.get(fieldname, 0)) == 1:
-				config[fieldname] = 1
+    leaf_fieldnames = [
+        df.fieldname
+        for df in webform_fields
+        if df.fieldname
+        and df.fieldtype not in BREAK_FIELDTYPES
+        and df.fieldname in conference_checkbox_fields
+        and df.fieldname not in section_controlled_fields
+    ]
 
-		# Add only visible sections/pages
-		for i, field in enumerate(webform_fields):
-			if field.fieldtype not in BREAK_FIELDTYPES or not field.fieldname:
-				continue
+    all_needed_fields = list(
+        set(leaf_fieldnames)
+        | set(SECTION_FIELD_MAP.keys())
+        | section_controlled_fields
+    )
 
-			keep_visible = False
+    conference_values = {}
+    if all_needed_fields:
+        db_values = frappe.db.get_value(
+            "Conference",
+            conference,
+            all_needed_fields,
+            as_dict=True,
+        )
+        if db_values:
+            conference_values = db_values
 
-			for j in range(i + 1, total):
-				nxt = webform_fields[j]
+    config = {}
 
-				if nxt.fieldtype == "Column Break":
-					continue
+    for fieldname in leaf_fieldnames:
+        if cint(conference_values.get(fieldname, 0)) == 1:
+            config[fieldname] = 1
 
-				if nxt.fieldtype in SECTION_ENDS:
-					break
+    for master_fieldname, section_fields in SECTION_FIELD_MAP.items():
+        if cint(conference_values.get(master_fieldname, 0)) == 1:
+            for fname in section_fields:
+                config[fname] = 1
 
-				if nxt.fieldname in config:
-					keep_visible = True
-					break
+    total = len(webform_fields)
+    for i, field in enumerate(webform_fields):
+        if field.fieldtype not in BREAK_FIELDTYPES or not field.fieldname:
+            continue
 
-			if keep_visible:
-				config[field.fieldname] = 1
-		return config
+        keep_visible = False
+        for j in range(i + 1, total):
+            nxt = webform_fields[j]
+            if nxt.fieldtype == "Column Break":
+                continue
+            if nxt.fieldtype in SECTION_ENDS:
+                break
+            if nxt.fieldname in config:
+                keep_visible = True
+                break
+
+        if keep_visible:
+            config[field.fieldname] = 1
+
+    return config
+
 
 @frappe.whitelist(allow_guest=True)
 def get_conference_descriptions_for_webform(event):
-    if not event or not frappe.db.exists("Conference", event):
-        return {}
+   if not event or not frappe.db.exists("Conference", event):
+       return {}
 
-    data = frappe.db.get_value(
-        "Conference",
-        event,
-        [
-            "accomodation_description",
-            "travel_description",
-            "deliberative_session_description",
-        ],
-        as_dict=True,
-    )
-    return data or {}
+
+   data = frappe.db.get_value(
+       "Conference",
+       event,
+       [
+           "accomodation_description",
+           "travel_description",
+           "deliberative_session_description",
+       ],
+       as_dict=True,
+   )
+   return data or {}
+
+
+
+
+
+
 
