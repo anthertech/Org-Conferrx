@@ -103,6 +103,7 @@ def has_exhibitor():
 def get_agenda_data(self):
 	agenda = self.agenda or []
 	result = []
+	now = frappe.utils.now_datetime()
 
 	# Collect unique CPA references from the agenda rows
 	cpa_names = list(set(
@@ -164,6 +165,14 @@ def get_agenda_data(self):
 				"speakers": speakers_list,
 			})
 
+		start_date = frappe.utils.get_datetime(item.start_date) if item.start_date else None
+		end_date = frappe.utils.get_datetime(item.end_date) if item.end_date else None
+
+		is_live = False
+
+		if start_date and end_date:
+			is_live = start_date <= now <= end_date
+
 		result.append({
 			"program_agenda": item.program_agenda or "",
 			"description": item.description or "",
@@ -172,6 +181,7 @@ def get_agenda_data(self):
 			"room": item.room,
 			"is_break": item.is_break,
 			"speakers_list": speakers_list,
+			"is_live": is_live,
 		})
 	return result, session_speakers, mapped_speaker_ids
 
