@@ -35,199 +35,805 @@
     /* Focus state */
     .frappe-form .form-control:focus,
     .frappe-form .form-select:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+      border-color: #14807a;
+      box-shadow: 0 0 0 2px rgba(20, 128, 122, 0.15);
     }
 
     /* Radio buttons */
-    .frappe-form .form-check-input {
-      cursor: pointer;
+    .frappe-form .form-check-input { cursor: pointer; }
+    .frappe-form .form-check-label { cursor: pointer; font-size: 14px; }
+
+    .required::after { content: " *"; color: #ef4444; }
+
+    .modal-content { border-radius: 10px; border: none; }
+    .modal-header { border-bottom: 1px solid #e5e7eb; }
+    .modal-footer { border-top: 1px solid #e5e7eb; }
+
+    input[type="file"] { padding: 6px; font-size: 13px; }
+    .frappe-form .mb-3 { margin-bottom: 16px !important; }
+
+    :root{
+      --cca-teal: #008080;
+      --cca-teal-dark: #0e5f5b;
+      --cca-red: #c0392b;
+      --cca-ink: #1f2937;
+      --cca-muted: #6b7280;
+      --cca-bg: #FFFFFF;
     }
 
-    .frappe-form .form-check-label {
-      cursor: pointer;
-      font-size: 14px;
-    }
+    .event-page { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: var(--cca-ink); }
 
-    /* Section headers (like Section Break) */
-    .section-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #374151;
-      text-transform: uppercase;
-      letter-spacing: .04em;
-      margin: 28px 0 14px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid #e5e7eb;
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #0F766E;
+      font-size: 12px;
+      font-weight: 400;
+      font-style: "Regular";
+      text-decoration: none;
+      line-height: 16.5px;
+      font-family: 'Inter',  sans-serif;
+      margin-bottom: 20px;
     }
+    .back-link:hover { color: var(--cca-teal-dark); text-decoration: none; }
 
-    /* Required field */
-    .required::after {
-      content: " *";
-      color: #ef4444;
-    }
-
-    /* Modal polish */
-    .modal-content {
-      border-radius: 10px;
-      border: none;
-    }
-
-    .modal-header {
-      border-bottom: 1px solid #e5e7eb;
-    }
-
-    .modal-footer {
-      border-top: 1px solid #e5e7eb;
-    }
-
-    /* Buttons (Frappe-like) */
-    .btn-primary {
-      background-color: #2563eb;
-      border-color: #2563eb;
-    }
-
-    .btn-primary:hover {
-      background-color: #1e40af;
-      border-color: #1e40af;
-    }
-
-    .btn-secondary {
-      background-color: #f3f4f6;
-      border-color: #d1d5db;
-      color: #374151;
-    }
-
-    /* File input cleanup */
-    input[type="file"] {
-      padding: 6px;
-      font-size: 13px;
-    }
-    
-    /* Spacing consistency */
-    .frappe-form .mb-3 {
-      margin-bottom: 16px !important;
-    }
-
-    /* =========================
-       PARTICIPANT TAB (matches reference design)
-    ========================= */
-
-    .participant-panel {
-      background: #f4f3ef;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .participant-subtabs {
+    /* ---- Header block: poster + title/meta ---- */
+    .event-header-row {
       display: flex;
+      gap: 28px;
+      align-items: flex-start;
       flex-wrap: wrap;
-      border-bottom: 2px solid #2563eb;
+      margin-bottom: 32px;
+    }
+
+    .event-poster {
+      width: 336px;
+      min-width: 200px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12);
       background: #fff;
     }
+    .event-poster img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
 
-    .participant-subtabs .nav-link {
+    .event-header-main { flex: 1 1 380px; min-width: 280px; }
+
+    .event-title {
+      font-size: 32px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      line-height: 38px;
+      color :#2F2F2F;
+      letter-spacing: 0.32px;
+      margin: 0 0 16px;
+    }
+
+    .event-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 19.5px;
+        color: #4B5563;
+        font-style: "Regular";
+
+        margin-bottom: 8px;
+    }
+
+    .event-meta-icon {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .event-meta-icon svg {
+        width: 16px;
+        height: 16px;
+        display: block;
+        stroke: var(--cca-teal);
+        stroke-width: 1.8;
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .event-actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 12px;
+        margin-top: 22px;
+        flex-wrap: wrap;
+        font-family: 'Inter', sans-serif;
+        font-style: 16px;
+        font-weight: 600;
+        line-height: 38px;
+        letter-spacing: 0.32px;
+        font-style: "Semi Bold";
+        height: 37px;
+    }
+
+    .btn-outline-cca {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #008080;
+      color: var(--cca-teal);
+      background: #FFFFFF;
+      border-radius: 6px;
+      padding: 9px 18px;
+      text-decoration: none;
+      height: 37px;
+    }
+    .btn-outline-cca:hover { background: #eefaf9; color: #008080; text-decoration: none;}
+
+    .btn-fill-cca {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid #008080;
+      background: #008080;
+      color: #fff;
+      border-radius: 6px;
+      padding: 9px 18px;
+      text-decoration: none;
+      height: 37px;
+    }
+    .btn-fill-cca:hover { background: var(--cca-teal-dark); color: #fff; text-decoration: none;}
+
+    .registration-closed-badge {
+      display: inline-block;
+      background: #FFFFFF;
+      color: #008080;
+      border: 1px solid #008080;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 16px;
+      font-style: "Semi Bold",
+    }
+
+    .registration-closed-badge a:hover {
+        text-decoration: none;
+    }
+
+    .btn-icon {
+        width: 15px;
+        height: 15px;
+        flex: 0 0 15px;
+
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .btn-outline-cca,
+    .btn-fill-cca {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+    }
+
+    /* ---- Main tabs (Agenda / Venue / Speakers / Sponsors / My Profile) ---- */
+    .event-tabs {
+      display: flex;
+      gap: 34px;
+      border-bottom: 1px solid #e5e7eb;
+      margin-bottom: 0;
+      flex-wrap: wrap;
+    }
+    .event-tabs .nav-link {
       border: none;
       border-radius: 0;
-      color: #2563eb;
+      background: transparent;
+      padding: 0 0 12px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
       font-weight: 600;
-      font-size: 14px;
-      padding: 14px 22px;
+      font-style: "Semi Bold";
+      color: #2F2F2F;
+      border-bottom: 2px solid transparent;
+    }
+    .event-tabs .nav-link:hover { color: var(--cca-teal); }
+    .event-tabs .nav-link.active {
+      color: var(--cca-teal);
+      border-bottom: 2px solid var(--cca-teal);
+      background: transparent;
+    }
+
+    .event-tab-content { margin-top: 24px; }
+
+    /* ---- Agenda card ---- */
+    .agenda-wrap {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    }
+
+    .agenda-day-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 0 0 160px;
+    }
+
+    .agenda-day-tab {
+    border: 1px solid #d1d5db;
+    background: #fff;
+    border-radius: 6px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    text-align: left;
+    transition: background .15s, color .15s, border-color .15s;
+    }
+    .agenda-day-tab .day-num {
+    font-weight: 600;
+    font-size: 16px;
+    display: block;
+    text-transform: uppercase;
+    line-height: 16px;
+    font-style: "Semi-Bold";
+    letter-spacing: 0.32px;
+    }
+    .agenda-day-tab .day-sub {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 16px;
+    letter-spacing: 0.32px;
+    display: block;
+    text-transform: uppercase;
+    opacity: .85;
+    }
+    .agenda-day-tab.active {
+    background: var(--cca-teal);
+    border-color: var(--cca-teal);
+    color: #fff;
+    }
+    .agenda-day-tab:not(.active):hover {
+    border-color: var(--cca-teal);
+    color: var(--cca-teal);
+    }
+
+    /* White card wrapping the whole agenda list */
+    .agenda-card {
+      flex: 1 1 420px;
+      max-width: 640px;
       background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      overflow: visible;
+    }
+    .agenda-day-panel.active .agenda-row:first-child {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+    .agenda-day-panel.active .agenda-row:last-child {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
     }
 
-    .participant-subtabs .nav-link:hover {
-      background: #eef2ff;
+    .agenda-day-panel { display: none; }
+    .agenda-day-panel.active { display: block; }
+
+    /* Base row style */
+    .agenda-row {
+        display: grid;
+        grid-template-columns: 170px 60px minmax(0, 1fr) 100px;
+        column-gap: 12px;
+        align-items: start;
+        padding: 16px 20px;
+        background: #fff;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    .agenda-day-panel .agenda-row:last-child {
+      border-bottom: none;
     }
 
-    .participant-subtabs .nav-link.active {
-      background: #2563eb;
+    .agenda-time {
+      flex: 0 0 170px;
+      font-family: 'Inter', sans-serif;
+      font-style: "Semi Bold";
+      font-size: 14px;
+      font-weight: 600;
+      color: #2F2F2F;
+      letter-spacing: 0.32px;
+      white-space: nowrap;
+    }
+
+    .agenda-info { flex: 1 1 auto; min-width: 0; }
+    .agenda-info .agenda-title {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2F2F2F;
+    }
+    .agenda-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 8px;
+    color: var(--cca-teal);
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.agenda-live::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--cca-teal);
+}
+    .agenda-info .agenda-desc {
+      margin: 2px 0 0;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      color: #00000080;
+      line-height: 0.32px;
+    }
+
+    .agenda-avatar { flex: 0 0 32px; }
+    .agenda-avatar img,
+    .agenda-avatar .avatar-placeholder {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #9ca3af;
       color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .agenda-avatar-stack {
+        display: flex;
+        align-self: center;
+        justify-self: end;
+    }
+    .agenda-avatar-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #fff;
+        margin-left: -10px;
+        background: #9ca3af;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+    }
+    .agenda-avatar-img:first-child {
+        margin-left: 0;
+    }
+    .avatar-more {
+        background: #d1d5db;
+        color: #374151;
+        font-size: 10px;
     }
 
-    .participant-body {
-      padding: 32px 40px 40px;
-      position: relative;
+    /* Break rows: simple teal underline, no box/highlight */
+    .agenda-row.is-break {
+        border-bottom: 2px solid var(--cca-teal);
+        }
+        .agenda-row.is-break .agenda-time {
+        color: #2F2F2F;
+        }
+        .agenda-row.is-break .agenda-info .agenda-title {
+        color: #2F2F2F;
+        font-weight: 600;
     }
 
-    .participant-edit-btn {
-      background: #eef2ff;
-      color: #2563eb;
-      border-color: #2563eb;
+    .agenda-row.is-live .agenda-time,
+    .agenda-row.is-live .agenda-room,
+    .agenda-row.is-live .agenda-info .agenda-title {
+        color: #008080;
     }
 
-    .info-item {
-      margin-bottom: 26px;
+    /* =========================================
+    AGENDA SPEAKER AVATAR STACK
+    ========================================= */
+
+    .agenda-avatar-stack {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-self: end;
+        width: fit-content;
+        min-width: 32px;
+        padding-right: 3px;
     }
 
-    .info-item .info-label {
-      font-weight: 700;
-      color: #111827;
-      margin-bottom: 4px;
+    /* Each speaker */
+    .agenda-speaker-avatar {
+        position: relative;
+        width: 32px;
+        height: 32px;
+        flex: 0 0 32px;
+        margin-left: -10px;
+        z-index: 1;
     }
 
-    .info-item .info-value {
-      color: #374151;
+    /* First speaker should not overlap to the left */
+    .agenda-speaker-avatar:first-child {
+        margin-left: 0;
+        z-index: 2;
+    }
+
+    /* Speaker image */
+    .agenda-speaker-avatar .agenda-avatar-img {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #9ca3af;
+        border: 2px solid #fff;
+        box-sizing: border-box;
+    }
+
+    /* =========================================
+    LIVE RING AROUND SPEAKER AVATARS
+    Works for a single speaker or any number of
+    overlapping speakers, plus the "+N" badge,
+    since the ring is applied per-avatar rather
+    than as one shape wrapping the whole stack.
+    ========================================= */
+
+    .agenda-avatar-stack.is-live .agenda-avatar-img {
+        box-shadow: 0 0 0 2px #008080;
+    }
+
+    .agenda-room {
+        flex: 0 0 80px;
+        min-width: 80px;
+        font-size: 14px;
+        font-weight: 600;
+        font-family: 'Inter', sans-serif;
+        letter-spacing: 0.32px;
+        color: #00000082;
+        white-space: nowrap;
+    }
+
+    /* Info icon + full-width hover description for agenda */
+    .agenda-title-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .agenda-info-icon {
+        cursor: default;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background: #e5e7eb;
+        color: #6b7280;
+        font-size: 10px;
+        font-weight: 700;
+        font-style: normal;
+        flex: 0 0 15px;
+        transition: background .15s, color .15s;
+    }
+
+    .agenda-desc-full {
+        display: none;
+        grid-column: 1 / -1;
+        background: #f9fafb;
+        border-top: 1px solid #e5e7eb;
+        padding: 14px 20px;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #374151;
+        white-space: normal;
+        margin: 10px -20px -16px;
+    }
+
+    .agenda-row:has(.agenda-info-icon:hover) .agenda-desc-full {
+        display: block;
+    }
+    .agenda-row:has(.agenda-info-icon:hover) .agenda-info-icon {
+        background: var(--cca-teal);
+        color: #fff;
+    }
+
+    /* ---- Venue / Sponsors / Speakers panels ---- */
+    .panel-card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      padding: 24px 28px;
+    }
+
+    .panel-flat {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      padding: 24px 28px;
+    }
+
+    .panel-plain {
+        box-shadow: none;
+        padding: 24px 0;
+    }
+
+    .speaker-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .speaker-card {
+        width: 130px;
+        flex: 0 0 130px;
+        text-align: center;
+        margin: 0;
+        padding: 0;
+    }
+
+    .speaker-card img,
+    .speaker-card .no-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 0 auto 8px;
+    }
+
+    .speaker-card .no-image {
+        background: #9ca3af;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+    }
+
+    .speaker-card .speaker-name {
+        font-family: 'Inter', sans-serif;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 15px;
+        color: #2F2F2F;
+        margin: 0;
+    }
+
+    /* NEW: designation/role line under the speaker name, as in the target design */
+    .speaker-card .speaker-role {
+        font-family: 'Inter', sans-serif;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 14px;
+        color: var(--cca-muted);
+        margin: 2px 0 0;
+    }
+    .speaker-session-group {
+        margin-bottom: 32px;
+    }
+    .speaker-session-group:last-child {
+        margin-bottom: 0;
+    }
+    .speaker-session-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        color: #2F2F2F;
+        margin: 0 0 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+/* ============ RESPONSIVE ============ */
+
+    @media (max-width: 992px) {
+    .event-poster { width: 260px; }
+        }
+
+    @media (max-width: 768px) {
+    .event-page { padding-left: 16px !important; padding-right: 16px !important; }
+
+    .event-header-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+    }
+    .event-poster { width: 100%; max-width: 280px; }
+    .event-header-main { width: 100%; text-align: left; }
+    .event-title { font-size: 24px; line-height: 30px; }
+    .event-meta-row { font-size: 14px; }
+
+    .event-actions {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+    }
+    .event-actions .event-meta-row,
+    .btn-outline-cca,
+    .btn-fill-cca,
+    .registration-closed-badge {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        margin: 0;
+    }
+
+    .event-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 24px;
+    }
+    .event-tabs .nav-link { white-space: nowrap; }
+
+    .agenda-wrap { flex-direction: column; }
+    .agenda-day-tabs {
+        flex-direction: row;
+        flex: 0 0 auto;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 8px;
+    }
+    .agenda-day-tab { flex: 0 0 auto; min-width: 110px; }
+    .agenda-card { max-width: 100%; }
+
+    .agenda-row {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+        "time avatar"
+        "room room"
+        "info info";
+        row-gap: 6px;
+    }
+    .agenda-time { grid-area: time; }
+    .agenda-room { grid-area: room; }
+    .agenda-info { grid-area: info; }
+    .agenda-avatar-stack { grid-area: avatar; justify-self: end; }
+
+    .panel-card, .panel-flat, .panel-plain { padding: 20px 16px; }
+    }
+
+    @media (max-width: 480px) {
+    .event-title { font-size: 20px; line-height: 26px; }
+    .speaker-card { width: 100px; flex: 0 0 100px; }
+    .speaker-card img, .speaker-card .no-image { width: 64px; height: 64px; }
+    .agenda-tooltip { width: 220px; }
     }
 </style>
 
 
-<div class="container my-5 px-5">
+<div class="container my-5 px-4 event-page">
 
-    <!-- TITLE + THEME -->
-    <div class="text-center mb-4">
-        <h1>{{ doc.title }}</h1>
-        {% if doc.event_theme %}
-            <p class="text-muted">{{ doc.event_theme }}</p>
-        {% endif %}
-    </div>
+    <a href="/conference_page" class="back-link">&larr; Back to All Conferences</a>
 
-    <!-- BANNER -->
-    {% if doc.event_image %}
-    <div class="text-center my-4">
-        <img src="{{ doc.event_image }}" alt="{{ doc.title }}" class="img-fluid rounded">
-    </div>
-    {% endif %}
+    <div class="event-header-row">
 
-    <!-- EVENT DETAILS -->
-    <div class="row">
-        <div class="col-md-6">
-            <h5>Event Details</h5>
-
-            {% if doc.start_date == doc.end_date %}
-                <p><strong>Date:</strong> {{ frappe.utils.format_date(doc.start_date , "dd/mm/yyyy") }}</p>
-            {% else %}
-                <p><strong>Date:</strong>  {{ frappe.utils.format_date(doc.start_date , "dd/mm/yyyy") }} to  {{ frappe.utils.format_date(doc.end_date , "dd/mm/yyyy") }}</p>
-            {% endif %}
-
-            <p><strong>Venue:</strong> {{ doc.venuelocation }}</p>
+        {% if doc.event_image %}
+        <div class="event-poster">
+            <img src="{{ doc.event_image }}" alt="{{ doc.title }}">
         </div>
-
-        <div class="col-md-6 text-end">
-
-            {% if is_registration_closed %}
-                <span class="badge bg-danger p-2 mt-4">Registration Closed</span>
-            {% else %}
-            {% if doc.registration_close_date %}
-                <p><strong>Registration closes on:</strong> {{ frappe.utils.format_date(doc.registration_close_date, "dd/mm/yyyy") }}</p>
-            {% endif %}
-
-        {% if has_exhibitor %}
-        <button class="btn btn-success mt-2"
-        data-bs-toggle="modal"
-        data-bs-target="#eventRegistrationModal">
-        <a href="/exhibitor-registration/new?event={{ name }}" style="color:white;text-decoration:none;">Become an exhibitor</a>
-        </button>
         {% endif %}
 
+        <div class="event-header-main">
+            <h4 class="event-title">{{ doc.title }}</h4>
+
+            <!-- DATE -->
+            <div class="event-meta-row">
+                <span class="event-meta-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <rect x="3" y="4" width="18" height="17" rx="2"></rect>
+                        <path d="M16 2v4"></path>
+                        <path d="M8 2v4"></path>
+                        <path d="M3 10h18"></path>
+                    </svg>
+                </span>
+
+                {% if doc.start_date == doc.end_date %}
+                    <span>
+                        {{ frappe.utils.format_date(doc.start_date, "MMMM d, yyyy") }}
+                    </span>
+                {% else %}
+                    <span>
+                        {{ frappe.utils.format_date(doc.start_date, "MMMM d") }}
+                        -
+                        {{ frappe.utils.format_date(doc.end_date, "d, yyyy") }}
+                    </span>
+                {% endif %}
+            </div>
+
+            <!-- LOCATION -->
+            {% if doc.venuelocation %}
+            <div class="event-meta-row">
+                <span class="event-meta-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"></path>
+                        <circle cx="12" cy="10" r="2.5"></circle>
+                    </svg>
+                </span>
+
+                <span>{{ doc.venuelocation }}</span>
+            </div>
             {% endif %}
+
+            <div class="event-actions">
+
+                {% if is_registration_closed %}
+                    <span class="registration-closed-badge">Registration Closed</span>
+                {% else %}
+                    {% if doc.registration_close_date %}
+                        <span class="event-meta-row" style="margin:0;">
+                            <strong>Registration closes on:</strong>&nbsp;{{ frappe.utils.format_date(doc.registration_close_date, "dd/mm/yyyy") }}
+                        </span>
+                    {% endif %}
+                {% endif %}
+
+                <a href="/registration-details/{{ name }}" class="btn-outline-cca">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="5" y="4" width="14" height="16" rx="1.5"></rect>
+                        <path d="M9 4.5V3h6v1.5"></path>
+                        <path d="M8.5 9h7"></path>
+                        <path d="M8.5 13h7"></path>
+                        <path d="M8.5 17h4"></path>
+                    </svg>
+                    <span>Registration Details</span>
+                </a>
+
+                <a href="/e-ticket/{{ name }}" class="btn-fill-cca">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 7h16v10H4z"></path>
+                        <path d="M8 7v2"></path>
+                        <path d="M8 11v2"></path>
+                        <path d="M8 15v2"></path>
+                        <path d="M16 7v2"></path>
+                        <path d="M16 11v2"></path>
+                        <path d="M16 15v2"></path>
+                    </svg>
+                    <span>View E-Ticket</span>
+                </a>
+
+                {% if has_exhibitor %}
+                <a href="/exhibitor-registration/new?event={{ name }}" class="btn-fill-cca">
+                    Become an exhibitor
+                </a>
+                {% endif %}
+
+            </div>
         </div>
     </div>
-
-    <hr class="my-4">
 
     <!-- MAIN SECTION TABS -->
-    <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+    <ul class="nav event-tabs" id="mainTabs" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="agenda-tab" data-bs-toggle="tab"
                     data-bs-target="#agendaSection" type="button" role="tab">
@@ -256,300 +862,244 @@
                 Speakers
             </button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="participant-tab" data-bs-toggle="tab"
-                    data-bs-target="#participantSection" type="button" role="tab">
-                My Profile
-            </button>
-        </li>
     </ul>
 
-    <div class="tab-content mt-4">
+    <div class="tab-content event-tab-content">
 
-        <!-- ==========================
-             AGENDA SECTION
-        =========================== -->
+    <!-- ==========================
+     AGENDA SECTION
+=========================== -->
+<div class="tab-pane fade show active" id="agendaSection" role="tabpanel">
 
-        <div class="tab-pane fade show active" id="agendaSection" role="tabpanel">
+    {% if agenda_list %}
 
-            {% if agenda_list %}
-            <ul>
-                {% for item in agenda_list %}
-                <li style="margin-bottom:15px;">
-                    <strong>{{ item.program_agenda }}</strong><br>
-
-                    {% if item.start_date %}
-                        {{ item.start_date }} – {{ item.end_date }}<br>
-                    {% endif %}
-
-                    {% if item.description %}
-                        <small>{{ item.description }}</small>
-                    {% endif %}
-                </li>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <p>No agenda added.</p>
+        {# ---- Build ordered unique day list (assumes agenda_list is date-sorted) ---- #}
+        {% set day_keys = [] %}
+        {% set day_labels = {} %}
+        {% for item in agenda_list %}
+            {% if item.start_date %}
+                {% set dkey = frappe.utils.format_date(item.start_date, "yyyy-MM-dd") %}
+                {% if dkey not in day_keys %}
+                    {% set _ = day_keys.append(dkey) %}
+                    {% set _ = day_labels.update({
+                        dkey: {
+                            "weekday": frappe.utils.format_date(item.start_date, "EEEE"),
+                            "date": frappe.utils.format_date(item.start_date, "dd/MM")
+                        }
+                    }) %}
+                {% endif %}
             {% endif %}
+        {% endfor %}
+
+        <div class="agenda-wrap">
+
+            <!-- DAY TABS -->
+            <div class="agenda-day-tabs" id="agendaDayTabs">
+                {% for dkey in day_keys %}
+                <button type="button"
+                        class="agenda-day-tab {% if loop.first %}active{% endif %}"
+                        data-day="{{ dkey }}">
+                    <span class="day-num">Day {{ loop.index }}</span>
+                    <span class="day-sub">{{ day_labels[dkey].weekday }}<br> {{ day_labels[dkey].date }}</span>
+                </button>
+                {% endfor %}
+            </div>
+
+            <!-- DAY PANELS -->
+            <div class="agenda-card">
+                {% for dkey in day_keys %}
+                <div class="agenda-day-panel {% if loop.first %}active{% endif %}" data-day-panel="{{ dkey }}">
+
+                    {% for item in agenda_list %}
+                        {% if item.start_date and frappe.utils.format_date(item.start_date, "yyyy-MM-dd") == dkey %}
+
+                            <div class="agenda-row {% if item.is_break %}is-break{% elif item.speakers_list %}is-session{% endif %} {% if item.is_live %}is-live{% endif %}">
+                            <div class="agenda-time">
+                                {{ frappe.utils.format_time(item.start_date, "hh:mm a") }}{% if item.end_date %} - {{ frappe.utils.format_time(item.end_date, "hh:mm a") }}{% endif %}
+                            </div>
+
+                            <div class="agenda-room">{% if item.room %}{{ item.room }}{% endif %}</div>
+
+                            <div class="agenda-info">
+                                <div class="agenda-title-row">
+                                    <p class="agenda-title mb-0">{{ item.program_agenda }}</p>
+
+                                    {% if item.description %}
+                                        <span class="agenda-info-icon">i</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            {% if not item.is_break and item.speakers_list %}
+                                <div class="agenda-avatar-stack {% if item.is_live %}is-live{% endif %}"
+                                    onclick="showSpeakersTab()"
+                                    title="{{ item.speakers_list | map(attribute='speaker_name') | join(', ') }}">
+
+                                    {% for sp in item.speakers_list[:3] %}
+
+                                        <div class="agenda-speaker-avatar">
+
+                                            {% if sp.photo %}
+
+                                                <img class="agenda-avatar-img"
+                                                    src="{{ sp.photo }}"
+                                                    alt="{{ sp.speaker_name }}">
+
+                                            {% else %}
+
+                                                <div class="agenda-avatar-img avatar-placeholder">
+                                                    {{ sp.speaker_name[0] }}
+                                                </div>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    {% endfor %}
+
+                                    {% if item.speakers_list | length > 3 %}
+
+                                        <div class="agenda-avatar-img avatar-placeholder avatar-more">
+                                            +{{ item.speakers_list | length - 3 }}
+                                        </div>
+
+                                    {% endif %}
+
+                                </div>
+                            {% endif %}
+
+                            {% if item.description %}
+                            <div class="agenda-desc-full">{{ item.description }}</div>
+                            {% endif %}
+
+                        </div>
+
+                        {% endif %}
+                    {% endfor %}
+
+                </div>
+                {% endfor %}
+            </div>
 
         </div>
 
+    {% else %}
+    <div class="panel-card">
+        <p class="agenda-empty mb-0">No agenda added.</p>
+    </div>
+    {% endif %}
+
+</div>
 
         <!-- ==========================
              VENUE
         =========================== -->
         <div class="tab-pane fade" id="venueSection" role="tabpanel">
-            <h5>Venue Details</h5>
-            <p>{{ doc.venuelocation }}</p>
+            <div class="panel-plain">
+                <h5>Venue Details</h5>
+                <p class="mb-0">{{ doc.venuelocation }}</p>
+            </div>
         </div>
 
         <!-- ==========================
              SPONSORS
         =========================== -->
         <div class="tab-pane fade" id="sponsorsSection" role="tabpanel">
-            <h5>Sponsors</h5>
-            <p>No sponsors added yet.</p>
+            <div class="panel-plain">
+                <h5>Sponsors</h5>
+                <p class="mb-0">No sponsors added yet.</p>
+            </div>
         </div>
-
         <!-- ==========================
-             SPEAKERS
+            SPEAKERS
         =========================== -->
         <div class="tab-pane fade" id="speakersSection" role="tabpanel">
-            <h5 class="mb-3">Speakers</h5>
+            <div class="panel-plain">
 
-            {% if speakers %}
-            <div class="row">
-                {% for s in speakers %}
-                <div class="col-md-3 col-sm-6 text-center mb-4">
-                    <!-- Speaker Photo -->
-                    {% if s.photo %}
-                    <img src="{{ s.photo }}" class="rounded-circle"
-                         style="width:120px;height:120px;object-fit:cover;">
-                    {% else %}
-                    <div class="rounded-circle bg-secondary"
-                         style="width:120px;height:120px;line-height:120px;color:#fff;">
-                         No Image
+                {% if session_speakers %}
+                    {% for session in session_speakers %}
+                    <div class="speaker-session-group">
+                        <h5 class="speaker-session-title">{{ session.title }}</h5>
+                        <div class="speaker-list">
+                            {% for s in session.speakers %}
+                                <div class="speaker-card">
+                                    {% if s.photo %}
+                                        <img src="{{ s.photo }}" alt="{{ s.speaker_name }}">
+                                    {% else %}
+                                        <div class="no-image">No Image</div>
+                                    {% endif %}
+
+                                    <p class="speaker-name">{{ s.speaker_name }}</p>
+                                    {% if s.designation %}
+                                        <p class="speaker-role">{{ s.designation }}</p>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                    {% endif %}
+                    {% endfor %}
+                {% endif %}
 
-                    <!-- Speaker Name -->
-                    <p class="mt-2"><strong>{{ s.full_name }}</strong></p>
+                {% if other_speakers %}
+                <div class="speaker-session-group">
+                    <h5 class="speaker-session-title">Other Speakers</h5>
+                    <div class="speaker-list">
+                        {% for s in other_speakers %}
+                            <div class="speaker-card">
+                                {% if s.photo %}
+                                    <img src="{{ s.photo }}" alt="{{ s.full_name }}">
+                                {% else %}
+                                    <div class="no-image">No Image</div>
+                                {% endif %}
+
+                                <p class="speaker-name">{{ s.full_name }}</p>
+                                {% if s.designation %}
+                                    <p class="speaker-role">{{ s.designation }}</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-                {% endfor %}
+                {% endif %}
+
+                {% if not session_speakers and not other_speakers %}
+                    <p class="mb-0">No speakers added yet.</p>
+                {% endif %}
+
             </div>
-            {% else %}
-                <p>No speakers added.</p>
-            {% endif %}
         </div>
 
     </div>
-
-<!-- ==========================
-     PARTICIPANT
-=========================== -->
-<div class="tab-pane fade" id="participantSection" role="tabpanel">
-
-    {% if participant %}
-
-        <div class="participant-panel">
-
-            <!-- Participant Sub Tabs -->
-            {% if participant.tabs %}
-
-                <ul class="nav participant-subtabs" id="participantSubTabs" role="tablist">
-
-                    {% for tab in participant.tabs %}
-
-                        <li class="nav-item" role="presentation">
-
-                            <button
-                                class="nav-link {% if loop.first %}active{% endif %}"
-                                id="p-tab-{{ loop.index }}"
-                                data-bs-toggle="pill"
-                                data-bs-target="#p-pane-{{ loop.index }}"
-                                type="button"
-                                role="tab"
-                                aria-controls="p-pane-{{ loop.index }}"
-                                aria-selected="{% if loop.first %}true{% else %}false{% endif %}"
-                            >
-                                {{ tab.label }}
-                            </button>
-
-                        </li>
-
-                    {% endfor %}
-
-                </ul>
-
-
-                <!-- Participant Sub Tab Content -->
-                <div class="tab-content" id="participantSubTabContent">
-
-                    {% for tab in participant.tabs %}
-
-                        <div
-                            class="tab-pane fade participant-body {% if loop.first %}show active{% endif %}"
-                            id="p-pane-{{ loop.index }}"
-                            role="tabpanel"
-                            aria-labelledby="p-tab-{{ loop.index }}"
-                        >
-
-                            {% for section in tab.sections %}
-
-                                {% if section.label %}
-                                    <div class="section-title">
-                                        {{ section.label }}
-                                    </div>
-                                {% endif %}
-
-                                <div class="row">
-
-                                    {% for field in section.fields %}
-
-                                        {% if field.fieldname != "custom_location_url_church" %}
-                                        <div class="col-md-6 info-item">
-                                            <div class="info-label">{{ field.label }}:</div>
-                                            <div class="info-value">
-                                                {% if field.fieldtype == "Attach Image" %}
-                                                    <img src="{{ field.value }}" alt="{{ field.label }}"
-                                                        style="width:110px;height:110px;object-fit:cover;border-radius:6px;">
-                                                {% else %}
-                                                    {{ field.value }}
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                        {% endif %}
-                                        {% if field.fieldname == "custom_hotel_address_link" and field.value %}
-                                            <div class="col-md-6 info-item">
-                                                <button type="button"
-                                                        class="btn btn-primary btn-sm get-direction-btn"
-                                                        data-address="{{ field.value }}">
-                                                    ➤ Get Directions
-                                                </button>
-                                            </div>
-                                        {% endif %}
-                                        {% if field.fieldname == "custom_location_url_church" and field.value %}
-                                            <div class="col-md-6 info-item">
-                                                <a href="{{ field.value }}"
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                class="btn btn-primary btn-sm">
-                                                    ⛪ Church Location
-                                                </a>
-                                            </div>
-                                        {% endif %}
-
-                                    {% endfor %}
-
-                                </div>
-
-                            {% endfor %}
-
-                        </div>
-
-                    {% endfor %}
-
-                </div>
-
-            {% else %}
-
-                <p class="text-muted p-4">No participant details available.</p>
-
-            {% endif %}
-
-        </div>
-
-    {% else %}
-
-        <p class="text-muted">
-            No participant details found.
-        </p>
-
-    {% endif %}
-
-</div>
-
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
-
 <script>
-document.addEventListener('click', function (e) {
-    const btn = e.target.closest('.get-direction-btn');
-    if (!btn) return;
+document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.agenda-day-tab');
+    tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            const day = tab.getAttribute('data-day');
 
-    const addressName = btn.getAttribute('data-address');
-    if (!addressName) {
-        frappe.msgprint(__('Please link a hotel address first.')); 
-        return;
-    }
+            document.querySelectorAll('.agenda-day-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
 
-    const originalText = btn.innerHTML;
-    btn.disabled = true;
-    btn.innerHTML = 'Loading...';
-
-    frappe.call({
-        method: "e_desk.e_desk.doctype.conference.conference.get_address_for_direction",
-        args: { address_name: addressName },
-        callback: function (r) {
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-
-            if (r.message && Object.keys(r.message).length) {
-                const a = r.message;
-                
-                const raw_parts = [
-                    a.address_line1,
-                    a.address_line2,
-                    a.city,
-                    a.state,
-                    a.pincode,
-                    a.country
-                ];
-                
-                const clean_parts = [];
-                for (let i = 0; i < raw_parts.length; i++) {
-                    const val = raw_parts[i];
-                    if (val) {
-                        const normalized = val.toString().trim().toLowerCase();
-                        if (normalized !== '' && normalized !== 'n/a' && normalized !== 'na') {
-                            clean_parts.push(val.trim());
-                        }
-                    }
-                }
-
-                if (clean_parts.length === 0 && a.country) {
-                    clean_parts.push(a.country);
-                }
-
-                const address_query = clean_parts.join(', ');
-                
-                if (!address_query) {
-                    frappe.msgprint(__('The linked address record contains no usable information.'));
-                    return;
-                }
-
-                const maps_url = 'https://www.google.com/maps/place/' + encodeURIComponent(address_query);
-                console.log('Opening Google Maps for address:', address_query);
-                
-                const map_window = window.open();
-                map_window.opener = null;
-                map_window.location = maps_url;
-                
-            } else {
-                frappe.msgprint(__('Could not fetch address details.'));
-            }
-        },
-        error: function (err) {
-            btn.disabled = false;
-            btn.innerHTML = originalText;
-            console.error('Error fetching address:', err);
-            frappe.msgprint(__('Failed to fetch the linked address. Please try again.'));
-        }
+            document.querySelectorAll('.agenda-day-panel').forEach(function (panel) {
+                panel.classList.toggle('active', panel.getAttribute('data-day-panel') === day);
+            });
+        });
     });
 });
+
+function showSpeakersTab() {
+    const trigger = document.getElementById('speakers-tab');
+    if (trigger) {
+        trigger.click();
+        trigger.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+}
 </script>
+
+
 
 {% endblock %}

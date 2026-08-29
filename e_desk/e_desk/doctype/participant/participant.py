@@ -603,11 +603,48 @@ def toggle_event_speaker(participant):
     # Toggle logic
     if participant_doc.event_role == "Speaker":
         participant_doc.event_role = "Participant"
+        remove_speaker_from_conference(participant_doc)
     else:
         participant_doc.event_role = "Speaker"
+        add_speaker_to_conference(participant_doc)
 
     participant_doc.save(ignore_permissions=True)
 
+def add_speaker_to_conference(participant_doc):
+    # TODO: confirm the link fieldname on Participant that points to Conference
+    conference_name = participant_doc.event
+    if not conference_name:
+        return
+
+    conference = frappe.get_doc("Conference", conference_name)
+
+    already_added = any(
+        row.speaker == participant_doc.name
+        for row in conference.speaker
+    )
+    if already_added:
+        return
+
+    conference.append("speaker", {
+        "speaker": participant_doc.name,
+    })
+    conference.save(ignore_permissions=True)
+
+
+def remove_speaker_from_conference(participant_doc):
+    conference_name = participant_doc.event
+    if not conference_name:
+        return
+
+    conference = frappe.get_doc("Conference", conference_name)
+    remaining = [
+        row for row in conference.speaker
+        if row.speaker != participant_doc.name
+    ]
+
+    if len(remaining) != len(conference.speaker):
+        conference.set("speaker", remaining)
+        conference.save(ignore_permissions=True)
 
 
 @frappe.whitelist(allow_guest=True)

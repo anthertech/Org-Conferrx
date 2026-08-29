@@ -29,6 +29,8 @@
   "is_private",
   "resources",
   "attach_files",
+  "speakers_section",
+  "speaker",
   "registration_form_tab",
   "select_all",
   "column_break_rduy",
@@ -267,8 +269,7 @@
   },
   {
    "fieldname": "section_break_avxn",
-   "fieldtype": "Section Break",
-   "label": "Programme Agenda"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "time_zone",
@@ -288,8 +289,7 @@
   },
   {
    "fieldname": "resources",
-   "fieldtype": "Section Break",
-   "label": "Resources"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "settings_tab",
@@ -975,7 +975,7 @@
    "label": "Event has Exhibitors"
   },
   {
-   "default": "0",
+   "default": "1",
    "fieldname": "create_customer_on_participant_creation",
    "fieldtype": "Check",
    "label": "Create Customer on Participant Creation"
@@ -1090,10 +1090,15 @@
    "fieldtype": "Text Editor"
   },
   {
-   "default": "0",
-   "fieldname": "show_deliberative_sessions",
-   "fieldtype": "Check",
-   "label": "Deliberative Sessions"
+   "fieldname": "speakers_section",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "speaker",
+   "fieldtype": "Table",
+   "label": "Speaker",
+   "options": "Speakers",
+   "read_only": 1
   },
   {
    "default": "0",
@@ -1107,15 +1112,13 @@
   },
   {
    "default": "0",
-   "fieldname": "show_additional_info",
-   "fieldtype": "Check",
-   "label": "Additional Info"
-  },
-  {
-   "default": "0",
    "fieldname": "show_contact_details",
    "fieldtype": "Check",
    "label": "Contact Details"
+  },
+  {
+   "fieldname": "column_break_jhyl",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_dnik",
@@ -1123,9 +1126,35 @@
   },
   {
    "default": "0",
+   "fieldname": "show_additional_info",
+   "fieldtype": "Check",
+   "label": "Additional Info"
+  },
+  {
+   "fieldname": "column_break_nkbu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_mago",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
    "fieldname": "show_medical_informations",
    "fieldtype": "Check",
    "label": "Medical Informations"
+  },
+  {
+   "fieldname": "column_break_aarf",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_roae",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_eolw",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_wgmd",
@@ -1138,10 +1167,34 @@
    "label": "Room Allotment & Accomodation"
   },
   {
+   "fieldname": "column_break_bvvu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_nibc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_dvta",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_mdgc",
+   "fieldtype": "Column Break"
+  },
+  {
    "default": "0",
    "fieldname": "show_travel_research",
    "fieldtype": "Check",
    "label": "Travel & Research Information"
+  },
+  {
+   "fieldname": "column_break_kqqc",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_bcek",
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_lqnm",
@@ -1154,7 +1207,15 @@
    "label": "Passport Details"
   },
   {
+   "fieldname": "column_break_fmuu",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "column_break_azsk",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_qqwv",
    "fieldtype": "Column Break"
   },
   {
@@ -1162,6 +1223,14 @@
    "fieldname": "show_travel_details",
    "fieldtype": "Check",
    "label": "Travel Details"
+  },
+  {
+   "fieldname": "column_break_jilt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_ztuo",
+   "fieldtype": "Column Break"
   },
   {
    "default": "0",
@@ -1174,79 +1243,21 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_dvta",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_jhyl",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_mago",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_nkbu",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_aarf",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_eolw",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_roae",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_bvvu",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_mdgc",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_nibc",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_kqqc",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_bcek",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_fmuu",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_qqwv",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_jilt",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_ztuo",
-   "fieldtype": "Column Break"
-  },
-  {
    "fieldname": "column_break_yngd",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_fchl",
+   "fieldname": "column_break_cpwj",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "column_break_cpwj",
+   "default": "0",
+   "fieldname": "show_deliberative_sessions",
+   "fieldtype": "Check",
+   "label": "Deliberative Sessions"
+  },
+  {
+   "fieldname": "column_break_fchl",
    "fieldtype": "Column Break"
   },
   {
@@ -1262,7 +1273,7 @@
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-08-24 16:49:36.074314",
+ "modified": "2026-08-29 15:24:33.293169",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",

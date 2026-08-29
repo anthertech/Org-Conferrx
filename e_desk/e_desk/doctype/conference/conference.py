@@ -77,8 +77,14 @@ class Conference(WebsiteGenerator):
 						
 
 	def get_context(self, context):
-		context.agenda_list = get_agenda_data(self)
-		context.speakers = get_speakers_for_event(self.name)
+		context.agenda_list, session_speakers, mapped_speaker_ids = get_agenda_data(self)
+		context.session_speakers = session_speakers
+
+		all_speakers = get_speakers_for_event(self.name)
+		context.other_speakers = [
+			s for s in all_speakers if s["participant_id"] not in mapped_speaker_ids
+		]
+
 		context.registration_types = get_registration_types()
 		context.has_exhibitor = has_exhibitor()
 		context.participant = get_participant_for_event(self.name)
@@ -97,18 +103,92 @@ def has_exhibitor():
 def get_agenda_data(self):
 	agenda = self.agenda or []
 	result = []
+	now = frappe.utils.now_datetime()
+
+	# Collect unique CPA references from the agenda rows
+	cpa_names = list(set(
+		item.conference_programme_agenda for item in agenda
+		if item.conference_programme_agenda
+	))
+
+	# Fetch all speaker rows from those CPAs in one query
+	cpa_speaker_rows = {}
+	if cpa_names:
+		rows = frappe.get_all(
+			"Speakers",
+			filters={
+				"parent": ["in", cpa_names],
+				"parenttype": "Conference Programme Agenda",
+			},
+			fields=["parent", "speaker", "speaker_name"],
+			order_by="idx",
+		)
+		for row in rows:
+			cpa_speaker_rows.setdefault(row.parent, []).append(row)
+
+	# Fetch profile photo + designation for every Participant referenced, in one query
+	participant_ids = list(set(
+		row.speaker for rows in cpa_speaker_rows.values() for row in rows if row.speaker
+	))
+	participant_map = {}
+	if participant_ids:
+		participants = frappe.get_all(
+			"Participant",
+			filters={"name": ["in", participant_ids]},
+			fields=["name", "profile_photo", "custom_official_position__designation"],
+		)
+		participant_map = {p.name: p for p in participants}
+
+	# session_speakers: ordered list of {"title": ..., "speakers": [...]}
+	# grouped by agenda item, so the template can show the agenda name
+	# first and the speakers for that session underneath it.
+	session_speakers = []
+	mapped_speaker_ids = set()
 
 	for item in agenda:
+		speakers_list = []
+		if item.conference_programme_agenda:
+			for row in cpa_speaker_rows.get(item.conference_programme_agenda, []):
+				participant = participant_map.get(row.speaker)
+				speakers_list.append({
+					"speaker_id": row.speaker,
+					"speaker_name": row.speaker_name,
+					"photo": participant.profile_photo if participant else None,
+					"designation": participant.custom_official_position__designation if participant else None,
+				})
+				if row.speaker:
+					mapped_speaker_ids.add(row.speaker)
+
+		if speakers_list and item.program_agenda:
+			session_speakers.append({
+				"title": item.program_agenda,
+				"speakers": speakers_list,
+			})
+
+		start_date = frappe.utils.get_datetime(item.start_date) if item.start_date else None
+		end_date = frappe.utils.get_datetime(item.end_date) if item.end_date else None
+
+		is_live = False
+
+		if start_date and end_date:
+			is_live = start_date <= now <= end_date
+
 		result.append({
 			"program_agenda": item.program_agenda or "",
 			"description": item.description or "",
 			"start_date": item.start_date or "",
 			"end_date": item.end_date or "",
+			"room": item.room,
+			"is_break": item.is_break,
+			"speakers_list": speakers_list,
+			"is_live": is_live,
 		})
-	return result
+	return result, session_speakers, mapped_speaker_ids
 
 
-def get_speakers_for_event(event_name):
+def get_speakers_for_event(event_name, speaker_agenda_map=None):
+    speaker_agenda_map = speaker_agenda_map or {}
+
     speakers = frappe.get_all(
         "Participant",
         filters={
@@ -118,7 +198,8 @@ def get_speakers_for_event(event_name):
         fields=[
             "name",
             "full_name",
-            "profile_photo"
+            "profile_photo",
+            "custom_official_position__designation"
         ]
     )
 
@@ -127,7 +208,9 @@ def get_speakers_for_event(event_name):
         speaker_list.append({
             "full_name": s.full_name,
             "participant_id": s.name,
-            "photo": s.profile_photo
+            "photo": s.profile_photo,
+            "designation": s.custom_official_position__designation,
+            "agenda_titles": speaker_agenda_map.get(s.name, []),
         })
 
     return speaker_list
@@ -359,3 +442,25 @@ def get_address_for_direction(address_name):
 #             "published",
 #             1 if self.event_has_exhibitors else 0
 #         )
+
+import frappe
+
+@frappe.whitelist()
+def get_speakers_display(cpa_name):
+    if not cpa_name:
+        return ""
+
+    speakers = frappe.get_all(
+        "Speakers",
+        filters={
+            "parent": cpa_name,
+            "parenttype": "Conference Programme Agenda",
+        },
+        fields=["speaker_name"],
+        order_by="idx",
+    )
+
+    if not speakers:
+        return ""
+
+    return "".join(f"<p>{s.speaker_name}</p>" for s in speakers)
