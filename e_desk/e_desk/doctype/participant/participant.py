@@ -208,7 +208,7 @@ class Participant(Document):
 				"user": self.e_mail,
 				"allow": "Conference",
 				"for_value": self.event,
-				"apply_to_all_doctypes": False
+				"apply_to_all_doctypes": True
 			}).insert(ignore_permissions=True)
 
 		# 2️⃣ User self-permission (CRITICAL)
@@ -222,7 +222,7 @@ class Participant(Document):
 				"user": self.e_mail,
 				"allow": "User",
 				"for_value": self.e_mail,
-				"apply_to_all_doctypes": False
+				"apply_to_all_doctypes": True
 			}).insert(ignore_permissions=True)
 
 	def create_address_and_contact(self):
