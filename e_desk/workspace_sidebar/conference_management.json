@@ -13,7 +13,7 @@
    "indent": 0,
    "keep_closed": 0,
    "label": "Home",
-   "link_to": "Conference",
+   "link_to": "CCA Conference",
    "link_type": "Workspace",
    "show_arrow": 0,
    "type": "Link"
@@ -38,18 +38,6 @@
    "keep_closed": 0,
    "label": "Program Agenda",
    "link_to": "Conference",
-   "link_type": "DocType",
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "list-alt",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Conferrx Settings",
-   "link_to": "Conference Settings",
    "link_type": "DocType",
    "show_arrow": 0,
    "type": "Link"
@@ -103,11 +91,11 @@
    "type": "Link"
   }
  ],
- "modified": "2026-03-18 15:13:11.994648",
+ "modified": "2026-09-01 12:33:33.457029",
  "modified_by": "Administrator",
  "module": "E Desk",
- "name": "Conferxx",
+ "name": "Conference Management",
  "owner": "Administrator",
- "standard": 0,
- "title": "Conferxx"
+ "standard": 1,
+ "title": "Conference Management"
 }

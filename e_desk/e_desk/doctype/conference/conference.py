@@ -87,7 +87,12 @@ class Conference(WebsiteGenerator):
 
 		context.registration_types = get_registration_types()
 		context.has_exhibitor = has_exhibitor()
-		context.participant = get_participant_for_event(self.name)
+		context.connections = get_connections(self)
+		context.resources = get_resources(self)
+		now = frappe.utils.now_datetime()
+		end_date = frappe.utils.get_datetime(self.end_date) if self.end_date else None
+
+		context.show_e_ticket = bool(end_date and now <= end_date)
 		return context
 
 
@@ -321,97 +326,57 @@ def get_confer_agenda_events(start, end):
     return agenda_events
 
 
-def get_participant_for_event(event):
-    if frappe.session.user == "Guest":
-        return None
-
-    participant_name = frappe.db.get_value(
-        "Participant", {"event": event, "user": frappe.session.user}, "name"
+def get_connections(self):
+    connections = frappe.get_all(
+        "Connections",
+        filters={"participant_id": frappe.session.user, "event": self.name},
+        fields=["name", "participant_id", "full_name", "email", "mobile_phone", "event", "profile_photo"],
+        order_by="creation desc",
     )
-    if not participant_name:
-        return None
-
-    doc = frappe.get_doc("Participant", participant_name)
-    meta = frappe.get_meta("Participant")
-
-    SKIP_TYPES = {
-        "Tab Break", "Section Break", "Column Break", "HTML",
-        "Table", "Table MultiSelect"
+    participant_ids = list(set([c.email for c in connections if c.email]))
+    participant_data = frappe.get_all(
+        "Participant",
+        filters={"user": ["in", participant_ids]},
+        fields=["user", "custom_official_position__designation", "city", "country", "custom_organization__institution"],
+    )
+    participant_map = {
+        p.user: {"designation": p.custom_official_position__designation, "city": p.city, "country": p.country, "custom_organization__institution": p.custom_organization__institution}
+        for p in participant_data
     }
+    for c in connections:
+        info = participant_map.get(c.email, {})
+        c["designation"] = info.get("designation")
+        c["city"] = info.get("city")
+        c["country"] = info.get("country")
+        c["organization"] = info.get("custom_organization__institution")
 
-    SKIP_FIELDNAMES = {
-        "naming_series", "participant_id", "customer", "user",
-        "stall", "max_staff_allowed", "participant_address",
-        "participant_contact",
-        "custom_abr", "status", "custom_registration_status",
-        "custom_age_category", "event_role", "event", "custom_present_paper_at_catx",
-        "registration_type", "is_staff", "participant_group",
-        "custom_category_files", "custom_scan_of_passports_information_page", "id_proof", "custom_scan_of_passports_information_page",
-    }
+    return connections
 
-    tabs = []
-    current_tab = None
-    current_section = None
+def get_resources(self):
+    resource_rows = frappe.get_all(
+        "Category Table",
+        filters={
+            "parent": self.name,
+            "parenttype": "Conference",
+            "parentfield": "attach_files",
+        },
+        fields=["name", "attach", "creation"],
+        order_by="idx asc",
+    )
 
-    for f in meta.fields:
-        if f.fieldtype == "Tab Break":
-            current_tab = {"label": f.label or "Details", "sections": []}
-            current_section = {"label": None, "fields": []}
-            current_tab["sections"].append(current_section)
-            tabs.append(current_tab)
-            continue
+    image_ext = (".png", ".jpg", ".jpeg", ".gif", ".webp")
 
-        if f.fieldtype == "Section Break":
-            if current_tab is None:
-                current_tab = {"label": "Details", "sections": []}
-                tabs.append(current_tab)
-            current_section = {"label": f.label, "fields": []}
-            current_tab["sections"].append(current_section)
-            continue
+    for r in resource_rows:
+        r["file_name"] = r.attach.split("/")[-1] if r.attach else "Untitled"
+        r["is_image"] = bool(r.attach) and r.attach.lower().endswith(image_ext)
+        r["ext"] = r.file_name.split(".")[-1].upper() if "." in r.file_name else "FILE"
+        r["uploaded_date"] = frappe.utils.formatdate(
+            r.creation,
+            "dd MMM yyyy"
+        )
 
-        if f.fieldtype in SKIP_TYPES or f.fieldname in SKIP_FIELDNAMES:
-            continue
+    return resource_rows
 
-        if f.hidden:
-            continue
-
-        value = doc.get(f.fieldname)
-        if value in (None, "", 0) and f.fieldtype != "Check":
-            continue
-        if f.fieldtype == "Check" and not value:
-            continue
-
-        if f.fieldtype in ("Date",):
-            value = frappe.utils.format_date(value, "dd/mm/yyyy")
-        elif f.fieldtype == "Datetime":
-            value = frappe.utils.format_datetime(value, "dd/mm/yyyy hh:mm a")
-        elif f.fieldtype == "Check":
-            value = "Yes"
-
-        if current_tab is None:
-            current_tab = {"label": "Details", "sections": []}
-            current_section = {"label": None, "fields": []}
-            current_tab["sections"].append(current_section)
-            tabs.append(current_tab)
-
-        current_section["fields"].append({
-            "label": f.label,
-            "value": value,
-            "fieldtype": f.fieldtype,
-            "fieldname": f.fieldname,
-        })
-
-    for t in tabs:
-        t["sections"] = [s for s in t["sections"] if s["fields"]]
-    tabs = [t for t in tabs if t["sections"]]
-
-    return {
-        "name": doc.name,
-        "event": doc.event,
-        "full_name": doc.full_name,
-        "profile_photo": doc.profile_photo,
-        "tabs": tabs,
-    }
 
 @frappe.whitelist(allow_guest=True)
 def get_address_for_direction(address_name):
