@@ -585,6 +585,18 @@
     .panel-plain {
         box-shadow: none;
         padding: 24px 0;
+        font-family: 'Inter',sans-serif;
+        font-size: 24px;
+        line-height: 40.5px;
+        color: #2F2F2F;
+        font-weight: 600;
+    }
+
+    .venue-details {
+        font-family: 'Inter',sans-serif;
+        font-size: 20px;
+        color: #2F2F2F;
+        font-weight: 400;
     }
 
     .speaker-list {
@@ -655,11 +667,15 @@
     }
 /* ============ RESPONSIVE ============ */
 
-    @media (max-width: 992px) {
-    .event-poster { width: 260px; }
-        }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
+    .conn-modal {
+        width: 300px;
+    }
+
+    .resource-grid {
+        grid-template-columns: 1fr;
+    }
     .event-page { padding-left: 16px !important; padding-right: 16px !important; }
 
     .event-header-row {
@@ -667,6 +683,8 @@
         align-items: center;
         text-align: center;
         gap: 16px;
+        margin-bottom: -110px;
+
     }
     .event-poster { width: 100%; max-width: 280px; }
     .event-header-main { width: 100%; text-align: left; }
@@ -678,6 +696,7 @@
         align-items: stretch;
         height: auto;
     }
+    .page-wrapper { min-height: auto; }
     .event-actions .event-meta-row,
     .btn-outline-cca,
     .btn-fill-cca,
@@ -706,7 +725,92 @@
         gap: 8px;
     }
     .agenda-day-tab { flex: 0 0 auto; min-width: 110px; }
-    .agenda-card { max-width: 100%; }
+    .agenda-card {
+        flex: 0 1 auto;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .agenda-row {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+        "time avatar"
+        "room room"
+        "info info";
+        row-gap: 6px;
+    }
+    .agenda-time { grid-area: time; }
+    .agenda-room { grid-area: room; }
+    .agenda-info { grid-area: info; }
+    .agenda-avatar-stack { grid-area: avatar; justify-self: end; }
+
+    .panel-card, .panel-flat, .panel-plain { padding: 20px 16px; }
+    }
+
+    @media (max-width: 768px) {
+    .conn-modal {
+        width: 300px;
+    }
+
+    .resource-grid {
+        grid-template-columns: 1fr;
+    }
+    .event-page { padding-left: 16px !important; padding-right: 16px !important; }
+
+    .event-header-row {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+        margin-bottom: -110px;
+
+    }
+    .event-poster { width: 100%; max-width: 280px; }
+    .event-header-main { width: 100%; text-align: left; }
+    .event-title { font-size: 24px; line-height: 30px; }
+    .event-meta-row { font-size: 14px; }
+
+    .event-actions {
+        flex-direction: column;
+        align-items: stretch;
+        height: auto;
+    }
+    .page-wrapper { min-height: auto; }
+    .event-actions .event-meta-row,
+    .btn-outline-cca,
+    .btn-fill-cca,
+    .registration-closed-badge {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        margin: 0;
+    }
+
+    .event-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 24px;
+    }
+    .event-tabs .nav-link { white-space: nowrap; }
+
+    .agenda-wrap { flex-direction: column; }
+    .agenda-day-tabs {
+        flex-direction: row;
+        flex: 0 0 auto;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        gap: 8px;
+    }
+    .agenda-day-tab { flex: 0 0 auto; min-width: 110px; }
+    .agenda-card {
+        flex: 0 1 auto;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
 
     .agenda-row {
         grid-template-columns: 1fr auto;
@@ -730,6 +834,380 @@
     .speaker-card img, .speaker-card .no-image { width: 64px; height: 64px; }
     .agenda-tooltip { width: 220px; }
     }
+
+    /* =========================================
+       CONNECTIONS TAB (merged from Connections page)
+    ========================================= */
+
+    .conn-page { max-width: 1100px; }
+    .conn-title { font-size: 26px; font-weight: 700; margin-bottom: 20px; color: #1a1a1a; }
+
+    .conn-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    }
+
+    .conn-card {
+    display: flex;
+    gap: 12px;
+    width: 347px;
+    height: 175px;
+    padding: 16px;
+    box-sizing: border-box;
+
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px #00000040;
+    border: 1px solid #eee;
+    }
+    .conn-card-avatar img,
+    .conn-card-avatar-fallback {
+    width: 118px;
+    height: 118px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    }
+
+    .conn-card-avatar-fallback {
+    background: #E1F5EE;
+    color: #0F6E56;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 20px;
+    }
+
+    .conn-card-body { min-width: 0; }
+
+    .conn-card-name {
+    width: 114px;
+    height: 20px;
+    font-style: "Semi Bold";
+    font-weight: 700;
+    font-size: 16px;
+    color: #2F2F2F;
+    line-height: 16px;
+    letter-spacing:0.32px;
+    font-family: 'Inter',sans-serif;
+    }
+
+    .conn-card-designation {
+    width: 139px;
+    height: 32px;
+    font-style: "Regular";
+    font-weight: 400;
+    font-size: 12px;
+    color: #2F2F2F;
+    line-height: 16px;
+    letter-spacing:0.32px;
+    font-family: 'Inter',sans-serif;
+    }
+
+    .conn-card-subtitle {
+    font-size: 12px;
+    color: #2F2F2F;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    }
+
+    .conn-card-info { margin-top: 6px; }
+
+    .conn-card-row {
+    display: flex;
+    font-weight: 400;
+    align-items: center;
+    font-family: 'Inter',sans-serif;
+    line-height: 16px;
+    gap: 6px;
+    font-size: 12px;
+    color: #2F2F2F;
+    margin-bottom: 4px;
+    word-break: break-word;
+    }
+
+    .conn-icon {
+    width: 12px;
+    color: #008080;
+    flex-shrink: 0;
+    }
+
+    .conn-add-tile {
+    width: 141px;
+    height: 141px;
+    border-radius: 50%;
+    border: 2px dashed #cfd6dc;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    align-self: center;
+    transition: border-color .15s ease, background .15s ease;
+    }
+
+    .conn-add-tile:hover {
+    border-color: #0F6E56;
+    background: #f2fbf8;
+    }
+
+    .conn-add-tile svg { width: 40px; height: 40px; }
+
+    .conn-empty { color: #888; margin-top: 12px; }
+
+    /* Modal */
+    .conn-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 20, 20, 0.55);
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    }
+
+    body:has(.conn-modal-overlay.is-open) {
+    overflow: hidden;
+    }
+
+    .conn-modal-overlay.is-open { display: flex; }
+
+    .conn-modal {
+    background: #FFFFFF;
+    border-radius: 14px;
+    color: #000000;
+    width: 400px;
+    height:500px;
+    padding: 28px 26px 30px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    font-family: 'Inter',sans-serif;
+    }
+
+    .conn-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    border: none;
+    background: none;
+    font-size: 22px;
+    line-height: 1;
+    color: #2F2F2F;
+    cursor: pointer;
+    }
+
+    .conn-modal-close:hover { color: #333; }
+
+    .conn-modal-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    line-height:19.5px;
+    letter-spacing:0.32px;
+    color: #000000;
+    }
+
+    .conn-modal-subtitle {
+    font-size: 14px;
+    color: #000000;
+    margin: 0 0 20px;
+    line-height: 19.5px;
+    letter-spacing:0.32px;
+    }
+
+    .conn-code-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid #B9B9B9;
+    background:#FAFAFA;
+    color: #767676;
+    font-family: 'Inter',sans-serif;
+    font-size: 14px;
+    text-align: center;
+    letter-spacing: 2px;
+    box-sizing: border-box;
+    }
+
+    .conn-code-input:focus {
+    outline: none;
+    border-color: #0F6E56;
+    background: #fff;
+    }
+
+    .conn-or-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 18px 0;
+    color: #999;
+    font-size: 12px;
+    }
+
+    .conn-or-divider::before,
+    .conn-or-divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #e5e5e5;
+    }
+
+    .conn-qr-box {
+    position: relative;
+    width: 190px;
+    height: 190px;
+    margin: 0 auto;
+    background: #111;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+
+    #qr-reader-modal {
+    width: 100%;
+    height: 100%;
+    }
+
+    #qr-reader-modal video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    }
+
+    .conn-qr-frame {
+    position: absolute;
+    inset: 18px;
+    pointer-events: none;
+    }
+
+    .conn-qr-frame .corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 3px solid #fff;
+    }
+
+    .conn-qr-frame .tl { top: 0; left: 0; border-right: none; border-bottom: none; }
+    .conn-qr-frame .tr { top: 0; right: 0; border-left: none; border-bottom: none; }
+    .conn-qr-frame .bl { bottom: 0; left: 0; border-right: none; border-top: none; }
+    .conn-qr-frame .br { bottom: 0; right: 0; border-left: none; border-top: none; }
+
+    .conn-qr-hint {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #ddd;
+    font-size: 11px;
+    }
+
+
+    /* =========================================
+       RESOURCES TAB (merged from Resources page)
+    ========================================= */
+    .resource-filter-form {
+        margin: 20px 0 24px;
+    }
+
+    .resource-title h3{
+        color: #0F766E;
+        
+    }
+
+    #conference-select {
+        width: 100%;
+        max-width: 360px;
+        padding: 10px 14px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        background: #fff;
+        font-size: 0.95rem;
+        color: #1a1a1a;
+        cursor: pointer;
+    }
+
+    .resource-empty {
+        text-align: center;
+        color: #888;
+        padding: 40px 0;
+    }
+
+    .resource-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 18px;
+        padding: 4px 0 20px;
+    }
+
+    .resource-card {
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .resource-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .resource-thumb {
+        height: 140px;
+        background-size: cover;
+        background-position: center;
+        background-color: #f2f2f2;
+    }
+
+    .resource-thumb-file {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .resource-thumb-file span {
+        font-weight: 700;
+        font-size: 1.1rem;
+        letter-spacing: 0.5px;
+        color: #999;
+    }
+
+    .resource-info {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 14px 16px;
+    }
+
+    .resource-category {
+        font-size: 10px;
+        font-family: 'Inter',sans-serif;
+        font-weight: 400;
+        color: #888888;
+        line-height: 20px;
+    }
+
+    .resource-name {
+        font-size: 12px;
+        font-weight: 600;
+        color: #2F2F2F;
+        line-height: 20px;
+        font-family: 'Inter', sans-serif;
+        word-break: break-word;
+    }
+
 </style>
 
 
@@ -767,7 +1245,7 @@
                     <span>
                         {{ frappe.utils.format_date(doc.start_date, "MMMM d") }}
                         -
-                        {{ frappe.utils.format_date(doc.end_date, "d, yyyy") }}
+                        {{ frappe.utils.format_date(doc.end_date, "MMMM d, yyyy") }}
                     </span>
                 {% endif %}
             </div>
@@ -808,7 +1286,7 @@
                     </svg>
                     <span>Registration Details</span>
                 </a>
-
+                {% if show_e_ticket %}
                 <a href="/e-ticket/{{ name }}" class="btn-fill-cca">
                     <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M4 7h16v10H4z"></path>
@@ -821,6 +1299,7 @@
                     </svg>
                     <span>View E-Ticket</span>
                 </a>
+                {% endif %}
 
                 {% if has_exhibitor %}
                 <a href="/exhibitor-registration/new?event={{ name }}" class="btn-fill-cca">
@@ -862,6 +1341,21 @@
                 Speakers
             </button>
         </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="connections-tab" data-bs-toggle="tab"
+                    data-bs-target="#connectionsSection" type="button" role="tab">
+                Connections
+            </button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="resources-tab" data-bs-toggle="tab"
+                    data-bs-target="#resourcesSection" type="button" role="tab">
+                Resources
+            </button>
+        </li>
+
     </ul>
 
     <div class="tab-content event-tab-content">
@@ -997,7 +1491,7 @@
         <div class="tab-pane fade" id="venueSection" role="tabpanel">
             <div class="panel-plain">
                 <h5>Venue Details</h5>
-                <p class="mb-0">{{ doc.venuelocation }}</p>
+                <p class="venue-details">{{ doc.venuelocation }}</p>
             </div>
         </div>
 
@@ -1069,10 +1563,154 @@
             </div>
         </div>
 
+        <!-- ==========================
+            CONNECTIONS
+        =========================== -->
+        <div class="tab-pane fade" id="connectionsSection" role="tabpanel">
+
+            <div class="conn-grid" id="connections-grid">
+                {% for c in connections %}
+                <div class="conn-card">
+                <div class="conn-card-avatar">
+                    {% if c.profile_photo %}
+                    <img src="{{ c.profile_photo }}" alt="{{ c.full_name }}">
+                    {% else %}
+                    <div class="conn-card-avatar-fallback">{{ c.full_name[0] if c.full_name else "?" }}</div>
+                    {% endif %}
+                </div>
+                <div class="conn-card-body">
+                    <div class="conn-card-name">{{ c.full_name }}</div>
+                    <div class="conn-card-designation">{{ c.designation or "" }}</div>
+                    {% if c.title %}<div class="conn-card-subtitle">{{ c.title }}</div>{% endif %}
+                    <div class="conn-card-info">
+                    {% if c.mobile_phone %}
+                    <div class="conn-card-row">
+                        <svg class="conn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <span>{{ c.mobile_phone }}</span>
+                    </div>
+                    {% endif %}
+                    {% if c.email %}
+                    <div class="conn-card-row">
+                        <svg class="conn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                        <span>{{ c.email }}</span>
+                    </div>
+                    {% endif %}
+                    {% if c.city or c.country %}
+                    <div class="conn-card-row">
+                        <svg class="conn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        <span>
+                            {% if c.city and c.country %}{{ c.city }}, {{ c.country }}
+                            {% elif c.city %}{{ c.city }}
+                            {% elif c.country %}{{ c.country }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% endif %}
+                    {% if c.organization %}
+                    <div class="conn-card-row">
+
+                        <svg class="conn-icon" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round">
+
+                            <rect x="4" y="3" width="16" height="18" rx="1"/>
+                            <path d="M9 21V17h6v4"/>
+                            <path d="M8 7h2"/>
+                            <path d="M14 7h2"/>
+                            <path d="M8 11h2"/>
+                            <path d="M14 11h2"/>
+                            <path d="M8 15h2"/>
+                            <path d="M14 15h2"/>
+
+                        </svg>
+
+                        <span>{{ c.organization }}</span>
+
+                    </div>
+                    {% endif %}
+                    </div>
+                </div>
+                </div>
+                {% endfor %}
+
+                <button type="button" class="conn-add-tile" id="add-connection-btn" title="{{ _('Add Connection') }}">
+                <svg viewBox="0 0 40 40" fill="none" stroke="#8D99A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 15h7M7.5 11.5v7"/>
+                    <g transform="translate(11,8) scale(1.05)">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                    </g>
+                </svg>
+                </button>
+            </div>
+
+            {% if not connections %}
+            <p class="conn-empty">{{ _("No connections yet. Tap the + tile to add one.") }}</p>
+            {% endif %}
+
+            <!-- Add Connection modal -->
+            <div class="conn-modal-overlay" id="connection-modal-overlay">
+            <div class="conn-modal">
+                <button type="button" class="conn-modal-close" id="modal-close-btn" aria-label="{{ _('Close') }}">&times;</button>
+                <h2 class="conn-modal-title">{{ _("Add your Connection!") }}</h2>
+                <p class="conn-modal-subtitle">{{ _("Connect with other members by sharing your code or scanning their QR Code") }}</p>
+
+                <input type="text" id="code-input" class="conn-code-input" maxlength="20"
+                    placeholder="{{ _('Enter 10 Digit Code') }}" autocomplete="off" inputmode="text">
+
+                <div class="conn-or-divider"><span>{{ _("OR") }}</span></div>
+
+                <div class="conn-qr-box" id="qr-scan-box">
+                <div id="qr-reader-modal"></div>
+                <div class="conn-qr-frame" id="qr-frame">
+                    <span class="corner tl"></span><span class="corner tr"></span>
+                    <span class="corner bl"></span><span class="corner br"></span>
+                </div>
+                <div class="conn-qr-hint" id="qr-hint">{{ _("Starting camera…") }}</div>
+                </div>
+            </div>
+            </div>
+
+        </div>
+
+        <!-- ==========================
+            RESOURCES
+        =========================== -->
+        <div class="tab-pane fade" id="resourcesSection" role="tabpanel">
+            <div class="panel-plain">
+                <h5>Resources</h5>
+
+                {% if not resources %}
+                    <div class="resource-empty">{{ _("No resources found for this conference.") }}</div>
+                {% else %}
+                    <div class="resource-grid">
+                    {% for res in resources %}
+                        <a href="{{ res.attach }}" target="_blank" rel="noopener" class="resource-card">
+                            {% if res.is_image %}
+                                <div class="resource-thumb" style="background-image:url('{{ res.attach }}');"></div>
+                            {% else %}
+                                <div class="resource-thumb resource-thumb-file">
+                                    <span>{{ res.ext }}</span>
+                                </div>
+                            {% endif %}
+                            <div class="resource-info">
+                                <span class="resource-name">{{ res.file_name }}</span>
+                                <span class="resource-category">Uploaded on {{ res.uploaded_date or " " }}</span>
+                            </div>
+                        </a>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode"></script>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -1100,6 +1738,129 @@ function showSpeakersTab() {
 }
 </script>
 
+<script>
+(function () {
+    var overlay = document.getElementById("connection-modal-overlay");
+    var addBtn = document.getElementById("add-connection-btn");
+    var closeBtn = document.getElementById("modal-close-btn");
+    var codeInput = document.getElementById("code-input");
+    var qrHint = document.getElementById("qr-hint");
+    var html5QrCode = null;
+    var scanning = false;
 
+    if (!overlay || !addBtn) {
+        return;
+    }
+
+    function handle_scanned_value(value) {
+        value = (value || "").trim();
+        if (!value) return;
+
+        frappe.call({
+            method: "e_desk.e_desk.api.connections.connection_doc",
+            args: { scanned_user: value, event: "{{ name }}"  },
+            callback: function (r) {
+                if (!r.message) {
+                    frappe.msgprint(__("No response from server"));
+                    return;
+                }
+
+                if (r.message.status === "created") {
+                    frappe.show_alert({ message: __("Connection added"), indicator: "green" });
+                    setTimeout(function () { window.location.reload(); }, 800);
+                } else if (r.message.status === "invalid") {
+                    frappe.show_alert({ message: __("Invalid or unrecognized QR code"), indicator: "red" });
+                    setTimeout(function () { window.location.reload(); }, 1500);
+                } else if (r.message.status === "same") {
+                    frappe.show_alert({ message: __("You cannot connect with yourself"), indicator: "red" });
+                    setTimeout(function () { window.location.reload(); }, 1500);
+                } else if (r.message.status === "event_not_matching") { 
+                    frappe.show_alert({ message: __("Event is not matching"), indicator: "red" }); 
+                    setTimeout(function () { window.location.reload(); }, 1500);
+                } else if (r.message.status === "existed") {
+                    frappe.show_alert({ message: __("Connection already exists"), indicator: "red" });
+                    setTimeout(function () { window.location.reload(); }, 1500);
+                } else {
+                    frappe.show_alert({ message: __("Something went wrong"), indicator: "red" });
+                    setTimeout(function () { window.location.reload(); }, 1500);
+                }
+
+                codeInput.value = "";
+            },
+            error: function () {
+                frappe.msgprint("{{ _('Error while adding connection') }}");
+            }
+        });
+    }
+
+    function startScanner() {
+        if (scanning) return;
+        html5QrCode = new Html5Qrcode("qr-reader-modal");
+        scanning = true;
+        html5QrCode.start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: 220 },
+            function (decodedText) {
+                stopScanner();
+                handle_scanned_value(decodedText);
+            },
+            function (errorMessage) { /* ignore per-frame scan errors */ }
+        ).then(function () {
+            qrHint.style.display = "none";
+        }).catch(function (err) {
+            scanning = false;
+            console.error("QR camera start failed:", err);
+            var msg = String(err && err.message ? err.message : err);
+            var friendly = "{{ _('Camera unavailable — enter the code above instead') }}";
+            if (!window.isSecureContext) {
+                friendly = "{{ _('Camera needs HTTPS — enter the code above instead') }}";
+            } else if (msg.indexOf("NotAllowedError") !== -1 || msg.indexOf("Permission") !== -1) {
+                friendly = "{{ _('Camera permission denied — enter the code above instead') }}";
+            } else if (msg.indexOf("NotFoundError") !== -1) {
+                friendly = "{{ _('No camera found — enter the code above instead') }}";
+            }
+            qrHint.textContent = friendly;
+        });
+    }
+
+    function stopScanner() {
+        if (html5QrCode && scanning) {
+            html5QrCode.stop().then(function () {
+                document.getElementById("qr-reader-modal").innerHTML = "";
+                scanning = false;
+            }).catch(function () { scanning = false; });
+        }
+    }
+
+    function openModal() {
+        overlay.classList.add("is-open");
+        codeInput.value = "";
+        qrHint.style.display = "block";
+        qrHint.textContent = "{{ _('Starting camera…') }}";
+        setTimeout(function () {
+            codeInput.focus();
+            startScanner();
+        }, 150);
+    }
+
+    function closeModal() {
+        overlay.classList.remove("is-open");
+        stopScanner();
+    }
+
+    addBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) closeModal();
+    });
+
+    codeInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            handle_scanned_value(this.value);
+        }
+    });
+})();
+</script>
 
 {% endblock %}

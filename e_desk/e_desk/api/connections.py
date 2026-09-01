@@ -2,7 +2,7 @@ import frappe
 from frappe import _
 
 @frappe.whitelist()
-def connection_doc(scanned_user):
+def connection_doc(scanned_user, event):
     current_user = frappe.session.user
 
     participant = frappe.db.get_value(
@@ -13,18 +13,21 @@ def connection_doc(scanned_user):
     )
 
     if not participant:
-        frappe.throw(_("Invalid or unrecognized QR code"))
+        return { "status": "invalid" }
 
     if participant.user == current_user:
-        frappe.throw(_("You cannot connect with yourself"))
+        return { "status": "same" }
+
+    if participant.event != event:
+        return { "status": "event_not_matching" }
 
     existing = frappe.db.exists("Connections", {
         "participant_id": current_user,
         "email": participant.e_mail
     })
-    if existing:
-        frappe.throw(_("Already Exists This Connections"))
 
+    if existing:
+        return {"status": "existed", "name": doc.name}
     doc = frappe.new_doc("Connections")
     doc.participant_id = current_user
     doc.full_name = participant.full_name
