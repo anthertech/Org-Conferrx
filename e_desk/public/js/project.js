@@ -29,12 +29,14 @@ function open_event_dialog(frm) {
                 fieldtype: 'Datetime',
                 fieldname: 'start_date',
                 label: 'Start Date',
+                default: frm.doc.expected_start_date,
                 reqd: 1
             },
             {
                 fieldtype: 'Datetime',
                 fieldname: 'end_date',
                 label: 'End Date',
+                default: frm.doc.expected_end_date,
                 reqd: 1
             },
             {

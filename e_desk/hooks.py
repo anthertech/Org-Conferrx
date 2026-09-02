@@ -92,13 +92,13 @@ fixtures = [
     ["name", "in", ["Volunteer", "Speaker", "Participant"]]
     ]
     },
-    {
-        "dt": "Custom Field",
-        "filters": [
-            ["dt", "=", "Project"],
-            ["name", "=", "Project-custom_warehouse"]
-        ]
-    },
+    # {
+    #     "dt": "Custom Field",
+    #     "filters": [
+    #         ["dt", "=", "Project"],
+    #         ["name", "=", "Project-custom_warehouse"]
+    #     ]
+    # },
     {
         "dt": "Custom Field",
         "filters": [
