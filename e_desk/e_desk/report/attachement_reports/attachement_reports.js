@@ -10,12 +10,7 @@ frappe.query_reports["Attachement Reports"] = {
             fieldtype: "Link",
             options: "Conference",
             reqd: 1,
-            default: "",
-            get_query: function() {
-                return {
-                    query: "e_desk.e_desk.report.attachement_reports.attachement_reports.get_user_conferences"
-                };
-            }
+            default: ""
         }
     ],
 
