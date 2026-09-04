@@ -68,6 +68,15 @@ frappe.ui.form.on('Registration Desk', {
 			frm.get_field("profile_preview").$wrapper.html(imgHTML);
 		}
 
+		if (frm.doc.qr_profile) {
+			let qrHTML = `
+				<div>
+					<img src="${frm.doc.qr_profile}" alt="QR Code"
+						style="width:116px !important; border-radius:5px;">
+				</div>`;
+			frm.get_field("qr_preview").$wrapper.html(qrHTML);
+		}
+
 		frm.set_query('item', 'items', () => {
 			let filters = { 'disabled': 0 };
 			if (current_item_group) {

@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_bulk_edit": 1,
  "allow_rename": 1,
  "creation": "2024-10-24 12:20:56.551203",
  "default_view": "List",
@@ -64,7 +65,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-01-14 20:36:03.602094",
+ "modified": "2026-09-04 11:24:42.641609",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Programme Attendance",
@@ -87,6 +88,16 @@
    "print": 1,
    "read": 1,
    "role": "Volunteer",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "E-Desk Admin",
    "share": 1,
    "write": 1
   }
