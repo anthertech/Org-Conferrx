@@ -32,6 +32,7 @@
    "fetch_from": "speaker.event",
    "fieldname": "conference",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Conference",
    "options": "Conference"
   }
@@ -40,7 +41,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-08-29 12:35:54.508642",
+ "modified": "2026-09-05 15:22:42.751269",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Speakers",
