@@ -15,7 +15,14 @@ frappe.query_reports["Event History"] = {
             label: __("User"),
             fieldtype: "Link",
             options: "User",
-            default: frappe.session.user
+            default: frappe.session.user,
+            get_query: function() {
+                return {
+                    filters: {
+                        "enabled": 1
+                    }
+                };
+            }
         },
         {
             fieldname: "event",
