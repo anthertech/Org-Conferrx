@@ -91,7 +91,7 @@ def get_data(filters):
         query = query.where(participant.creation <= to_date)
 
     if filters.get("email"):
-        query = query.where(participant.user == filters["email"])
+        query = query.where(participant.e_mail == filters["email"])
 
     if filters.get("event"):
         query = query.where(participant.event == filters["event"])
