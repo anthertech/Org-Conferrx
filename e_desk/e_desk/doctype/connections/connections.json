@@ -10,8 +10,9 @@
   "participant_id",
   "full_name",
   "email",
-  "mobile_phone",
+  "column_break_1awk",
   "event",
+  "mobile_phone",
   "business_category",
   "profile_photo"
  ],
@@ -24,18 +25,22 @@
    "description": "Connected By",
    "fieldname": "participant_id",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Participant",
    "options": "User"
   },
   {
    "fieldname": "full_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
    "label": "Full Name"
   },
   {
    "description": "Connected User",
    "fieldname": "email",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Email",
    "options": "User"
   },
@@ -47,6 +52,8 @@
   {
    "fieldname": "event",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Event",
    "options": "Conference"
   },
@@ -60,11 +67,15 @@
    "fieldname": "profile_photo",
    "fieldtype": "Attach Image",
    "label": "Profile photo"
+  },
+  {
+   "fieldname": "column_break_1awk",
+   "fieldtype": "Column Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-07 11:55:16.679696",
+ "modified": "2026-10-01 11:30:45.029793",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Connections",

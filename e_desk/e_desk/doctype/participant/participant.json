@@ -103,6 +103,8 @@
   {
    "fieldname": "event",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Event",
    "options": "Conference",
    "reqd": 1
@@ -171,6 +173,8 @@
    "default": "Open",
    "fieldname": "status",
    "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Status",
    "options": "\nOpen\nRegistered\nApproved\nDeclined"
   },
@@ -513,7 +517,7 @@
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-17 15:46:46.489172",
+ "modified": "2026-10-01 11:14:47.198864",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",
