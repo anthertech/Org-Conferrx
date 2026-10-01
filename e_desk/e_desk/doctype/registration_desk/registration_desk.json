@@ -38,6 +38,7 @@
    "fieldname": "kit_provided_",
    "fieldtype": "Select",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Kit provided ?",
    "options": "\nYES\nNO",
    "reqd": 1
@@ -106,6 +107,8 @@
   {
    "fieldname": "confer",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Conference",
    "options": "Conference"
   },
@@ -129,6 +132,8 @@
    "fieldname": "participant_id",
    "fieldtype": "Link",
    "hidden": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "participant id",
    "options": "Participant"
   },
@@ -186,7 +191,7 @@
    "link_fieldname": "custom_registration_desk"
   }
  ],
- "modified": "2026-09-03 15:19:41.656753",
+ "modified": "2026-10-01 11:18:50.856447",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Registration Desk",

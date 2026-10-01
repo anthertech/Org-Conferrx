@@ -261,6 +261,8 @@
   {
    "fieldname": "venuelocation",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Venue/Location"
   },
   {
@@ -300,6 +302,8 @@
    "default": "0",
    "fieldname": "is_publish",
    "fieldtype": "Check",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Is Publish"
   },
   {
@@ -1000,7 +1004,6 @@
    "depends_on": "eval:doc.meal_access==\"Controlled by Pricing\" && doc.has_meal",
    "fieldname": "meal_item",
    "fieldtype": "Link",
-   "in_list_view": 1,
    "label": "Meal Item",
    "mandatory_depends_on": "eval:doc.meal_access==\"Controlled by Pricing\" && doc.has_meal",
    "options": "Item"
@@ -1273,7 +1276,7 @@
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-08-29 15:24:33.293169",
+ "modified": "2026-10-01 11:16:26.481353",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
