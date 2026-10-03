@@ -1330,7 +1330,7 @@
 
                 {% endif %}
                 {% if is_guest %}
-                <a href="#" class="register-btn">Register Now</a>
+                <a href="/event-participant-registrations/new#event={{ name | urlencode }}" class="register-btn">Register Now</a>
                 {% endif %}
 
                 {% if has_exhibitor %}
