@@ -77,6 +77,7 @@ class Conference(WebsiteGenerator):
 						
 
 	def get_context(self, context):
+		context.is_guest = frappe.session.user == "Guest"
 		context.agenda_list, session_speakers, mapped_speaker_ids = get_agenda_data(self)
 		context.session_speakers = session_speakers
 

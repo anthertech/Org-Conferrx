@@ -1207,13 +1207,38 @@
         font-family: 'Inter', sans-serif;
         word-break: break-word;
     }
+    .register-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid #008080;
+        background: #008080;
+        color: #fff;
+        border-radius: 6px;
+        padding: 9px 18px;
+        text-decoration: none;
+        height: 37px;
+        }
+
+        .register-btn:hover {
+        background-color: #004d4d;
+        color: #ffffff;
+        text-decoration: none;
+        }
+
+        .register-btn:active {
+        transform: translateY(1px);
+        }
 
 </style>
 
 
 <div class="container my-5 px-4 event-page">
+    {% if not is_guest %}
 
     <a href="/conference_page" class="back-link">&larr; Back to All Conferences</a>
+
+    {% endif %}
 
     <div class="event-header-row">
 
@@ -1275,30 +1300,37 @@
                         </span>
                     {% endif %}
                 {% endif %}
+                {% if not is_guest %}
 
-                <a href="/registration-details/{{ name }}" class="btn-outline-cca">
-                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <rect x="5" y="4" width="14" height="16" rx="1.5"></rect>
-                        <path d="M9 4.5V3h6v1.5"></path>
-                        <path d="M8.5 9h7"></path>
-                        <path d="M8.5 13h7"></path>
-                        <path d="M8.5 17h4"></path>
-                    </svg>
-                    <span>Registration Details</span>
-                </a>
-                {% if show_e_ticket %}
-                <a href="/e-ticket/{{ name }}" class="btn-fill-cca">
-                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M4 7h16v10H4z"></path>
-                        <path d="M8 7v2"></path>
-                        <path d="M8 11v2"></path>
-                        <path d="M8 15v2"></path>
-                        <path d="M16 7v2"></path>
-                        <path d="M16 11v2"></path>
-                        <path d="M16 15v2"></path>
-                    </svg>
-                    <span>View E-Ticket</span>
-                </a>
+                    <a href="/registration-details/{{ name }}" class="btn-outline-cca">
+                        <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <rect x="5" y="4" width="14" height="16" rx="1.5"></rect>
+                            <path d="M9 4.5V3h6v1.5"></path>
+                            <path d="M8.5 9h7"></path>
+                            <path d="M8.5 13h7"></path>
+                            <path d="M8.5 17h4"></path>
+                        </svg>
+                        <span>Registration Details</span>
+                    </a>
+
+                    {% if show_e_ticket %}
+                    <a href="/e-ticket/{{ name }}" class="btn-fill-cca">
+                        <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 7h16v10H4z"></path>
+                            <path d="M8 7v2"></path>
+                            <path d="M8 11v2"></path>
+                            <path d="M8 15v2"></path>
+                            <path d="M16 7v2"></path>
+                            <path d="M16 11v2"></path>
+                            <path d="M16 15v2"></path>
+                        </svg>
+                        <span>View E-Ticket</span>
+                    </a>
+                    {% endif %}
+
+                {% endif %}
+                {% if is_guest %}
+                <a href="#" class="register-btn">Register Now</a>
                 {% endif %}
 
                 {% if has_exhibitor %}
@@ -1341,6 +1373,7 @@
                 Speakers
             </button>
         </li>
+        {% if not is_guest %}
 
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="connections-tab" data-bs-toggle="tab"
@@ -1355,6 +1388,7 @@
                 Resources
             </button>
         </li>
+        {% endif %}
 
     </ul>
 
