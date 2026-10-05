@@ -27,7 +27,7 @@ def connection_doc(scanned_user, event):
     })
 
     if existing:
-        return {"status": "existed", "name": doc.name}
+        return {"status": "existed", "name": existing}
     doc = frappe.new_doc("Connections")
     doc.participant_id = current_user
     doc.full_name = participant.full_name
@@ -38,3 +38,17 @@ def connection_doc(scanned_user, event):
     doc.insert(ignore_permissions=True)
 
     return {"status": "created", "name": doc.name}
+
+@frappe.whitelist()
+def delete_connection(connection):
+    if not connection or not frappe.db.exists("Connections", connection):
+        return {"status": "not_found"}
+
+    owner = frappe.db.get_value("Connections", connection, "participant_id")
+
+    if owner != frappe.session.user:
+        frappe.throw(_("Not permitted"), frappe.PermissionError)
+
+    frappe.delete_doc("Connections", connection, ignore_permissions=True)
+
+    return {"status": "deleted"}

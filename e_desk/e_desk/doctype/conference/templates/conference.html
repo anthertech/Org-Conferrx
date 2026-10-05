@@ -955,7 +955,83 @@
 
     .conn-add-tile svg { width: 40px; height: 40px; }
 
-    .conn-empty { color: #888; margin-top: 12px; }
+    .conn-empty { 
+        color: #888; 
+        margin-top: 12px;
+        font-family: 'Inter',sans-serif;
+        font-size: 16px;
+
+    }
+    .conn-card { position: relative; }
+
+    .conn-delete-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 26px;
+        height: 26px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: transparent;
+        color: #9ca3af;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: background .15s, color .15s;
+    }
+    .conn-delete-btn:hover { background: #fdecea; color: var(--cca-red); }
+    .conn-delete-btn svg {
+        width: 15px;
+        height: 15px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .conn-confirm-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(20, 20, 20, 0.55);
+        align-items: center;
+        justify-content: center;
+        z-index: 100000;
+    }
+    .conn-confirm-overlay.is-open { display: flex; }
+
+    .conn-confirm-box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        width: 320px;
+        max-width: 90%;
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    }
+    .conn-confirm-box p {
+        font-size: 16px;
+        font-weight: 400;
+        color: #2F2F2F;
+        margin: 0 0 20px;
+    }
+    .conn-confirm-actions { display: flex; gap: 12px; justify-content: center; }
+    .conn-confirm-actions button {
+        min-width: 90px;
+        height: 37px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    .conn-confirm-no  { background: #fff; color: #008080; border: 1px solid #008080; }
+    .conn-confirm-no:hover { background: #eefaf9; }
+    .conn-confirm-yes { background: var(--cca-red); color: #fff; border: 1px solid var(--cca-red); }
+    .conn-confirm-yes:hover { background: #a93226; }
 
     /* Modal */
     .conn-modal-overlay {
@@ -1002,11 +1078,7 @@
     .conn-modal-close:hover { color: #333; }
 
     .conn-modal-title {
-    font-size: 24px;
-    font-weight: 600;
     margin: 0 0 8px;
-    line-height:19.5px;
-    letter-spacing:0.32px;
     color: #000000;
     }
 
@@ -1604,7 +1676,19 @@
 
             <div class="conn-grid" id="connections-grid">
                 {% for c in connections %}
-                <div class="conn-card">
+                <div class="conn-card" data-connection="{{ c.name }}">
+
+                <!-- DELETE ICON -->
+                <button type="button" class="conn-delete-btn" data-connection="{{ c.name }}" title="{{ _('Delete connection') }}" aria-label="{{ _('Delete connection') }}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M3 6h18"></path>
+                        <path d="M8 6V4h8v2"></path>
+                        <path d="M19 6l-1 14H6L5 6"></path>
+                        <path d="M10 11v6"></path>
+                        <path d="M14 11v6"></path>
+                    </svg>
+                </button>
+
                 <div class="conn-card-avatar">
                     {% if c.profile_photo %}
                     <img src="{{ c.profile_photo }}" alt="{{ c.full_name }}">
@@ -1688,7 +1772,7 @@
             <div class="conn-modal-overlay" id="connection-modal-overlay">
             <div class="conn-modal">
                 <button type="button" class="conn-modal-close" id="modal-close-btn" aria-label="{{ _('Close') }}">&times;</button>
-                <h2 class="conn-modal-title">{{ _("Add your Connection!") }}</h2>
+                <h5 class="conn-modal-title">{{ _("Add your Connection!") }}</h2>
                 <p class="conn-modal-subtitle">{{ _("Connect with other members by sharing your code or scanning their QR Code") }}</p>
 
                 <input type="text" id="code-input" class="conn-code-input" maxlength="20"
@@ -1705,6 +1789,17 @@
                 <div class="conn-qr-hint" id="qr-hint">{{ _("Starting camera…") }}</div>
                 </div>
             </div>
+            </div>
+
+            <!-- Delete confirmation popup -->
+            <div class="conn-confirm-overlay" id="conn-confirm-overlay">
+                <div class="conn-confirm-box">
+                    <p>{{ _("Are you sure you want to delete this connection?") }}</p>
+                    <div class="conn-confirm-actions">
+                        <button type="button" class="conn-confirm-no" id="conn-confirm-no">{{ _("No") }}</button>
+                        <button type="button" class="conn-confirm-yes" id="conn-confirm-yes">{{ _("Yes") }}</button>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -1771,7 +1866,6 @@ function showSpeakersTab() {
     }
 }
 </script>
-
 <script>
 (function () {
     var overlay = document.getElementById("connection-modal-overlay");
@@ -1782,49 +1876,67 @@ function showSpeakersTab() {
     var html5QrCode = null;
     var scanning = false;
 
+    var scanLock = false; 
+    var scanTimer = null;
+    var SCAN_DEBOUNCE_MS = 300;
+
     if (!overlay || !addBtn) {
         return;
     }
 
     function handle_scanned_value(value) {
         value = (value || "").trim();
-        if (!value) return;
+        if (!value) { scanLock = false; return; }
 
         frappe.call({
             method: "e_desk.e_desk.api.connections.connection_doc",
-            args: { scanned_user: value, event: "{{ name }}"  },
+            args: { scanned_user: value, event: "{{ name }}" },
             callback: function (r) {
                 if (!r.message) {
                     frappe.msgprint(__("No response from server"));
+                    scanLock = false;
+                    codeInput.focus();
                     return;
                 }
 
-                if (r.message.status === "created") {
+                var status = r.message.status;
+
+                if (status === "created") {
                     frappe.show_alert({ message: __("Connection added"), indicator: "green" });
                     setTimeout(function () { window.location.reload(); }, 800);
-                } else if (r.message.status === "invalid") {
-                    frappe.show_alert({ message: __("Invalid or unrecognized QR code"), indicator: "red" });
-                    setTimeout(function () { window.location.reload(); }, 1500);
-                } else if (r.message.status === "same") {
-                    frappe.show_alert({ message: __("You cannot connect with yourself"), indicator: "red" });
-                    setTimeout(function () { window.location.reload(); }, 1500);
-                } else if (r.message.status === "event_not_matching") { 
-                    frappe.show_alert({ message: __("Event is not matching"), indicator: "red" }); 
-                    setTimeout(function () { window.location.reload(); }, 1500);
-                } else if (r.message.status === "existed") {
-                    frappe.show_alert({ message: __("Connection already exists"), indicator: "red" });
-                    setTimeout(function () { window.location.reload(); }, 1500);
-                } else {
-                    frappe.show_alert({ message: __("Something went wrong"), indicator: "red" });
-                    setTimeout(function () { window.location.reload(); }, 1500);
+                    return;
                 }
 
+                var errors = {
+                    invalid: __("Invalid or unrecognized QR code"),
+                    same: __("You cannot connect with yourself"),
+                    event_not_matching: __("Event is not matching"),
+                    existed: __("Connection already exists")
+                };
+                frappe.show_alert({
+                    message: errors[status] || __("Something went wrong"),
+                    indicator: "red"
+                });
+
+                scanLock = false;
                 codeInput.value = "";
+                codeInput.focus();
             },
             error: function () {
+                scanLock = false;
+                codeInput.focus();
                 frappe.msgprint("{{ _('Error while adding connection') }}");
             }
         });
+    }
+
+    function processScan() {
+        var value = (codeInput.value || "").trim();
+        if (!value || scanLock) return;
+
+        scanLock = true;
+        codeInput.value = "";
+        handle_scanned_value(value);
     }
 
     function startScanner() {
@@ -1835,7 +1947,8 @@ function showSpeakersTab() {
             { facingMode: "environment" },
             { fps: 10, qrbox: 220 },
             function (decodedText) {
-                stopScanner();
+                if (scanLock) return;      // ignore repeated frames while processing
+                scanLock = true;
                 handle_scanned_value(decodedText);
             },
             function (errorMessage) { /* ignore per-frame scan errors */ }
@@ -1867,6 +1980,8 @@ function showSpeakersTab() {
     }
 
     function openModal() {
+        scanLock = false;
+        clearTimeout(scanTimer);
         overlay.classList.add("is-open");
         codeInput.value = "";
         qrHint.style.display = "block";
@@ -1878,6 +1993,7 @@ function showSpeakersTab() {
     }
 
     function closeModal() {
+        clearTimeout(scanTimer);
         overlay.classList.remove("is-open");
         stopScanner();
     }
@@ -1888,11 +2004,74 @@ function showSpeakersTab() {
         if (e.target === overlay) closeModal();
     });
 
+    codeInput.addEventListener("input", function () {
+        clearTimeout(scanTimer);
+        scanTimer = setTimeout(processScan, SCAN_DEBOUNCE_MS);
+    });
+
     codeInput.addEventListener("keydown", function (e) {
         if (e.key === "Enter") {
             e.preventDefault();
-            handle_scanned_value(this.value);
+            clearTimeout(scanTimer);
+            processScan();
         }
+    });
+})();
+</script>
+
+<!-- DELETE CONNECTION -->
+<script>
+(function () {
+    var confirmOverlay = document.getElementById("conn-confirm-overlay");
+    var yesBtn = document.getElementById("conn-confirm-yes");
+    var noBtn = document.getElementById("conn-confirm-no");
+    var pendingName = null;
+
+    if (!confirmOverlay) return;
+
+    function closeConfirm() {
+        confirmOverlay.classList.remove("is-open");
+        pendingName = null;
+        yesBtn.disabled = false;
+    }
+
+    // Event delegation so it works for every card
+    document.addEventListener("click", function (e) {
+        var btn = e.target.closest(".conn-delete-btn");
+        if (!btn) return;
+        pendingName = btn.getAttribute("data-connection");
+        confirmOverlay.classList.add("is-open");
+    });
+
+    noBtn.addEventListener("click", closeConfirm);
+    confirmOverlay.addEventListener("click", function (e) {
+        if (e.target === confirmOverlay) closeConfirm();
+    });
+
+    yesBtn.addEventListener("click", function () {
+        if (!pendingName) return;
+        yesBtn.disabled = true;
+        var nameToDelete = pendingName;
+
+        frappe.call({
+            method: "e_desk.e_desk.api.connections.delete_connection",
+            args: { connection: nameToDelete },
+            callback: function (r) {
+                if (r.message && r.message.status === "deleted") {
+                    var card = document.querySelector('.conn-card[data-connection="' + nameToDelete + '"]');
+                    if (card) card.remove();
+                    closeConfirm();
+                    frappe.show_alert({ message: __("Connection deleted"), indicator: "green" });
+                } else {
+                    closeConfirm();
+                    frappe.show_alert({ message: __("Could not delete connection"), indicator: "red" });
+                }
+            },
+            error: function () {
+                closeConfirm();
+                frappe.show_alert({ message: __("Error while deleting connection"), indicator: "red" });
+            }
+        });
     });
 })();
 </script>
