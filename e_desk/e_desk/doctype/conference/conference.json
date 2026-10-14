@@ -17,14 +17,15 @@
   "time_zone",
   "currency",
   "is_sponsored",
+  "event_image",
   "column_break_mc7g",
   "is_publish",
-  "registration_required",
+  "event_status",
+  "event_type",
   "route",
   "start_date",
   "end_date",
   "registration_close_date",
-  "event_image",
   "section_break_avxn",
   "agenda",
   "is_private",
@@ -1273,18 +1274,24 @@
    "fieldtype": "Column Break"
   },
   {
-   "default": "0",
-   "fieldname": "registration_required",
-   "fieldtype": "Check",
-   "label": "Registration Required"
+   "fieldname": "event_status",
+   "fieldtype": "Select",
+   "label": "Event Status",
+   "options": "\nOpen\nCompleted\nClosed\nCanceled"
+  },
+  {
+   "fieldname": "event_type",
+   "fieldtype": "Select",
+   "label": "Event Type",
+   "options": "Private\nPublic"
   }
  ],
  "has_web_view": 1,
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-10-14 10:32:03.924758",
- "modified_by": "akhila@anther.tech",
+ "modified": "2026-10-14 16:15:31.719975",
+ "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
  "naming_rule": "Expression (old style)",
@@ -1342,6 +1349,19 @@
    "read": 1,
    "report": 1,
    "role": "E-Desk Admin",
+   "select": 1,
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Website Manager",
    "select": 1,
    "share": 1,
    "write": 1
