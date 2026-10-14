@@ -6,6 +6,7 @@ from frappe.model.document import Document
 from frappe.website.website_generator import WebsiteGenerator
 # from frappe.utils import get_timezones
 from datetime import date,datetime
+from frappe.utils import now_datetime, get_datetime
 
 
 class Conference(WebsiteGenerator):
@@ -94,6 +95,18 @@ class Conference(WebsiteGenerator):
 		end_date = frappe.utils.get_datetime(self.end_date) if self.end_date else None
 
 		context.show_e_ticket = bool(end_date and now <= end_date)
+		context.is_registration_closed = bool(
+			self.registration_close_date
+			and get_datetime(self.registration_close_date) < now_datetime()
+		)
+
+		status = (self.event_status or "").strip()
+
+		context.is_cancelled = status == "Canceled"
+		context.is_closed = (status == "Closed" or context.is_registration_closed)
+
+		context.can_register = status == "Open" and not context.is_registration_closed
+		
 		return context
 
 

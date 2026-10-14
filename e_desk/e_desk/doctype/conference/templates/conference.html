@@ -207,6 +207,27 @@
     .registration-closed-badge a:hover {
         text-decoration: none;
     }
+    /* Gray button: registration closed */
+    .register-btn.is-closed-gray,
+    .register-btn.is-closed-gray:hover,
+    .register-btn.is-closed-gray:active {
+      background: #81848b;
+      border-color: #9CA3AF;
+      color: #FFFFFF;
+      cursor: default;
+      transform: none;
+    }
+
+    /* Red button: event cancelled */
+    .register-btn.is-cancelled,
+    .register-btn.is-cancelled:hover,
+    .register-btn.is-cancelled:active {
+      background: #c0392b;
+      border-color: #c0392b;
+      color: #FFFFFF;
+      cursor: default;
+      transform: none;
+    }
 
     .btn-icon {
         width: 15px;
@@ -1374,15 +1395,16 @@
 
             <div class="event-actions">
 
-                {% if is_registration_closed %}
-                    <span class="registration-closed-badge">Registration Closed</span>
-                {% else %}
-                    {% if doc.registration_close_date %}
-                        <span class="event-meta-row" style="margin:0;">
-                            <strong>Registration closes on:</strong>&nbsp;{{ frappe.utils.format_date(doc.registration_close_date, "dd/mm/yyyy") }}
-                        </span>
-                    {% endif %}
+                {% if is_cancelled %}
+                    <span class="register-btn is-cancelled">Event Cancelled</span>
+                {% elif is_closed %}
+                    <span class="register-btn is-closed-gray">Registration Closed</span>
+                {% elif can_register and doc.registration_close_date %}
+                    <span class="event-meta-row" style="margin:0;">
+                        <strong>Registration closes on:</strong>&nbsp;{{ frappe.utils.format_date(doc.registration_close_date, "dd/mm/yyyy") }}
+                    </span>
                 {% endif %}
+
                 {% if not is_guest %}
 
                     <a href="/registration-details/{{ name }}" class="btn-outline-cca">
@@ -1396,7 +1418,7 @@
                         <span>Registration Details</span>
                     </a>
 
-                    {% if show_e_ticket %}
+                    {% if show_e_ticket and not is_cancelled %}
                     <a href="/e-ticket/{{ name }}" class="btn-fill-cca">
                         <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
                             <path d="M4 7h16v10H4z"></path>
@@ -1412,7 +1434,9 @@
                     {% endif %}
 
                 {% endif %}
-                {% if is_guest %}
+
+                {# ---- Register Now: only for guests and only when status is Open ---- #}
+                {% if is_guest and can_register %}
                 <a href="/event-participant-registrations/new#event={{ name | urlencode }}" class="register-btn">Register Now</a>
                 {% endif %}
 
