@@ -19,6 +19,7 @@
   "is_sponsored",
   "column_break_mc7g",
   "is_publish",
+  "registration_required",
   "route",
   "start_date",
   "end_date",
@@ -1270,14 +1271,20 @@
   {
    "fieldname": "column_break_uwlb",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "registration_required",
+   "fieldtype": "Check",
+   "label": "Registration Required"
   }
  ],
  "has_web_view": 1,
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-10-01 11:16:26.481353",
- "modified_by": "Administrator",
+ "modified": "2026-10-14 10:32:03.924758",
+ "modified_by": "akhila@anther.tech",
  "module": "E Desk",
  "name": "Conference",
  "naming_rule": "Expression (old style)",
