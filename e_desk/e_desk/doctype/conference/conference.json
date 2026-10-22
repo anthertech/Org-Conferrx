@@ -48,6 +48,8 @@
   "event",
   "column_break_rqcc",
   "mobile_number",
+  "column_break_2qba",
+  "social_media",
   "personal_information_section",
   "show_personal_information",
   "column_break_fikc",
@@ -1284,13 +1286,23 @@
    "fieldtype": "Select",
    "label": "Event Type",
    "options": "Private\nPublic"
+  },
+  {
+   "fieldname": "column_break_2qba",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "1",
+   "fieldname": "social_media",
+   "fieldtype": "Check",
+   "label": "Social Media"
   }
  ],
  "has_web_view": 1,
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-10-14 16:15:31.719975",
+ "modified": "2026-10-22 18:06:12.759756",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",
