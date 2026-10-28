@@ -1276,12 +1276,14 @@
    "fieldtype": "Column Break"
   },
   {
+   "description": "Indicates the current status of the event.",
    "fieldname": "event_status",
    "fieldtype": "Select",
    "label": "Event Status",
    "options": "\nOpen\nCompleted\nClosed\nCanceled"
   },
   {
+   "description": "Specifies whether the event is open to the public or restricted to selected participants.",
    "fieldname": "event_type",
    "fieldtype": "Select",
    "label": "Event Type",
@@ -1302,7 +1304,7 @@
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-10-23 12:45:52.634106",
+ "modified": "2026-10-27 11:58:07.174936",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",

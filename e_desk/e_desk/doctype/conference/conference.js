@@ -132,7 +132,7 @@ function open_add_speaker_dialog(frm) {
 		return;
 	}
 	if (!frm.doc.speaker || !frm.doc.speaker.length) {
-		frappe.msgprint(__("Please add speakers to the Conference's Speaker list first."));
+		frappe.msgprint(__("No speakers have been added to this Conference. Kindly add the participants as speakers before assigning them to a Program Agenda."));
 		return;
 	}
 
