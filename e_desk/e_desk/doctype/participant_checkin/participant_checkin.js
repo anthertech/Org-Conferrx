@@ -1,7 +1,7 @@
 // Copyright (c) 2026, Anther Technologies Pvt Ltd and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Scanned List", {
+// frappe.ui.form.on("Participant Checkin", {
 // 	refresh(frm) {
 
 // 	},
