@@ -1,0 +1,130 @@
+{
+ "charts": [],
+ "content": "[{\"id\": \"moJWlIER1F\", \"type\": \"header\", \"data\": {\"text\": \"\\u003cspan style=\\\"font-size:16px\\\"\\u003eConference\\u003c/span\\u003e\", \"col\": 12}}, {\"id\": \"ChdI8wG-D9\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Participant\", \"col\": 3}}, {\"id\": \"_A-14y-UjS\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"User\", \"col\": 3}}, {\"id\": \"QtfMuh6twg\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hotel\", \"col\": 3}}, {\"id\": \"0hZz0S2ouU\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Registration Desk\", \"col\": 3}}, {\"id\": \"YJl7IdIDNZ\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Conference & Events\", \"col\": 3}}, {\"id\": \"uWSEmatfU0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project\", \"col\": 3}}, {\"id\": \"QEN_wPVnN5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Connections\", \"col\": 3}}, {\"id\": \"2ZvvPOSs3d\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Programme Attendance\", \"col\": 3}}, {\"id\": \"O3g7qWrPfL\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"Rd7ZK9AuOx\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
+ "creation": "2026-08-12 18:16:10.710200",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 1,
+ "icon": "project",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "CCA Conference",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Reports",
+   "link_count": 2,
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Event Attendee",
+   "link_count": 0,
+   "link_to": "Attendee Report",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 1,
+   "label": "Event History",
+   "link_count": 0,
+   "link_to": "Event History",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2026-10-28 12:47:24.773282",
+ "modified_by": "Administrator",
+ "module": "E Desk",
+ "name": "CCA Conference",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Volunteer"
+  },
+  {
+   "role": "E-Desk Admin"
+  },
+  {
+   "role": "Administrator"
+  }
+ ],
+ "sequence_id": 2.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Hotel",
+   "link_to": "Hotel",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Connections",
+   "link_to": "Connections",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Conference & Events",
+   "link_to": "Conference",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Programme Attendance",
+   "link_to": "Programme Attendance",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "User",
+   "link_to": "User",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Participant",
+   "link_to": "Participant",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Registration Desk",
+   "link_to": "Registration Desk",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Project",
+   "link_to": "Project",
+   "stats_filter": "[]",
+   "type": "DocType"
+  }
+ ],
+ "standard": 1,
+ "title": "CCA Conference",
+ "type": "Workspace"
+}
