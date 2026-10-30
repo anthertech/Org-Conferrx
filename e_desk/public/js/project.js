@@ -1,10 +1,17 @@
 frappe.ui.form.on('Project', {
     refresh(frm) {
-        if (!frm.is_new()) {
-            frm.add_custom_button(__('Create Event'), function () {
-                open_event_dialog(frm);
-            }, __('Actions'));
-        }
+        if (frm.is_new()) return;
+
+        frappe.db.get_value('Conference', { project: frm.doc.name }, 'name')
+            .then(r => {
+                const has_conference = r && r.message && r.message.name;
+
+                if (!has_conference) {
+                    frm.add_custom_button(__('Create Event'), function () {
+                        open_event_dialog(frm);
+                    }, __('Actions'));
+                }
+            });
     }
 });
 

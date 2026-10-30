@@ -69,7 +69,7 @@ def process_scan(scan_qr, event, programme, docname=None):
                 )
 
     already_scanned = frappe.db.exists(
-        "Scanned List",
+        "Participant Checkin",
         {
             "participant": participant.name,
             "event": event,
@@ -81,7 +81,7 @@ def process_scan(scan_qr, event, programme, docname=None):
         frappe.throw("This participant is already scanned for this programme.")
 
     scanned_doc = frappe.get_doc({
-        "doctype": "Scanned List",
+        "doctype": "Participant Checkin",
         "participant": participant.name,
         "participant_name": participant_name,
         "event": event,

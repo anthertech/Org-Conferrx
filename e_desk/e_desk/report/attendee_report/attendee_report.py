@@ -63,7 +63,7 @@ def execute(filters=None):
             sl.participant_name,
             sl.participant,
             sl.scanned_by
-        FROM `tabScanned List` sl
+        FROM `tabParticipant Checkin` sl
         WHERE sl.event = %(event)s
           AND sl.programme = %(programme)s
           AND DATE(sl.date_time) = %(date_val)s
