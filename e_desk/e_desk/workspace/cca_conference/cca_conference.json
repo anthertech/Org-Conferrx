@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\": \"moJWlIER1F\", \"type\": \"header\", \"data\": {\"text\": \"\\u003cspan style=\\\"font-size:16px\\\"\\u003eConference\\u003c/span\\u003e\", \"col\": 12}}, {\"id\": \"ChdI8wG-D9\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Participant\", \"col\": 3}}, {\"id\": \"_A-14y-UjS\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"User\", \"col\": 3}}, {\"id\": \"QtfMuh6twg\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hotel\", \"col\": 3}}, {\"id\": \"0hZz0S2ouU\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Registration Desk\", \"col\": 3}}, {\"id\": \"YJl7IdIDNZ\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Conference & Events\", \"col\": 3}}, {\"id\": \"uWSEmatfU0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project\", \"col\": 3}}, {\"id\": \"QEN_wPVnN5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Connections\", \"col\": 3}}, {\"id\": \"2ZvvPOSs3d\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Programme Attendance\", \"col\": 3}}, {\"id\": \"O3g7qWrPfL\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"Rd7ZK9AuOx\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
+ "content": "[{\"id\": \"moJWlIER1F\", \"type\": \"header\", \"data\": {\"text\": \"\\u003cspan style=\\\"font-size:16px\\\"\\u003eConference\\u003c/span\\u003e\", \"col\": 12}}, {\"id\": \"ChdI8wG-D9\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Participant\", \"col\": 3}}, {\"id\": \"_A-14y-UjS\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"User\", \"col\": 3}}, {\"id\": \"QtfMuh6twg\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Hotel\", \"col\": 3}}, {\"id\": \"0hZz0S2ouU\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Registration Desk\", \"col\": 3}}, {\"id\": \"YJl7IdIDNZ\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Conference & Events\", \"col\": 3}}, {\"id\": \"uWSEmatfU0\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project\", \"col\": 3}}, {\"id\": \"QEN_wPVnN5\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Connections\", \"col\": 3}}, {\"id\": \"2ZvvPOSs3d\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Programme Attendance\", \"col\": 3}}, {\"id\": \"fxETQP7eDt\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Participant Checkin\", \"col\": 3}}, {\"id\": \"O3g7qWrPfL\", \"type\": \"spacer\", \"data\": {\"col\": 12}}, {\"id\": \"Rd7ZK9AuOx\", \"type\": \"card\", \"data\": {\"card_name\": \"Reports\", \"col\": 4}}]",
  "creation": "2026-08-12 18:16:10.710200",
  "custom_blocks": [],
  "docstatus": 0,
@@ -42,7 +42,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-10-28 12:47:24.773282",
+ "modified": "2026-10-30 12:45:15.397593",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "CCA Conference",
@@ -69,6 +69,14 @@
    "doc_view": "List",
    "label": "Hotel",
    "link_to": "Hotel",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Participant Checkin",
+   "link_to": "Participant Checkin",
    "stats_filter": "[]",
    "type": "DocType"
   },
