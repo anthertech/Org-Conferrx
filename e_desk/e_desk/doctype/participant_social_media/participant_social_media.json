@@ -11,11 +11,13 @@
  ],
  "fields": [
   {
+   "description": "Enter the full profile URL, e.g. https://www.facebook.com/yourpage",
    "fieldname": "link",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Social Media",
    "options": "URL",
+   "placeholder": "https://www.facebook.com/yourpage",
    "reqd": 1
   }
  ],
@@ -23,7 +25,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-10-08 12:55:00.538730",
+ "modified": "2026-10-29 15:05:38.877619",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant Social Media",
