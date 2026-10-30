@@ -4,6 +4,16 @@
 let current_item_group = "";
 
 frappe.ui.form.on('Registration Desk', {
+	setup: function(frm) {
+        frm.set_query('confer', function() {
+            return {
+                filters: {
+                    is_publish: 1,
+                    end_date: ['>=', frappe.datetime.now_datetime()]
+                }
+            };
+        });
+    },
 
 	onload(frm) {
 		update_item_group(frm);

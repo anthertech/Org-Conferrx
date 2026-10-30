@@ -513,8 +513,7 @@
   },
   {
    "fieldname": "social_media_section",
-   "fieldtype": "Section Break",
-   "label": "Social Media Section"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "social_media",
@@ -526,7 +525,7 @@
  "image_field": "profile_photo",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-08 11:48:55.989052",
+ "modified": "2026-10-29 15:12:51.602827",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Participant",

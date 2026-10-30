@@ -2,6 +2,16 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on("Programme Attendance", {
+    setup: function(frm) {
+        frm.set_query('event', function() {
+            return {
+                filters: {
+                    is_publish: 1,
+                    end_date: ['>=', frappe.datetime.now_datetime()]
+                }
+            };
+        });
+    },
     refresh: function (frm) {
         if (frm.doc.event) {
             frm.events.load_programmes(frm);
