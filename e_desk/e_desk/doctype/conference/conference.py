@@ -102,7 +102,7 @@ class Conference(WebsiteGenerator):
 
 		status = (self.event_status or "").strip()
 
-		context.is_cancelled = status == "Canceled"
+		context.is_cancelled = status == "Cancelled"
 		context.is_closed = (status == "Closed" or context.is_registration_closed)
 
 		context.can_register = status == "Open" and not context.is_registration_closed
