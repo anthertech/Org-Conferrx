@@ -993,6 +993,7 @@
    "description": "Indicates whether meals are included as part of the conference or event registration.",
    "fieldname": "has_meal",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Has Meal"
   },
   {
@@ -1001,6 +1002,7 @@
    "description": "Controlled by Pricing requires a separate meal item to be purchased.",
    "fieldname": "meal_access",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Meal Access ",
    "options": "Free for All Participants\nControlled by Pricing"
   },
@@ -1008,6 +1010,7 @@
    "depends_on": "eval:doc.meal_access==\"Controlled by Pricing\" && doc.has_meal",
    "fieldname": "meal_item",
    "fieldtype": "Link",
+   "hidden": 1,
    "label": "Meal Item",
    "mandatory_depends_on": "eval:doc.meal_access==\"Controlled by Pricing\" && doc.has_meal",
    "options": "Item"
@@ -1280,7 +1283,7 @@
    "fieldname": "event_status",
    "fieldtype": "Select",
    "label": "Event Status",
-   "options": "\nOpen\nCompleted\nClosed\nCanceled"
+   "options": "\nOpen\nCompleted\nClosed\nCancelled"
   },
   {
    "description": "Specifies whether the event is open to the public or restricted to selected participants.",
@@ -1304,7 +1307,7 @@
  "is_calendar_and_gantt": 1,
  "is_published_field": "is_publish",
  "links": [],
- "modified": "2026-10-27 11:58:07.174936",
+ "modified": "2026-11-13 15:57:45.968240",
  "modified_by": "Administrator",
  "module": "E Desk",
  "name": "Conference",

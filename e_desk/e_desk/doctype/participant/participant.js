@@ -154,12 +154,12 @@ function toggleSpeaker(frm) {
 function addVolunteerButton(frm) {
     if (!frm.doc.event_role) return;
 
-    if (frm.doc.event_role === "Volunteer") {
-        frm.add_custom_button(__('Remove Volunteer'), () => {
+    if (frm.doc.event_role === "Steward") {
+        frm.add_custom_button(__('Remove Steward'), () => {
             toggleVolunteer(frm);
         }, __('Actions'));
     } else if (frm.doc.event_role === "Participant") {
-        frm.add_custom_button(__('Make Volunteer'), () => {
+        frm.add_custom_button(__('Make Steward'), () => {
             toggleVolunteer(frm);
         }, __('Actions'));
     }
