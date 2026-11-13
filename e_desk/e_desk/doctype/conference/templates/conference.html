@@ -1316,7 +1316,7 @@
 
 
 <div class="container my-5 px-4 event-page">
-    {% if not is_guest %}
+    {% if is_registered %}
 
     <a href="/conference_page" class="back-link">&larr; Back to All Conferences</a>
 
@@ -1393,7 +1393,7 @@
                         <strong>Registration closes on:</strong>&nbsp;{{ frappe.utils.format_date(doc.registration_close_date, "dd/mm/yyyy") }}
                     </span>
                 {% endif %}
-
+                {% if is_registered %}
                 {% if not is_guest %}
 
                     <a href="/registration-details/{{ name }}" class="btn-outline-cca">
@@ -1423,9 +1423,10 @@
                     {% endif %}
 
                 {% endif %}
+                {% endif %}
 
                 {# ---- Register Now: only for guests and only when status is Open ---- #}
-                {% if is_guest and can_register %}
+                {% if (is_guest or not is_registered) and can_register %}
                 <a href="/event-participant-registrations/new#event={{ name | urlencode }}" class="register-btn">Register Now</a>
                 {% endif %}
 
@@ -1470,6 +1471,8 @@
             </button>
         </li>
         {% if not is_guest %}
+        {% if is_registered %}
+
 
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="connections-tab" data-bs-toggle="tab"
@@ -1484,6 +1487,7 @@
                 Resources
             </button>
         </li>
+        {% endif %}
         {% endif %}
 
     </ul>

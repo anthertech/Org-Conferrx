@@ -106,9 +106,25 @@ class Conference(WebsiteGenerator):
 		context.is_closed = (status == "Closed" or context.is_registration_closed)
 
 		context.can_register = status == "Open" and not context.is_registration_closed
+		context.is_registered = is_user_registered(self.name)
 		
 		return context
 
+def is_user_registered(event_name):
+    user = frappe.session.user
+    if user == "Guest":
+        return False
+
+    return bool(
+        frappe.get_all(
+            "Participant",
+            filters={
+                "event": event_name,
+                "user": user,
+            },
+            limit=1,
+        )
+    )
 
 def has_exhibitor():
     has_exhibitor = frappe.db.get_value(
